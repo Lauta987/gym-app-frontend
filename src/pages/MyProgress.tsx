@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import api from "../api/api";
 import type { User, WorkoutLog } from "../types";
 
@@ -111,13 +111,21 @@ export default function MyProgress() {
                   <span>{user?.email}</span>
                 </div>
 
-                <a href="/my-routine" className="student-menu-link">
+                <Link
+                  to="/my-routine"
+                  className="student-menu-link"
+                  onClick={() => setShowUserMenu(false)}
+                >
                   Mi rutina
-                </a>
+                </Link>
 
-                <a href="/my-progress" className="student-menu-link">
+                <Link
+                  to="/my-progress"
+                  className="student-menu-link"
+                  onClick={() => setShowUserMenu(false)}
+                >
                   Mi progreso
-                </a>
+                </Link>
 
                 <button
                   type="button"
@@ -196,51 +204,62 @@ export default function MyProgress() {
                 </div>
 
                 <div className="progress-day-cards">
-                  {logs.map((log) => (
-                    <article key={log._id} className="student-progress-card-v2">
-                      <div className="progress-card-main">
-                        <div className="progress-exercise-icon">
-                          {log.exerciseId.name.charAt(0).toUpperCase()}
+                  {logs.map((log) => {
+                    const exerciseName = log.exerciseId?.name || "Ejercicio";
+                    const routineName = log.routineId?.name || "Rutina";
+                    const dayName = log.dayName || "Día";
+
+                    return (
+                      <article
+                        key={log._id}
+                        className="student-progress-card-v2"
+                      >
+                        <div className="progress-card-main">
+                          <div className="progress-exercise-icon">
+                            {exerciseName.charAt(0).toUpperCase()}
+                          </div>
+
+                          <div>
+                            <h3>{exerciseName}</h3>
+                            <p>
+                              {routineName} · {dayName}
+                            </p>
+                          </div>
+
+                          <span className="progress-hour">
+                            {formatHour(log.completedAt)}
+                          </span>
                         </div>
 
-                        <div>
-                          <h3>{log.exerciseId.name}</h3>
-                          <p>
-                            {log.routineId.name} · {log.dayName}
+                        <div className="student-progress-data-v2">
+                          <div>
+                            <span>Peso</span>
+                            <strong>
+                              {log.weight ? `${log.weight} kg` : "-"}
+                            </strong>
+                          </div>
+
+                          <div>
+                            <span>Reps</span>
+                            <strong>{log.repsDone || "-"}</strong>
+                          </div>
+
+                          <div>
+                            <span>Plan</span>
+                            <strong>
+                              {log.setsPlanned} x {log.repsPlanned}
+                            </strong>
+                          </div>
+                        </div>
+
+                        {log.notes && (
+                          <p className="student-progress-note-v2">
+                            {log.notes}
                           </p>
-                        </div>
-
-                        <span className="progress-hour">
-                          {formatHour(log.completedAt)}
-                        </span>
-                      </div>
-
-                      <div className="student-progress-data-v2">
-                        <div>
-                          <span>Peso</span>
-                          <strong>
-                            {log.weight ? `${log.weight} kg` : "-"}
-                          </strong>
-                        </div>
-
-                        <div>
-                          <span>Reps</span>
-                          <strong>{log.repsDone || "-"}</strong>
-                        </div>
-
-                        <div>
-                          <span>Plan</span>
-                          <strong>
-                            {log.setsPlanned} x {log.repsPlanned}
-                          </strong>
-                        </div>
-                      </div>
-
-                      {log.notes && (
-                        <p className="student-progress-note-v2">{log.notes}</p>
-                      )}
-                    </article>
-                  ))}
+                        )}
+                      </article>
+                    );
+                  })}
                 </div>
               </div>
             ))}
