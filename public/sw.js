@@ -1,6 +1,12 @@
-const CACHE_NAME = "gymstart-v1";
+const CACHE_NAME = "gymstart-v2";
 
-const APP_SHELL = ["/", "/manifest.webmanifest", "/favicon.svg"];
+const APP_SHELL = [
+  "/",
+  "/manifest.webmanifest",
+  "/icon-192.png",
+  "/icon-512.png",
+  "/favicon.svg",
+];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
