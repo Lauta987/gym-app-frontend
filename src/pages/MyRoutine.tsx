@@ -80,6 +80,11 @@ export default function MyRoutine() {
     });
   };
 
+  const getDefaultReps = (reps: string) => {
+    const match = reps.match(/\d+/);
+    return match ? match[0] : "10";
+  };
+
   const openProgressForm = (
     dayName: string,
     dayOrder: number,
@@ -91,8 +96,8 @@ export default function MyRoutine() {
       item,
     });
 
-    setWeight("");
-    setRepsDone("");
+    setWeight("0");
+    setRepsDone(getDefaultReps(item.reps));
     setProgressNotes("");
     setSuccessMessage("");
   };
@@ -102,6 +107,34 @@ export default function MyRoutine() {
     setWeight("");
     setRepsDone("");
     setProgressNotes("");
+  };
+
+  const decreaseWeight = () => {
+    setWeight((prev) => {
+      const current = Number(prev) || 0;
+      return String(Math.max(0, current - 5));
+    });
+  };
+
+  const increaseWeight = () => {
+    setWeight((prev) => {
+      const current = Number(prev) || 0;
+      return String(current + 5);
+    });
+  };
+
+  const decreaseReps = () => {
+    setRepsDone((prev) => {
+      const current = Number(prev) || 1;
+      return String(Math.max(1, current - 1));
+    });
+  };
+
+  const increaseReps = () => {
+    setRepsDone((prev) => {
+      const current = Number(prev) || 0;
+      return String(current + 1);
+    });
   };
 
   const handleSaveProgress = async () => {
@@ -382,60 +415,98 @@ export default function MyRoutine() {
       </section>
 
       {selectedExercise && (
-        <section className="progress-modal-backdrop">
-          <article className="progress-modal">
-            <div className="progress-modal-header">
+        <section className="progress-bottom-backdrop">
+          <article className="progress-bottom-sheet">
+            <div className="bottom-sheet-handle"></div>
+
+            <div className="progress-bottom-header">
               <div>
-                <h2>Registrar progreso</h2>
-                <p>{selectedExercise.item.exerciseId.name}</p>
+                <h2>{selectedExercise.item.exerciseId.name}</h2>
+
+                <p>
+                  <span>◎</span>
+                  Enfócate en la técnica y no te rindas. 🔥
+                </p>
               </div>
 
-              <button type="button" onClick={closeProgressForm}>
-                ✕
-              </button>
+              <strong>
+                Serie <span>1</span> de {selectedExercise.item.sets}
+              </strong>
             </div>
 
-            <div className="progress-form">
-              <label>
-                Peso usado en kg
-                <input
-                  type="number"
-                  placeholder="Ej: 40"
-                  value={weight}
-                  onChange={(event) => setWeight(event.target.value)}
-                />
-              </label>
+            <div className="progress-bottom-controls">
+              <div className="progress-counter-block">
+                <label>Peso (kg)</label>
 
-              <label>
-                Repeticiones realizadas
-                <input
-                  type="text"
-                  placeholder="Ej: 10, 10, 8"
-                  value={repsDone}
-                  onChange={(event) => setRepsDone(event.target.value)}
-                />
-              </label>
+                <div className="progress-counter">
+                  <button type="button" onClick={decreaseWeight}>
+                    −
+                  </button>
 
-              <label>
-                Notas
-                <textarea
-                  placeholder="Ej: Me costó la última serie"
-                  value={progressNotes}
-                  onChange={(event) => setProgressNotes(event.target.value)}
-                />
-              </label>
+                  <strong>{weight || "0"}</strong>
 
-              <button
-                type="button"
-                onClick={handleSaveProgress}
-                disabled={savingProgress}
-              >
-                {savingProgress ? "Guardando..." : "Guardar progreso"}
-              </button>
+                  <button type="button" onClick={increaseWeight}>
+                    +
+                  </button>
+                </div>
+              </div>
+
+              <div className="progress-control-divider"></div>
+
+              <div className="progress-counter-block">
+                <label>Repeticiones</label>
+
+                <div className="progress-counter">
+                  <button type="button" onClick={decreaseReps}>
+                    −
+                  </button>
+
+                  <strong>{repsDone || "0"}</strong>
+
+                  <button type="button" onClick={increaseReps}>
+                    +
+                  </button>
+                </div>
+              </div>
             </div>
+
+            <textarea
+              className="progress-bottom-notes"
+              placeholder="Agregar nota opcional..."
+              value={progressNotes}
+              onChange={(event) => setProgressNotes(event.target.value)}
+            />
+
+            <button
+              type="button"
+              className="save-series-button"
+              onClick={handleSaveProgress}
+              disabled={savingProgress}
+            >
+              {savingProgress ? "Guardando..." : "Guardar serie"}
+            </button>
+
+            <div className="progress-motivation-card">
+              <div>📈</div>
+
+              <p>
+                Cada repetición te acerca a tu mejor versión.
+                <strong> Seguí así, campeón.</strong>
+              </p>
+
+              <span>💪</span>
+            </div>
+
+            <button
+              type="button"
+              className="close-bottom-sheet"
+              onClick={closeProgressForm}
+            >
+              Cerrar
+            </button>
           </article>
         </section>
       )}
     </main>
   );
-}  
+} 
