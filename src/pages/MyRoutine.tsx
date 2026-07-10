@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import api from "../api/api";
 import type { Routine, RoutineExercise, User, WorkoutLog } from "../types";
 import { isValidImageUrl } from "../utils/image";
@@ -165,13 +165,21 @@ export default function MyRoutine() {
                   <span>{user?.email}</span>
                 </div>
 
-                <a href="/my-routine" className="student-menu-link">
+                <Link
+                  to="/my-routine"
+                  className="student-menu-link"
+                  onClick={() => setShowUserMenu(false)}
+                >
                   Mi rutina
-                </a>
+                </Link>
 
-                <a href="/my-progress" className="student-menu-link">
+                <Link
+                  to="/my-progress"
+                  className="student-menu-link"
+                  onClick={() => setShowUserMenu(false)}
+                >
                   Mi progreso
-                </a>
+                </Link>
 
                 <button
                   type="button"
