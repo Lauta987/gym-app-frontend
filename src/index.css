@@ -2518,3 +2518,12 @@ button,
 .student-routine-hero {
   -webkit-tap-highlight-color: transparent;
 } 
+/* Ajuste para que la PWA no quede debajo de la barra superior del iPhone */
+.student-phone-shell {
+  padding-top: max(24px, calc(env(safe-area-inset-top, 0px) + 18px));
+  padding-bottom: max(24px, calc(env(safe-area-inset-bottom, 0px) + 18px));
+}
+
+.student-dark-header {
+  padding-top: 6px;
+} 
