@@ -2487,3 +2487,34 @@ button:hover {
     font-size: 22px;
   }
 } 
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+  overflow-x: hidden;
+  overscroll-behavior: none;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  touch-action: manipulation;
+}
+
+/* Evita que iPhone haga zoom automático al tocar inputs */
+input,
+textarea,
+select,
+button {
+  font-size: 16px;
+}
+
+/* Evita selección rara de texto en botones/cards */
+button,
+.student-dark-exercise,
+.visual-stat-card,
+.visual-history-card,
+.student-routine-hero {
+  -webkit-tap-highlight-color: transparent;
+} 
