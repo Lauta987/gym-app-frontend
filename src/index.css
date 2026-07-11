@@ -3711,3 +3711,234 @@ button,
     font-size: 30px;
   }
 } 
+/* === FORMA STYLE - LOGIN === */
+
+.forma-login-page {
+  min-height: 100dvh;
+  background: #e9e1d4;
+  display: flex;
+  justify-content: center;
+  color: #111111;
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+}
+
+.forma-login-shell {
+  width: 100%;
+  max-width: 720px;
+  min-height: 100dvh;
+  background:
+    radial-gradient(circle at top right, rgba(255, 73, 35, 0.14), transparent 34%),
+    #f5efe5;
+  padding: max(54px, calc(env(safe-area-inset-top, 0px) + 26px)) 18px
+    max(26px, calc(env(safe-area-inset-bottom, 0px) + 18px));
+  display: flex;
+  flex-direction: column;
+}
+
+.forma-login-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: flex-start;
+  margin-bottom: 34px;
+}
+
+.forma-login-brand {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+
+.forma-login-logo {
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  background: #111111;
+  color: #ff4a2f;
+  display: grid;
+  place-items: center;
+  font-size: 24px;
+  font-weight: 950;
+  box-shadow: 0 16px 34px rgba(17, 17, 17, 0.18);
+}
+
+.forma-login-brand h1 {
+  margin: 0;
+  color: #111111;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 27px;
+  letter-spacing: -0.06em;
+}
+
+.forma-login-brand h1 span {
+  color: #ff3b1f;
+  font-style: italic;
+}
+
+.forma-login-brand p {
+  margin: 5px 0 0;
+  color: #7c756d;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.forma-login-badge {
+  border: 1px solid rgba(17, 17, 17, 0.1);
+  border-radius: 999px;
+  background: #fffaf2;
+  color: #7c756d;
+  padding: 8px 11px;
+  font-size: 11px;
+  font-weight: 950;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+.forma-login-hero {
+  border-radius: 30px;
+  background:
+    radial-gradient(circle at top right, rgba(255, 255, 255, 0.16), transparent 32%),
+    linear-gradient(135deg, #161616, #050505);
+  color: #ffffff;
+  padding: 26px 22px;
+  box-shadow: 0 24px 60px rgba(17, 17, 17, 0.18);
+  overflow: hidden;
+}
+
+.forma-login-hero > span {
+  color: #ff4a2f;
+  font-size: 11px;
+  font-weight: 950;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+}
+
+.forma-login-hero h2 {
+  margin: 16px 0 12px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 46px;
+  line-height: 0.9;
+  letter-spacing: -0.07em;
+}
+
+.forma-login-hero p {
+  margin: 0;
+  color: #c9c3bc;
+  font-size: 14px;
+  line-height: 1.45;
+  max-width: 430px;
+}
+
+.forma-login-form {
+  margin-top: 24px;
+  display: grid;
+  gap: 14px;
+}
+
+.forma-login-form label {
+  display: grid;
+  gap: 8px;
+  color: #7c756d;
+  font-size: 12px;
+  font-weight: 950;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+}
+
+.forma-login-form input {
+  width: 100%;
+  border: 1px solid rgba(17, 17, 17, 0.1);
+  border-radius: 18px;
+  background: #fffaf2;
+  color: #111111;
+  padding: 16px;
+  font-size: 16px;
+  font-weight: 800;
+  outline: none;
+  box-shadow: 0 10px 30px rgba(17, 17, 17, 0.05);
+}
+
+.forma-login-form input::placeholder {
+  color: #aaa198;
+}
+
+.forma-login-form input:focus {
+  border-color: #ff3b1f;
+  box-shadow: 0 0 0 4px rgba(255, 59, 31, 0.12);
+}
+
+.forma-login-error {
+  margin: 0;
+  border-radius: 16px;
+  background: rgba(255, 59, 31, 0.12);
+  color: #b91c1c;
+  padding: 12px 14px;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.forma-login-form button {
+  margin-top: 4px;
+  border: none;
+  border-radius: 19px;
+  background: #ff3b1f;
+  color: #ffffff;
+  padding: 17px;
+  font-size: 15px;
+  font-weight: 950;
+  cursor: pointer;
+  box-shadow: 0 18px 40px rgba(255, 59, 31, 0.28);
+}
+
+.forma-login-form button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.forma-login-footer {
+  margin-top: auto;
+  padding-top: 28px;
+  text-align: center;
+}
+
+.forma-login-footer span {
+  color: #111111;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: -0.05em;
+}
+
+.forma-login-footer p {
+  margin: 6px 0 0;
+  color: #7c756d;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+@media (max-width: 430px) {
+  .forma-login-shell {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .forma-login-top {
+    align-items: flex-start;
+  }
+
+  .forma-login-badge {
+    display: none;
+  }
+
+  .forma-login-hero h2 {
+    font-size: 40px;
+  }
+} 
