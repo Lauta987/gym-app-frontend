@@ -2893,3 +2893,54 @@ a,
     width: 100%;
   }
 } 
+.routine-days-summary {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.routine-days-summary div {
+  display: grid;
+  grid-template-columns: 58px 1fr auto;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid rgba(17, 17, 17, 0.08);
+  border-radius: 16px;
+  background: #fffaf2;
+  padding: 10px 12px;
+}
+
+.routine-days-summary strong {
+  color: #111111;
+  font-size: 13px;
+  font-weight: 950;
+  white-space: nowrap;
+}
+
+.routine-days-summary span {
+  min-width: 0;
+  color: #111111;
+  font-size: 14px;
+  font-weight: 800;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.routine-days-summary small {
+  color: #7c756d;
+  font-size: 12px;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+@media (max-width: 620px) {
+  .routine-days-summary div {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+
+  .routine-days-summary span {
+    white-space: normal;
+  }
+} 

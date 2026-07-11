@@ -119,6 +119,14 @@ export default function Routines() {
     return "Ejercicio";
   };
 
+  const formatDayName = (currentDayName: string, order: number) => {
+    const cleanName = currentDayName
+      .replace(new RegExp(`^Día\\s*${order}\\s*[-:]\\s*`, "i"), "")
+      .trim();
+
+    return cleanName || currentDayName;
+  };
+
   const buildRoutinePayload = () => {
     return {
       name,
@@ -199,34 +207,37 @@ export default function Routines() {
       return;
     }
 
-    let exerciseWasAdded = false;
+    const selectedDay = days.find((day) => day.id === selectedDayId);
+
+    if (!selectedDay) {
+      setError("El día seleccionado no existe.");
+      return;
+    }
+
+    const exerciseAlreadyAdded = selectedDay.exercises.some(
+      (exercise) => exercise.exerciseId === selectedExerciseId
+    );
+
+    if (exerciseAlreadyAdded) {
+      setError("Ese ejercicio ya fue agregado a este día.");
+      return;
+    }
+
+    const newExercise: RoutineFormExercise = {
+      exerciseId: selectedExercise._id,
+      exerciseName: selectedExercise.name,
+      sets,
+      reps,
+      rest,
+      order: selectedDay.exercises.length + 1,
+      notes,
+    };
 
     setDays((prevDays) =>
       prevDays.map((day) => {
         if (day.id !== selectedDayId) {
           return day;
         }
-
-        const exerciseAlreadyAdded = day.exercises.some(
-          (exercise) => exercise.exerciseId === selectedExerciseId
-        );
-
-        if (exerciseAlreadyAdded) {
-          setError("Ese ejercicio ya fue agregado a este día.");
-          return day;
-        }
-
-        const newExercise: RoutineFormExercise = {
-          exerciseId: selectedExercise._id,
-          exerciseName: selectedExercise.name,
-          sets,
-          reps,
-          rest,
-          order: day.exercises.length + 1,
-          notes,
-        };
-
-        exerciseWasAdded = true;
 
         return {
           ...day,
@@ -235,13 +246,11 @@ export default function Routines() {
       })
     );
 
-    if (exerciseWasAdded) {
-      setSelectedExerciseId("");
-      setSets(3);
-      setReps("10-12");
-      setRest("60 segundos");
-      setNotes("");
-    }
+    setSelectedExerciseId("");
+    setSets(3);
+    setReps("10-12");
+    setRest("60 segundos");
+    setNotes("");
   };
 
   const handleRemoveExerciseFromDay = (dayId: string, exerciseId: string) => {
@@ -578,7 +587,7 @@ export default function Routines() {
                       <div className="routine-day-header">
                         <div>
                           <strong>
-                            Día {day.order}: {day.dayName}
+                            Día {day.order}: {formatDayName(day.dayName, day.order)}
                           </strong>
                           <span>{day.exercises.length} ejercicios</span>
                         </div>
@@ -681,10 +690,11 @@ export default function Routines() {
                     <div className="routine-days-summary">
                       {routine.days.map((day) => (
                         <div key={`${routine._id}-${day.order}-${day.dayName}`}>
-                          <strong>
-                            Día {day.order}: {day.dayName}
-                          </strong>
-                          <span>{day.exercises.length} ejercicios</span>
+                          <strong>Día {day.order}</strong>
+
+                          <span>{formatDayName(day.dayName, day.order)}</span>
+
+                          <small>{day.exercises.length} ejercicios</small>
                         </div>
                       ))}
                     </div>
