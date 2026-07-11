@@ -1,10 +1,23 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import api from "../api/api";
 import AdminLayout from "../components/AdminLayout";
 import type { Routine, Student } from "../types";
 
+type AssignedRoutineValue =
+  | string
+  | {
+      _id: string;
+      name: string;
+      level?: string;
+      objective?: string;
+    };
+
+interface AssignStudent extends Omit<Student, "assignedRoutine"> {
+  assignedRoutine?: AssignedRoutineValue;
+}
+
 export default function AssignRoutine() {
-  const [students, setStudents] = useState<Student[]>([]);
+  const [students, setStudents] = useState<AssignStudent[]>([]);
   const [routines, setRoutines] = useState<Routine[]>([]);
 
   const [studentId, setStudentId] = useState("");
@@ -21,7 +34,7 @@ export default function AssignRoutine() {
       setError("");
 
       const [studentsResponse, routinesResponse] = await Promise.all([
-        api.get<{ students: Student[] }>("/students"),
+        api.get<{ students: AssignStudent[] }>("/students"),
         api.get<{ routines: Routine[] }>("/routines"),
       ]);
 
@@ -39,8 +52,32 @@ export default function AssignRoutine() {
     loadData();
   }, []);
 
-  const getRoutineName = (assignedRoutine?: string) => {
+  const selectedStudent = useMemo(() => {
+    return students.find((student) => student._id === studentId);
+  }, [students, studentId]);
+
+  const selectedRoutine = useMemo(() => {
+    return routines.find((routine) => routine._id === routineId);
+  }, [routines, routineId]);
+
+  const activeStudents = students.filter((student) => student.active);
+
+  const getAssignedRoutineId = (assignedRoutine?: AssignedRoutineValue) => {
+    if (!assignedRoutine) return "";
+
+    if (typeof assignedRoutine === "string") {
+      return assignedRoutine;
+    }
+
+    return assignedRoutine._id;
+  };
+
+  const getRoutineName = (assignedRoutine?: AssignedRoutineValue) => {
     if (!assignedRoutine) return "Sin rutina asignada";
+
+    if (typeof assignedRoutine === "object") {
+      return assignedRoutine.name;
+    }
 
     const routine = routines.find((item) => item._id === assignedRoutine);
 
@@ -79,29 +116,40 @@ export default function AssignRoutine() {
         <header className="dashboard-header">
           <div>
             <h1>Asignar rutina</h1>
-            <p>Asigná una rutina existente a un alumno del gimnasio.</p>
+            <p>Conectá cada alumno con su plan de entrenamiento.</p>
           </div>
 
-          <div className="date-pill">Panel admin</div>
+          <div className="date-pill">
+            {students.length} alumnos · {routines.length} rutinas
+          </div>
         </header>
 
-        <section className="page-grid">
-          <article className="form-card">
-            <h2>Nueva asignación</h2>
+        {error && <p className="error-message">{error}</p>}
+        {message && <p className="success-message">{message}</p>}
 
-            {loading ? (
-              <p className="loading-text">Cargando datos...</p>
-            ) : (
-              <div className="student-form">
-                <label>
+        {loading ? (
+          <p className="loading-text">Cargando datos...</p>
+        ) : (
+          <>
+            <section className="assign-hero-grid">
+              <article className="assign-main-card">
+                <div className="assign-card-heading">
+                  <span>Paso 1</span>
+                  <h2>Seleccioná el alumno</h2>
+                  <p>
+                    Elegí el alumno al que querés asignarle una rutina activa.
+                  </p>
+                </div>
+
+                <label className="assign-field">
                   Alumno
                   <select
                     value={studentId}
-                    onChange={(e) => setStudentId(e.target.value)}
+                    onChange={(event) => setStudentId(event.target.value)}
                   >
                     <option value="">Seleccionar alumno</option>
 
-                    {students.map((student) => (
+                    {activeStudents.map((student) => (
                       <option key={student._id} value={student._id}>
                         {student.name} {student.lastName} - {student.email}
                       </option>
@@ -109,11 +157,44 @@ export default function AssignRoutine() {
                   </select>
                 </label>
 
-                <label>
+                {selectedStudent ? (
+                  <div className="assign-selected-card">
+                    <div className="assign-avatar">
+                      {selectedStudent.name.charAt(0).toUpperCase()}
+                    </div>
+
+                    <div>
+                      <strong>
+                        {selectedStudent.name} {selectedStudent.lastName}
+                      </strong>
+                      <span>{selectedStudent.email}</span>
+                      <p>
+                        Rutina actual:{" "}
+                        <b>{getRoutineName(selectedStudent.assignedRoutine)}</b>
+                      </p>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="assign-empty-box">
+                    Seleccioná un alumno para ver su información.
+                  </div>
+                )}
+              </article>
+
+              <article className="assign-main-card featured">
+                <div className="assign-card-heading">
+                  <span>Paso 2</span>
+                  <h2>Elegí la rutina</h2>
+                  <p>
+                    Seleccioná el plan que va a ver el alumno en su app.
+                  </p>
+                </div>
+
+                <label className="assign-field">
                   Rutina
                   <select
                     value={routineId}
-                    onChange={(e) => setRoutineId(e.target.value)}
+                    onChange={(event) => setRoutineId(event.target.value)}
                   >
                     <option value="">Seleccionar rutina</option>
 
@@ -125,74 +206,99 @@ export default function AssignRoutine() {
                   </select>
                 </label>
 
-                {message && <p className="success-message">{message}</p>}
-                {error && <p className="error-message">{error}</p>}
+                {selectedRoutine ? (
+                  <div className="assign-routine-preview">
+                    <span>{selectedRoutine.level}</span>
+                    <h3>{selectedRoutine.name}</h3>
+                    <p>{selectedRoutine.objective || "Sin objetivo definido"}</p>
+
+                    <div>
+                      <strong>{selectedRoutine.days.length}</strong>
+                      <small>días de entrenamiento</small>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="assign-empty-box dark">
+                    Seleccioná una rutina para ver el resumen.
+                  </div>
+                )}
 
                 <button
                   type="button"
+                  className="assign-submit-button"
                   onClick={handleAssignRoutine}
                   disabled={saving}
                 >
                   {saving ? "Asignando..." : "Asignar rutina"}
                 </button>
+              </article>
+            </section>
+
+            <section className="table-card assign-table-card">
+              <div className="panel-header">
+                <h2>Alumnos y rutinas</h2>
+                <button type="button" onClick={loadData}>
+                  Actualizar
+                </button>
               </div>
-            )}
-          </article>
 
-          <article className="table-card">
-            <div className="panel-header">
-              <h2>Alumnos y rutinas</h2>
-              <button onClick={loadData}>Actualizar</button>
-            </div>
+              {students.length === 0 ? (
+                <div className="empty-state">
+                  <h3>No hay alumnos registrados</h3>
+                  <p>Primero creá alumnos desde la sección Alumnos.</p>
+                </div>
+              ) : (
+                <div className="assign-students-grid">
+                  {students.map((student) => {
+                    const assignedRoutineId = getAssignedRoutineId(
+                      student.assignedRoutine
+                    );
 
-            {loading ? (
-              <p className="loading-text">Cargando alumnos...</p>
-            ) : students.length === 0 ? (
-              <div className="empty-state">
-                <h3>No hay alumnos registrados</h3>
-                <p>Primero creá alumnos desde la sección Alumnos.</p>
-              </div>
-            ) : (
-              <div className="table-wrapper">
-                <table className="students-table">
-                  <thead>
-                    <tr>
-                      <th>Alumno</th>
-                      <th>Email</th>
-                      <th>Rutina asignada</th>
-                      <th>Estado</th>
-                    </tr>
-                  </thead>
+                    const hasSelectedRoutine =
+                      assignedRoutineId && assignedRoutineId === routineId;
 
-                  <tbody>
-                    {students.map((student) => (
-                      <tr key={student._id}>
-                        <td>
+                    return (
+                      <article
+                        key={student._id}
+                        className={
+                          hasSelectedRoutine
+                            ? "assign-student-row highlighted"
+                            : "assign-student-row"
+                        }
+                      >
+                        <div className="assign-avatar small">
+                          {student.name.charAt(0).toUpperCase()}
+                        </div>
+
+                        <div className="assign-student-main">
                           <strong>
                             {student.name} {student.lastName}
                           </strong>
-                        </td>
-                        <td>{student.email}</td>
-                        <td>{getRoutineName(student.assignedRoutine)}</td>
-                        <td>
-                          <span
-                            className={
-                              student.active
-                                ? "status-pill active"
-                                : "status-pill inactive"
-                            }
-                          >
-                            {student.active ? "Activo" : "Inactivo"}
-                          </span>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            )}
-          </article>
-        </section>
+                          <span>{student.email}</span>
+                        </div>
+
+                        <div className="assign-student-routine">
+                          <span>Rutina</span>
+                          <strong>{getRoutineName(student.assignedRoutine)}</strong>
+                        </div>
+
+                        <span
+                          className={
+                            student.active
+                              ? "status-pill active"
+                              : "status-pill inactive"
+                          }
+                        >
+                          {student.active ? "Activo" : "Inactivo"}
+                        </span>
+                      </article>
+                    );
+                  })}
+                </div>
+              )}
+            </section>
+          </>
+        )}
       </section>
     </AdminLayout>
   );
