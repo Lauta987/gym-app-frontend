@@ -2527,3 +2527,794 @@ button,
 .student-dark-header {
   padding-top: 6px;
 } 
+/* === FORMA STYLE - STUDENT ROUTINE === */
+
+.forma-page {
+  min-height: 100dvh;
+  background: #e9e1d4;
+  color: #111111;
+  display: flex;
+  justify-content: center;
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+}
+
+.forma-app-shell {
+  width: 100%;
+  max-width: 720px;
+  min-height: 100dvh;
+  background:
+    radial-gradient(circle at top right, rgba(255, 73, 35, 0.12), transparent 34%),
+    #f5efe5;
+  padding: max(54px, calc(env(safe-area-inset-top, 0px) + 26px)) 18px
+    max(26px, calc(env(safe-area-inset-bottom, 0px) + 18px));
+}
+
+.forma-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.forma-topbar h1 {
+  margin: 0;
+  color: #111111;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 26px;
+  letter-spacing: -0.06em;
+}
+
+.forma-topbar h1 span {
+  color: #ff3b1f;
+  font-style: italic;
+}
+
+.forma-topbar p {
+  margin: 8px 0 0;
+  color: #7c756d;
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+}
+
+.forma-user-menu {
+  position: relative;
+}
+
+.forma-avatar-button {
+  width: 46px;
+  height: 46px;
+  border: none;
+  border-radius: 999px;
+  background: #111111;
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 950;
+  cursor: pointer;
+}
+
+.forma-user-dropdown {
+  position: absolute;
+  top: 54px;
+  right: 0;
+  z-index: 30;
+  width: 230px;
+  border: 1px solid rgba(17, 17, 17, 0.12);
+  border-radius: 20px;
+  background: #fffaf2;
+  box-shadow: 0 22px 60px rgba(17, 17, 17, 0.18);
+  padding: 12px;
+}
+
+.forma-user-dropdown div {
+  border-bottom: 1px solid rgba(17, 17, 17, 0.1);
+  padding-bottom: 10px;
+  margin-bottom: 8px;
+}
+
+.forma-user-dropdown strong {
+  display: block;
+  color: #111111;
+  font-size: 14px;
+}
+
+.forma-user-dropdown span {
+  display: block;
+  margin-top: 4px;
+  color: #7c756d;
+  font-size: 12px;
+}
+
+.forma-user-dropdown a,
+.forma-user-dropdown button {
+  width: 100%;
+  border: none;
+  border-radius: 12px;
+  background: transparent;
+  display: block;
+  padding: 10px;
+  color: #111111;
+  text-align: left;
+  text-decoration: none;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.forma-user-dropdown a:hover,
+.forma-user-dropdown button:hover {
+  background: #f0e7dc;
+}
+
+.forma-hero-card {
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at top right, rgba(255, 255, 255, 0.16), transparent 30%),
+    linear-gradient(135deg, #161616, #050505);
+  color: #ffffff;
+  padding: 22px;
+  box-shadow: 0 24px 60px rgba(17, 17, 17, 0.18);
+  overflow: hidden;
+}
+
+.forma-hero-card > span {
+  color: #ff4a2f;
+  font-size: 11px;
+  font-weight: 950;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+}
+
+.forma-hero-card h2 {
+  margin: 12px 0 8px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 38px;
+  line-height: 0.95;
+  letter-spacing: -0.06em;
+}
+
+.forma-hero-card p {
+  margin: 0;
+  color: #c9c3bc;
+  font-size: 14px;
+}
+
+.forma-hero-card p strong {
+  color: #ffffff;
+}
+
+.forma-hero-stats {
+  margin-top: 22px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.forma-hero-stats article {
+  min-width: 0;
+}
+
+.forma-hero-stats small {
+  display: block;
+  color: #8e8880;
+  font-size: 10px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.forma-hero-stats strong {
+  display: block;
+  margin-top: 5px;
+  color: #ffffff;
+  font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.forma-success-message {
+  margin: 14px 0 0;
+  border-radius: 16px;
+  background: #dcfce7;
+  color: #166534;
+  padding: 12px 14px;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.forma-day-tabs {
+  margin-top: 22px;
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  scrollbar-width: none;
+}
+
+.forma-day-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.forma-day-tabs button {
+  min-width: 92px;
+  border: none;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  color: #7c756d;
+  padding: 10px 8px 13px;
+  cursor: pointer;
+}
+
+.forma-day-tabs button.active {
+  color: #ff3b1f;
+  border-color: #ff3b1f;
+}
+
+.forma-day-tabs strong {
+  display: block;
+  font-size: 15px;
+  font-weight: 950;
+}
+
+.forma-day-tabs span {
+  display: block;
+  margin-top: 5px;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.forma-routine-content {
+  margin-top: 14px;
+  padding-bottom: 90px;
+}
+
+.forma-section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+
+.forma-section-heading span {
+  color: #ff3b1f;
+  font-size: 11px;
+  font-weight: 950;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+}
+
+.forma-section-heading h2 {
+  margin: 6px 0 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 32px;
+  letter-spacing: -0.06em;
+}
+
+.forma-section-heading > strong {
+  color: #7c756d;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.forma-exercise-list {
+  display: grid;
+  gap: 12px;
+}
+
+.forma-exercise-card {
+  display: grid;
+  grid-template-columns: 58px 1fr;
+  gap: 14px;
+  border: 1px solid rgba(17, 17, 17, 0.08);
+  border-radius: 22px;
+  background: rgba(255, 250, 242, 0.78);
+  padding: 14px;
+  box-shadow: 0 10px 30px rgba(17, 17, 17, 0.06);
+}
+
+.forma-exercise-card.completed {
+  border-color: rgba(22, 163, 74, 0.22);
+  background: rgba(236, 253, 245, 0.72);
+}
+
+.forma-exercise-number {
+  width: 58px;
+  height: 58px;
+  border-radius: 18px;
+  background: #111111;
+  color: #ffffff;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 28px;
+  font-weight: 900;
+}
+
+.forma-exercise-number img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.forma-exercise-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.forma-exercise-title strong {
+  display: block;
+  color: #111111;
+  font-size: 18px;
+  line-height: 1.1;
+}
+
+.forma-exercise-title p {
+  margin: 6px 0 0;
+  color: #7c756d;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.forma-done-pill,
+.forma-open-progress {
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+}
+
+.forma-done-pill {
+  background: #111111;
+  color: #ffffff;
+  font-weight: 950;
+}
+
+.forma-open-progress {
+  background: #f0e7dc;
+  color: #111111;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.forma-muscle-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 10px;
+}
+
+.forma-muscle-row span {
+  border-radius: 999px;
+  background: #eee4d8;
+  color: #554e47;
+  padding: 5px 9px;
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.forma-exercise-actions {
+  margin-top: 13px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.forma-exercise-actions a {
+  color: #ff3b1f;
+  font-size: 13px;
+  font-weight: 950;
+  text-decoration: none;
+}
+
+.forma-exercise-actions button {
+  border: none;
+  border-radius: 999px;
+  background: #111111;
+  color: #ffffff;
+  padding: 9px 13px;
+  font-size: 12px;
+  font-weight: 950;
+  cursor: pointer;
+}
+
+.forma-exercise-actions button:disabled {
+  background: #16a34a;
+  cursor: not-allowed;
+}
+
+.forma-coach-card {
+  margin-top: 16px;
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 12px;
+  border: 1px solid rgba(255, 59, 31, 0.22);
+  border-radius: 22px;
+  background: rgba(255, 59, 31, 0.08);
+  padding: 16px;
+}
+
+.forma-coach-card > div:first-child {
+  width: 48px;
+  height: 48px;
+  border-radius: 17px;
+  background: #111111;
+  display: grid;
+  place-items: center;
+}
+
+.forma-coach-card h3 {
+  margin: 0;
+  color: #111111;
+  font-size: 16px;
+}
+
+.forma-coach-card p {
+  margin: 6px 0 0;
+  color: #5f574f;
+  line-height: 1.4;
+}
+
+.forma-bottom-nav {
+  position: fixed;
+  left: 50%;
+  bottom: max(12px, env(safe-area-inset-bottom, 0px));
+  transform: translateX(-50%);
+  z-index: 40;
+  width: min(680px, calc(100% - 28px));
+  border-radius: 999px;
+  background: #111111;
+  padding: 8px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  box-shadow: 0 20px 60px rgba(17, 17, 17, 0.24);
+}
+
+.forma-bottom-nav a,
+.forma-bottom-nav button {
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: #8f8a84;
+  display: grid;
+  gap: 2px;
+  place-items: center;
+  padding: 8px 6px;
+  font-size: 11px;
+  font-weight: 900;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.forma-bottom-nav .active {
+  color: #ff3b1f;
+}
+
+.forma-bottom-nav span {
+  font-size: 17px;
+}
+
+.forma-empty {
+  margin-top: 30px;
+  border-radius: 24px;
+  background: #fffaf2;
+  padding: 22px;
+  text-align: center;
+}
+
+.forma-empty h2 {
+  margin: 0 0 8px;
+  color: #111111;
+}
+
+.forma-empty p {
+  color: #7c756d;
+}
+
+.forma-empty button {
+  border: none;
+  border-radius: 999px;
+  background: #111111;
+  color: #ffffff;
+  padding: 12px 18px;
+  font-weight: 900;
+}
+
+/* === FORMA PROGRESS SHEET === */
+
+.forma-sheet-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(17, 17, 17, 0.38);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.forma-progress-sheet {
+  width: min(720px, 100%);
+  max-height: 92dvh;
+  overflow-y: auto;
+  border-radius: 34px 34px 0 0;
+  background: #f8f1e8;
+  padding: 12px 18px max(22px, env(safe-area-inset-bottom, 0px));
+  box-shadow: 0 -24px 70px rgba(17, 17, 17, 0.3);
+  animation: formaSheetUp 0.22s ease-out;
+}
+
+@keyframes formaSheetUp {
+  from {
+    transform: translateY(26px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.forma-sheet-handle {
+  width: 56px;
+  height: 5px;
+  border-radius: 999px;
+  background: rgba(17, 17, 17, 0.16);
+  margin: 0 auto 14px;
+}
+
+.forma-sheet-header {
+  display: grid;
+  grid-template-columns: 42px 1fr 42px;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.forma-sheet-header button {
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(17, 17, 17, 0.08);
+  border-radius: 999px;
+  background: #fffaf2;
+  color: #111111;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.forma-sheet-header span {
+  color: #7c756d;
+  font-size: 11px;
+  font-weight: 950;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+}
+
+.forma-sheet-header h2 {
+  margin: 10px 0 3px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 36px;
+  line-height: 0.95;
+  letter-spacing: -0.06em;
+}
+
+.forma-sheet-header p {
+  margin: 0;
+  color: #ff3b1f;
+  font-size: 12px;
+  font-weight: 950;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.forma-progress-info {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.forma-progress-info article {
+  border-radius: 16px;
+  background: #eee5da;
+  padding: 13px;
+}
+
+.forma-progress-info span {
+  display: block;
+  color: #7c756d;
+  font-size: 10px;
+  font-weight: 950;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.forma-progress-info strong {
+  display: block;
+  margin-top: 6px;
+  color: #111111;
+  font-size: 15px;
+}
+
+.forma-progress-table {
+  margin-top: 22px;
+  display: grid;
+  gap: 8px;
+}
+
+.forma-progress-row {
+  display: grid;
+  grid-template-columns: 44px 1fr 1fr 28px;
+  gap: 10px;
+  align-items: center;
+  min-height: 58px;
+}
+
+.forma-progress-row.muted {
+  min-height: auto;
+  color: #9a9289;
+  font-size: 10px;
+  font-weight: 950;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.forma-progress-row.active {
+  border-radius: 18px;
+  background: #eee5da;
+  padding: 8px;
+  border: 1px solid rgba(255, 59, 31, 0.16);
+}
+
+.forma-progress-row.active > span:first-child {
+  color: #ff3b1f;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 26px;
+  font-weight: 900;
+  text-align: center;
+}
+
+.forma-counter-mini {
+  height: 48px;
+  border: 1px solid rgba(17, 17, 17, 0.1);
+  border-radius: 14px;
+  background: #fffaf2;
+  display: grid;
+  grid-template-columns: 30px 1fr 30px;
+  align-items: center;
+}
+
+.forma-counter-mini button {
+  border: none;
+  background: transparent;
+  color: #111111;
+  font-size: 19px;
+  font-weight: 950;
+  cursor: pointer;
+}
+
+.forma-counter-mini strong {
+  text-align: center;
+  font-size: 22px;
+  font-family: Georgia, "Times New Roman", serif;
+  color: #111111;
+}
+
+.forma-current-dot {
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  background: #ff3b1f;
+  color: #ffffff;
+  display: grid;
+  place-items: center;
+  font-size: 8px;
+}
+
+.forma-progress-notes {
+  width: 100%;
+  min-height: 86px;
+  margin-top: 14px;
+  border: 1px solid rgba(17, 17, 17, 0.12);
+  border-radius: 18px;
+  background: #fffaf2;
+  color: #111111;
+  padding: 14px;
+  resize: none;
+  outline: none;
+  font-size: 16px;
+}
+
+.forma-progress-notes:focus {
+  border-color: #ff3b1f;
+}
+
+.forma-save-progress {
+  width: 100%;
+  margin-top: 14px;
+  border: none;
+  border-radius: 18px;
+  background: #ff3b1f;
+  color: #ffffff;
+  padding: 17px;
+  font-size: 15px;
+  font-weight: 950;
+  cursor: pointer;
+  box-shadow: 0 18px 40px rgba(255, 59, 31, 0.28);
+}
+
+.forma-save-progress:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+@media (max-width: 420px) {
+  .forma-app-shell {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .forma-hero-card h2 {
+    font-size: 32px;
+  }
+
+  .forma-hero-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .forma-exercise-card {
+    grid-template-columns: 50px 1fr;
+    gap: 12px;
+  }
+
+  .forma-exercise-number {
+    width: 50px;
+    height: 50px;
+    border-radius: 16px;
+    font-size: 24px;
+  }
+
+  .forma-sheet-header {
+    grid-template-columns: 36px 1fr 36px;
+  }
+
+  .forma-sheet-header button {
+    width: 36px;
+    height: 36px;
+  }
+
+  .forma-sheet-header h2 {
+    font-size: 31px;
+  }
+
+  .forma-progress-row {
+    grid-template-columns: 34px 1fr 1fr 24px;
+    gap: 7px;
+  }
+
+  .forma-counter-mini {
+    grid-template-columns: 24px 1fr 24px;
+  }
+
+  .forma-counter-mini strong {
+    font-size: 19px;
+  }
+} 

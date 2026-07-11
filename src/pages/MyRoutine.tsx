@@ -170,55 +170,43 @@ export default function MyRoutine() {
   };
 
   return (
-    <main className="student-dark-page">
-      <section className="student-phone-shell">
-        <header className="student-dark-header">
-          <div className="student-app-brand">
-            <div className="student-app-logo">G</div>
-            <span>GymStart</span>
+    <main className="forma-page">
+      <section className="forma-app-shell">
+        <header className="forma-topbar">
+          <div>
+            <h1>
+              Gym<span>Start.</span>
+            </h1>
+            <p>Mi rutina</p>
           </div>
 
-          <h1>Mi rutina</h1>
-
-          <div className="student-user-menu">
+          <div className="forma-user-menu">
             <button
               type="button"
-              className="student-avatar-button"
+              className="forma-avatar-button"
               onClick={() => setShowUserMenu(!showUserMenu)}
             >
               {user?.name?.charAt(0).toUpperCase() || "U"}
             </button>
 
             {showUserMenu && (
-              <div className="student-user-dropdown">
-                <div className="student-user-info">
+              <div className="forma-user-dropdown">
+                <div>
                   <strong>
                     {user?.name} {user?.lastName}
                   </strong>
                   <span>{user?.email}</span>
                 </div>
 
-                <Link
-                  to="/my-routine"
-                  className="student-menu-link"
-                  onClick={() => setShowUserMenu(false)}
-                >
+                <Link to="/my-routine" onClick={() => setShowUserMenu(false)}>
                   Mi rutina
                 </Link>
 
-                <Link
-                  to="/my-progress"
-                  className="student-menu-link"
-                  onClick={() => setShowUserMenu(false)}
-                >
+                <Link to="/my-progress" onClick={() => setShowUserMenu(false)}>
                   Mi progreso
                 </Link>
 
-                <button
-                  type="button"
-                  onClick={handleLogout}
-                  className="logout-option"
-                >
+                <button type="button" onClick={handleLogout}>
                   Cerrar sesión
                 </button>
               </div>
@@ -227,11 +215,11 @@ export default function MyRoutine() {
         </header>
 
         {loading ? (
-          <div className="student-dark-empty">
+          <div className="forma-empty">
             <p>Cargando tu rutina...</p>
           </div>
         ) : error && !routine ? (
-          <div className="student-dark-empty">
+          <div className="forma-empty">
             <h2>Sin rutina asignada</h2>
             <p>
               Todavía no tenés una rutina cargada. Cuando el profesor te asigne
@@ -244,24 +232,39 @@ export default function MyRoutine() {
           </div>
         ) : routine ? (
           <>
-            <section className="student-routine-hero">
-              <div className="routine-icon">🏋️</div>
+            <section className="forma-hero-card">
+              <span>Rutina asignada</span>
 
               <div>
                 <h2>{routine.name}</h2>
                 <p>
-                  Objetivo:{" "}
-                  <strong>{routine.objective || "No definido"}</strong>
+                  Objetivo: <strong>{routine.objective || "No definido"}</strong>
                 </p>
-                <span>{routine.level}</span>
+              </div>
+
+              <div className="forma-hero-stats">
+                <article>
+                  <small>Nivel</small>
+                  <strong>{routine.level}</strong>
+                </article>
+
+                <article>
+                  <small>Días</small>
+                  <strong>{routine.days.length}</strong>
+                </article>
+
+                <article>
+                  <small>Actual</small>
+                  <strong>{activeDay?.dayName || "-"}</strong>
+                </article>
               </div>
             </section>
 
             {successMessage && (
-              <p className="student-progress-success">{successMessage}</p>
+              <p className="forma-success-message">{successMessage}</p>
             )}
 
-            <nav className="routine-day-tabs">
+            <nav className="forma-day-tabs">
               {routine.days.map((day, index) => (
                 <button
                   type="button"
@@ -278,17 +281,17 @@ export default function MyRoutine() {
             </nav>
 
             {activeDay ? (
-              <section className="student-dark-content">
-                <div className="student-day-heading">
+              <section className="forma-routine-content">
+                <div className="forma-section-heading">
                   <div>
+                    <span>Ejercicios</span>
                     <h2>{activeDay.dayName}</h2>
-                    <p>{activeDay.exercises.length} ejercicios asignados</p>
                   </div>
 
-                  <span>{activeDay.order}</span>
+                  <strong>{activeDay.exercises.length} de rutina</strong>
                 </div>
 
-                <div className="student-dark-exercises">
+                <div className="forma-exercise-list">
                   {activeDay.exercises.map((item) => {
                     const completedToday = isCompletedToday(
                       item.exerciseId._id,
@@ -300,11 +303,11 @@ export default function MyRoutine() {
                         key={`${activeDay.order}-${item.exerciseId._id}`}
                         className={
                           completedToday
-                            ? "student-dark-exercise completed"
-                            : "student-dark-exercise"
+                            ? "forma-exercise-card completed"
+                            : "forma-exercise-card"
                         }
                       >
-                        <div className="exercise-thumb">
+                        <div className="forma-exercise-number">
                           {isValidImageUrl(item.exerciseId.imageUrl) ? (
                             <img
                               src={item.exerciseId.imageUrl}
@@ -318,63 +321,56 @@ export default function MyRoutine() {
                           )}
                         </div>
 
-                        <div className="exercise-dark-info">
-                          <div className="exercise-dark-top">
-                            <h3>{item.exerciseId.name}</h3>
+                        <div className="forma-exercise-main">
+                          <div className="forma-exercise-title">
+                            <div>
+                              <strong>{item.exerciseId.name}</strong>
+                              <p>
+                                {item.sets} series · {item.reps} reps ·{" "}
+                                {item.rest} descanso
+                              </p>
+                            </div>
 
                             {completedToday ? (
-                              <span className="completed-pill">Hecho</span>
+                              <span className="forma-done-pill">✓</span>
                             ) : (
-                              <button type="button">⋮</button>
+                              <button
+                                type="button"
+                                className="forma-open-progress"
+                                onClick={() =>
+                                  openProgressForm(
+                                    activeDay.dayName,
+                                    activeDay.order,
+                                    item
+                                  )
+                                }
+                              >
+                                ›
+                              </button>
                             )}
                           </div>
 
-                          <div className="exercise-dark-stats">
-                            <div>
-                              <span>Series</span>
-                              <strong>{item.sets}</strong>
-                            </div>
-
-                            <div>
-                              <span>Reps</span>
-                              <strong>{item.reps}</strong>
-                            </div>
-
-                            <div>
-                              <span>Descanso</span>
-                              <strong>{item.rest}</strong>
-                            </div>
-                          </div>
-
-                          {item.notes && (
-                            <p className="exercise-dark-note">
-                              Nota: {item.notes}
-                            </p>
-                          )}
-
-                          {item.exerciseId.muscles.length > 0 && (
-                            <div className="exercise-dark-muscles">
+                          {item.exerciseId.muscles?.length > 0 && (
+                            <div className="forma-muscle-row">
                               {item.exerciseId.muscles.map((muscle) => (
                                 <span key={muscle}>{muscle}</span>
                               ))}
                             </div>
                           )}
 
-                          <div className="exercise-action-row">
+                          <div className="forma-exercise-actions">
                             {item.exerciseId.videoUrl && (
                               <a
                                 href={item.exerciseId.videoUrl}
                                 target="_blank"
                                 rel="noreferrer"
-                                className="exercise-video-button"
                               >
-                                ▶ Ver video
+                                Ver video
                               </a>
                             )}
 
                             <button
                               type="button"
-                              className="progress-button"
                               onClick={() =>
                                 openProgressForm(
                                   activeDay.dayName,
@@ -395,9 +391,8 @@ export default function MyRoutine() {
                   })}
                 </div>
 
-                <article className="coach-tip-card">
+                <article className="forma-coach-card">
                   <div>💡</div>
-
                   <div>
                     <h3>Consejo del coach</h3>
                     <p>La constancia de hoy son los resultados de mañana.</p>
@@ -405,73 +400,110 @@ export default function MyRoutine() {
                 </article>
               </section>
             ) : (
-              <div className="student-dark-empty">
+              <div className="forma-empty">
                 <h2>Rutina sin días</h2>
                 <p>Esta rutina todavía no tiene días cargados.</p>
               </div>
             )}
           </>
         ) : null}
+
+        <nav className="forma-bottom-nav">
+          <Link to="/my-routine" className="active">
+            <span>⌂</span>
+            Rutina
+          </Link>
+
+          <Link to="/my-progress">
+            <span>↗</span>
+            Progreso
+          </Link>
+
+          <button type="button" onClick={() => setShowUserMenu(true)}>
+            <span>○</span>
+            Perfil
+          </button>
+        </nav>
       </section>
 
       {selectedExercise && (
-        <section className="progress-bottom-backdrop">
-          <article className="progress-bottom-sheet">
-            <div className="bottom-sheet-handle"></div>
+        <section className="forma-sheet-backdrop">
+          <article className="forma-progress-sheet">
+            <div className="forma-sheet-handle"></div>
 
-            <div className="progress-bottom-header">
+            <header className="forma-sheet-header">
+              <button type="button" onClick={closeProgressForm}>
+                ‹
+              </button>
+
               <div>
+                <span>
+                  {selectedExercise.dayName} · {selectedExercise.item.sets}{" "}
+                  series
+                </span>
                 <h2>{selectedExercise.item.exerciseId.name}</h2>
-
                 <p>
-                  <span>◎</span>
-                  Enfócate en la técnica y no te rindas. 🔥
+                  {selectedExercise.item.exerciseId.muscles?.join(" · ") ||
+                    "Ejercicio"}
                 </p>
               </div>
 
-              <strong>
-                Serie <span>1</span> de {selectedExercise.item.sets}
-              </strong>
-            </div>
+              <button type="button" onClick={closeProgressForm}>
+                ×
+              </button>
+            </header>
 
-            <div className="progress-bottom-controls">
-              <div className="progress-counter-block">
-                <label>Peso (kg)</label>
+            <section className="forma-progress-info">
+              <article>
+                <span>Plan</span>
+                <strong>
+                  {selectedExercise.item.sets} x {selectedExercise.item.reps}
+                </strong>
+              </article>
 
-                <div className="progress-counter">
+              <article>
+                <span>Descanso</span>
+                <strong>{selectedExercise.item.rest}</strong>
+              </article>
+            </section>
+
+            <section className="forma-progress-table">
+              <div className="forma-progress-row muted">
+                <span>Serie</span>
+                <span>Peso (kg)</span>
+                <span>Reps</span>
+                <span></span>
+              </div>
+
+              <div className="forma-progress-row active">
+                <span>1</span>
+
+                <div className="forma-counter-mini">
                   <button type="button" onClick={decreaseWeight}>
                     −
                   </button>
-
                   <strong>{weight || "0"}</strong>
-
                   <button type="button" onClick={increaseWeight}>
                     +
                   </button>
                 </div>
-              </div>
 
-              <div className="progress-control-divider"></div>
-
-              <div className="progress-counter-block">
-                <label>Repeticiones</label>
-
-                <div className="progress-counter">
+                <div className="forma-counter-mini">
                   <button type="button" onClick={decreaseReps}>
                     −
                   </button>
-
                   <strong>{repsDone || "0"}</strong>
-
                   <button type="button" onClick={increaseReps}>
                     +
                   </button>
                 </div>
+
+                <span className="forma-current-dot">●</span>
               </div>
-            </div>
+            </section>
 
             <textarea
-              className="progress-bottom-notes"
+              className="forma-progress-notes"
               placeholder="Agregar nota opcional..."
               value={progressNotes}
               onChange={(event) => setProgressNotes(event.target.value)}
@@ -479,30 +511,11 @@ export default function MyRoutine() {
 
             <button
               type="button"
-              className="save-series-button"
+              className="forma-save-progress"
               onClick={handleSaveProgress}
               disabled={savingProgress}
             >
-              {savingProgress ? "Guardando..." : "Guardar serie"}
-            </button>
-
-            <div className="progress-motivation-card">
-              <div>📈</div>
-
-              <p>
-                Cada repetición te acerca a tu mejor versión.
-                <strong> Seguí así, campeón.</strong>
-              </p>
-
-              <span>💪</span>
-            </div>
-
-            <button
-              type="button"
-              className="close-bottom-sheet"
-              onClick={closeProgressForm}
-            >
-              Cerrar
+              {savingProgress ? "Guardando..." : "Guardar progreso"}
             </button>
           </article>
         </section>
