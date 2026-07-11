@@ -2786,3 +2786,38 @@ a,
     width: fit-content;
   }
 } 
+.student-admin-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.student-admin-actions button {
+  border: none;
+  border-radius: 999px;
+  padding: 8px 11px;
+  font-size: 12px;
+  font-weight: 900;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.edit-student-button {
+  background: #111111;
+  color: #ffffff;
+}
+
+.disable-student-button {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.enable-student-button {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.student-admin-actions button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+} 
