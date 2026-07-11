@@ -21,16 +21,21 @@ interface RoutineFormDay {
   exercises: RoutineFormExercise[];
 }
 
+type RoutineLevel = "principiante" | "intermedio" | "avanzado";
+
 export default function Routines() {
   const [routines, setRoutines] = useState<Routine[]>([]);
   const [exercises, setExercises] = useState<Exercise[]>([]);
 
+  const [editingRoutineId, setEditingRoutineId] = useState<string | null>(null);
+  const [deletingRoutineId, setDeletingRoutineId] = useState<string | null>(
+    null
+  );
+
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [objective, setObjective] = useState("");
-  const [level, setLevel] = useState<
-    "principiante" | "intermedio" | "avanzado"
-  >("principiante");
+  const [level, setLevel] = useState<RoutineLevel>("principiante");
 
   const [dayName, setDayName] = useState("");
   const [days, setDays] = useState<RoutineFormDay[]>([]);
@@ -71,6 +76,69 @@ export default function Routines() {
   useEffect(() => {
     loadData();
   }, []);
+
+  const resetForm = () => {
+    setEditingRoutineId(null);
+    setName("");
+    setDescription("");
+    setObjective("");
+    setLevel("principiante");
+    setDayName("");
+    setDays([]);
+    setSelectedDayId("");
+    setSelectedExerciseId("");
+    setSets(3);
+    setReps("10-12");
+    setRest("60 segundos");
+    setNotes("");
+  };
+
+  const getExerciseId = (exercise: unknown) => {
+    if (typeof exercise === "string") return exercise;
+
+    if (
+      typeof exercise === "object" &&
+      exercise !== null &&
+      "_id" in exercise
+    ) {
+      return String((exercise as Exercise)._id);
+    }
+
+    return "";
+  };
+
+  const getExerciseName = (exercise: unknown) => {
+    if (
+      typeof exercise === "object" &&
+      exercise !== null &&
+      "name" in exercise
+    ) {
+      return String((exercise as Exercise).name);
+    }
+
+    return "Ejercicio";
+  };
+
+  const buildRoutinePayload = () => {
+    return {
+      name,
+      description,
+      objective,
+      level,
+      days: days.map((day) => ({
+        dayName: day.dayName,
+        order: day.order,
+        exercises: day.exercises.map((exercise) => ({
+          exerciseId: exercise.exerciseId,
+          sets: exercise.sets,
+          reps: exercise.reps,
+          rest: exercise.rest,
+          order: exercise.order,
+          notes: exercise.notes,
+        })),
+      })),
+    };
+  };
 
   const handleAddDay = () => {
     setError("");
@@ -131,6 +199,8 @@ export default function Routines() {
       return;
     }
 
+    let exerciseWasAdded = false;
+
     setDays((prevDays) =>
       prevDays.map((day) => {
         if (day.id !== selectedDayId) {
@@ -156,6 +226,8 @@ export default function Routines() {
           notes,
         };
 
+        exerciseWasAdded = true;
+
         return {
           ...day,
           exercises: [...day.exercises, newExercise],
@@ -163,11 +235,13 @@ export default function Routines() {
       })
     );
 
-    setSelectedExerciseId("");
-    setSets(3);
-    setReps("10-12");
-    setRest("60 segundos");
-    setNotes("");
+    if (exerciseWasAdded) {
+      setSelectedExerciseId("");
+      setSets(3);
+      setReps("10-12");
+      setRest("60 segundos");
+      setNotes("");
+    }
   };
 
   const handleRemoveExerciseFromDay = (dayId: string, exerciseId: string) => {
@@ -190,7 +264,7 @@ export default function Routines() {
     );
   };
 
-  const handleCreateRoutine = async (event: FormEvent) => {
+  const handleSubmitRoutine = async (event: FormEvent) => {
     event.preventDefault();
 
     try {
@@ -215,46 +289,104 @@ export default function Routines() {
         return;
       }
 
-      await api.post("/routines", {
-        name,
-        description,
-        objective,
-        level,
-        days: days.map((day) => ({
-          dayName: day.dayName,
-          order: day.order,
-          exercises: day.exercises.map((exercise) => ({
-            exerciseId: exercise.exerciseId,
-            sets: exercise.sets,
-            reps: exercise.reps,
-            rest: exercise.rest,
-            order: exercise.order,
-            notes: exercise.notes,
-          })),
-        })),
-      });
+      const payload = buildRoutinePayload();
 
-      setMessage("Rutina creada correctamente.");
+      if (editingRoutineId) {
+        await api.put(`/routines/${editingRoutineId}`, payload);
+        setMessage("Rutina actualizada correctamente.");
+      } else {
+        await api.post("/routines", payload);
+        setMessage("Rutina creada correctamente.");
+      }
 
-      setName("");
-      setDescription("");
-      setObjective("");
-      setLevel("principiante");
-      setDayName("");
-      setDays([]);
-      setSelectedDayId("");
-      setSelectedExerciseId("");
-      setSets(3);
-      setReps("10-12");
-      setRest("60 segundos");
-      setNotes("");
-
+      resetForm();
       await loadData();
     } catch (error) {
-      console.error("Error al crear rutina", error);
-      setError("No se pudo crear la rutina. Revisá los datos ingresados.");
+      console.error("Error al guardar rutina", error);
+
+      setError(
+        editingRoutineId
+          ? "No se pudo actualizar la rutina. Revisá los datos ingresados."
+          : "No se pudo crear la rutina. Revisá los datos ingresados."
+      );
     } finally {
       setSaving(false);
+    }
+  };
+
+  const handleEditRoutine = (routine: Routine) => {
+    const formDays: RoutineFormDay[] = routine.days.map((day, dayIndex) => ({
+      id: crypto.randomUUID(),
+      dayName: day.dayName,
+      order: day.order || dayIndex + 1,
+      exercises: day.exercises.map((item, exerciseIndex) => {
+        const exerciseId = getExerciseId(item.exerciseId);
+
+        return {
+          exerciseId,
+          exerciseName: getExerciseName(item.exerciseId),
+          sets: item.sets,
+          reps: item.reps,
+          rest: item.rest,
+          order: item.order || exerciseIndex + 1,
+          notes: item.notes || "",
+        };
+      }),
+    }));
+
+    setEditingRoutineId(routine._id);
+    setName(routine.name);
+    setDescription(routine.description || "");
+    setObjective(routine.objective || "");
+    setLevel(routine.level || "principiante");
+    setDays(formDays);
+    setSelectedDayId(formDays[0]?.id || "");
+    setDayName("");
+    setSelectedExerciseId("");
+    setSets(3);
+    setReps("10-12");
+    setRest("60 segundos");
+    setNotes("");
+    setMessage("");
+    setError("");
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
+  const handleCancelEdit = () => {
+    resetForm();
+    setMessage("");
+    setError("");
+  };
+
+  const handleDeleteRoutine = async (routine: Routine) => {
+    const confirmDelete = window.confirm(
+      `¿Seguro que querés eliminar la rutina "${routine.name}"? Si algún alumno la tiene asignada, se le va a quitar.`
+    );
+
+    if (!confirmDelete) return;
+
+    try {
+      setDeletingRoutineId(routine._id);
+      setMessage("");
+      setError("");
+
+      await api.delete(`/routines/${routine._id}`);
+
+      if (editingRoutineId === routine._id) {
+        resetForm();
+      }
+
+      setMessage("Rutina eliminada correctamente.");
+      await loadData();
+    } catch (error) {
+      console.error("Error al eliminar rutina", error);
+      setError("No se pudo eliminar la rutina.");
+    } finally {
+      setDeletingRoutineId(null);
     }
   };
 
@@ -272,9 +404,21 @@ export default function Routines() {
 
         <section className="page-grid">
           <article className="form-card">
-            <h2>Crear rutina</h2>
+            <div className="form-card-header">
+              <h2>{editingRoutineId ? "Editar rutina" : "Crear rutina"}</h2>
 
-            <form onSubmit={handleCreateRoutine} className="student-form">
+              {editingRoutineId && (
+                <button
+                  type="button"
+                  className="secondary-action-button"
+                  onClick={handleCancelEdit}
+                >
+                  Cancelar
+                </button>
+              )}
+            </div>
+
+            <form onSubmit={handleSubmitRoutine} className="student-form">
               <label>
                 Nombre
                 <input
@@ -282,6 +426,7 @@ export default function Routines() {
                   placeholder="Rutina Principiante"
                   value={name}
                   onChange={(event) => setName(event.target.value)}
+                  required
                 />
               </label>
 
@@ -309,12 +454,7 @@ export default function Routines() {
                 <select
                   value={level}
                   onChange={(event) =>
-                    setLevel(
-                      event.target.value as
-                        | "principiante"
-                        | "intermedio"
-                        | "avanzado"
-                    )
+                    setLevel(event.target.value as RoutineLevel)
                   }
                 >
                   <option value="principiante">Principiante</option>
@@ -417,77 +557,77 @@ export default function Routines() {
                     Notas
                     <input
                       type="text"
-                      placeholder="Controlar la técnica"
+                      placeholder="Opcional"
                       value={notes}
                       onChange={(event) => setNotes(event.target.value)}
                     />
                   </label>
 
                   <button type="button" onClick={handleAddExerciseToDay}>
-                    Agregar ejercicio al día
+                    Agregar ejercicio
                   </button>
                 </div>
               )}
 
               {days.length > 0 && (
-                <div className="selected-exercises">
-                  <h3>Días de la rutina</h3>
+                <div className="routine-preview">
+                  <h3>Días cargados</h3>
 
                   {days.map((day) => (
-                    <div key={day.id} className="routine-day-box">
+                    <article key={day.id} className="routine-day-card">
                       <div className="routine-day-header">
-                        <strong>
-                          {day.order}. {day.dayName}
-                        </strong>
+                        <div>
+                          <strong>
+                            Día {day.order}: {day.dayName}
+                          </strong>
+                          <span>{day.exercises.length} ejercicios</span>
+                        </div>
 
                         <button
                           type="button"
                           onClick={() => handleRemoveDay(day.id)}
                         >
-                          Quitar día
+                          Eliminar día
                         </button>
                       </div>
 
                       {day.exercises.length === 0 ? (
-                        <p className="muted-text">
-                          Este día todavía no tiene ejercicios.
+                        <p className="routine-empty-day">
+                          Todavía no agregaste ejercicios a este día.
                         </p>
                       ) : (
-                        day.exercises.map((exercise) => (
-                          <div
-                            key={exercise.exerciseId}
-                            className="selected-exercise"
-                          >
-                            <div>
-                              <strong>
-                                {exercise.order}. {exercise.exerciseName}
-                              </strong>
-
-                              <p>
-                                {exercise.sets} series · {exercise.reps} reps ·{" "}
-                                {exercise.rest}
-                              </p>
-
-                              {exercise.notes && (
-                                <p>Nota: {exercise.notes}</p>
-                              )}
-                            </div>
-
-                            <button
-                              type="button"
-                              onClick={() =>
-                                handleRemoveExerciseFromDay(
-                                  day.id,
-                                  exercise.exerciseId
-                                )
-                              }
+                        <div className="routine-exercise-list">
+                          {day.exercises.map((exercise) => (
+                            <div
+                              key={`${day.id}-${exercise.exerciseId}`}
+                              className="routine-exercise-item"
                             >
-                              Quitar
-                            </button>
-                          </div>
-                        ))
+                              <div>
+                                <strong>
+                                  {exercise.order}. {exercise.exerciseName}
+                                </strong>
+                                <span>
+                                  {exercise.sets} series · {exercise.reps} reps
+                                  · {exercise.rest}
+                                </span>
+                              </div>
+
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  handleRemoveExerciseFromDay(
+                                    day.id,
+                                    exercise.exerciseId
+                                  )
+                                }
+                              >
+                                Quitar
+                              </button>
+                            </div>
+                          ))}
+                        </div>
                       )}
-                    </div>
+                    </article>
                   ))}
                 </div>
               )}
@@ -496,7 +636,11 @@ export default function Routines() {
               {error && <p className="error-message">{error}</p>}
 
               <button type="submit" disabled={saving}>
-                {saving ? "Guardando..." : "Crear rutina"}
+                {saving
+                  ? "Guardando..."
+                  : editingRoutineId
+                    ? "Guardar cambios"
+                    : "Crear rutina"}
               </button>
             </form>
           </article>
@@ -504,76 +648,69 @@ export default function Routines() {
           <article className="table-card">
             <div className="panel-header">
               <h2>Rutinas creadas</h2>
-              <button onClick={loadData}>Actualizar</button>
+              <button type="button" onClick={loadData}>
+                Actualizar
+              </button>
             </div>
 
             {loading ? (
               <p className="loading-text">Cargando rutinas...</p>
             ) : routines.length === 0 ? (
               <div className="empty-state">
-                <h3>No hay rutinas creadas</h3>
+                <h3>No hay rutinas cargadas</h3>
                 <p>Cuando crees rutinas, van a aparecer en esta sección.</p>
               </div>
             ) : (
               <div className="routine-list">
-                {routines.map((routine) => {
-                  const routineDays = routine.days || [];
+                {routines.map((routine) => (
+                  <article key={routine._id} className="routine-card">
+                    <div className="routine-card-header">
+                      <div>
+                        <h3>{routine.name}</h3>
+                        <p>{routine.description || "Sin descripción"}</p>
+                      </div>
 
-                  return (
-                    <article key={routine._id} className="routine-card">
-                      <div className="routine-card-header">
-                        <div>
-                          <h3>{routine.name}</h3>
-                          <p>{routine.description || "Sin descripción"}</p>
+                      <span className="difficulty-pill">{routine.level}</span>
+                    </div>
+
+                    <div className="routine-meta">
+                      <span>{routine.days.length} días</span>
+                      <span>{routine.objective || "Sin objetivo"}</span>
+                    </div>
+
+                    <div className="routine-days-summary">
+                      {routine.days.map((day) => (
+                        <div key={`${routine._id}-${day.order}-${day.dayName}`}>
+                          <strong>
+                            Día {day.order}: {day.dayName}
+                          </strong>
+                          <span>{day.exercises.length} ejercicios</span>
                         </div>
+                      ))}
+                    </div>
 
-                        <span className="difficulty-pill">
-                          {routine.level}
-                        </span>
-                      </div>
+                    <div className="routine-admin-actions">
+                      <button
+                        type="button"
+                        className="edit-routine-button"
+                        onClick={() => handleEditRoutine(routine)}
+                      >
+                        Editar
+                      </button>
 
-                      <div className="routine-meta">
-                        <span>
-                          Objetivo:{" "}
-                          <strong>{routine.objective || "No definido"}</strong>
-                        </span>
-
-                        <span>
-                          Días: <strong>{routineDays.length}</strong>
-                        </span>
-                      </div>
-
-                      <div className="routine-exercise-list">
-                        {routineDays.map((day) => (
-                          <div
-                            key={`${routine._id}-${day.order}`}
-                            className="routine-day-view"
-                          >
-                            <h4 className="day-title">
-                              {day.order}. {day.dayName}
-                            </h4>
-
-                            {day.exercises.map((item) => (
-                              <div
-                                key={`${routine._id}-${day.order}-${item.exerciseId._id}`}
-                                className="routine-exercise-row"
-                              >
-                                <strong>
-                                  {item.order}. {item.exerciseId.name}
-                                </strong>
-
-                                <span>
-                                  {item.sets} series · {item.reps} reps ·{" "}
-                                  {item.rest}
-                                </span>
-                              </div>
-                            ))}
-                          </div>
-                        ))}
-                      </div>
-                    </article>
-                  );
-                })}
+                      <button
+                        type="button"
+                        className="delete-routine-button"
+                        onClick={() => handleDeleteRoutine(routine)}
+                        disabled={deletingRoutineId === routine._id}
+                      >
+                        {deletingRoutineId === routine._id
+                          ? "Eliminando..."
+                          : "Eliminar"}
+                      </button>
+                    </div>
+                  </article>
+                ))}
               </div>
             )}
           </article>

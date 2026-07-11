@@ -2821,3 +2821,75 @@ a,
   opacity: 0.7;
   cursor: not-allowed;
 } 
+/* === ROUTINE ADMIN ACTIONS === */
+
+.routine-admin-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+
+.routine-admin-actions button {
+  border: none;
+  border-radius: 999px;
+  padding: 9px 13px;
+  font-size: 12px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.edit-routine-button {
+  background: #111111;
+  color: #ffffff;
+}
+
+.delete-routine-button {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.delete-routine-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.routine-day-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.routine-day-header button,
+.routine-exercise-item button {
+  border: none;
+  border-radius: 999px;
+  background: #eee5da;
+  color: #5f574f;
+  padding: 8px 11px;
+  font-size: 12px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.routine-empty-day {
+  margin: 12px 0 0;
+  color: #7c756d;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+@media (max-width: 620px) {
+  .routine-day-header {
+    flex-direction: column;
+  }
+
+  .routine-admin-actions {
+    flex-direction: column;
+  }
+
+  .routine-admin-actions button {
+    width: 100%;
+  }
+} 
