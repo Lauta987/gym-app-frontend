@@ -3,26 +3,34 @@ import type { FormEvent } from "react";
 import api from "../api/api";
 import AdminLayout from "../components/AdminLayout";
 import type { Exercise } from "../types";
+import { isValidImageUrl } from "../utils/image";
+
+type Difficulty = "principiante" | "intermedio" | "avanzado";
 
 export default function Exercises() {
   const [exercises, setExercises] = useState<Exercise[]>([]);
+
+  const [editingExerciseId, setEditingExerciseId] = useState<string | null>(
+    null
+  );
+
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [videoUrl, setVideoUrl] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [muscles, setMuscles] = useState("");
-  const [difficulty, setDifficulty] = useState<
-    "principiante" | "intermedio" | "avanzado"
-  >("principiante");
+  const [difficulty, setDifficulty] = useState<Difficulty>("principiante");
 
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
 
   const loadExercises = async () => {
     try {
       setLoading(true);
+      setError("");
 
       const response = await api.get<{ exercises: Exercise[] }>("/exercises");
 
@@ -39,7 +47,33 @@ export default function Exercises() {
     loadExercises();
   }, []);
 
-  const handleCreateExercise = async (event: FormEvent) => {
+  const resetForm = () => {
+    setEditingExerciseId(null);
+    setName("");
+    setDescription("");
+    setVideoUrl("");
+    setImageUrl("");
+    setMuscles("");
+    setDifficulty("principiante");
+  };
+
+  const buildExercisePayload = () => {
+    const musclesArray = muscles
+      .split(",")
+      .map((muscle) => muscle.trim())
+      .filter((muscle) => muscle.length > 0);
+
+    return {
+      name,
+      description,
+      videoUrl,
+      imageUrl,
+      muscles: musclesArray,
+      difficulty,
+    };
+  };
+
+  const handleSubmitExercise = async (event: FormEvent) => {
     event.preventDefault();
 
     try {
@@ -47,33 +81,81 @@ export default function Exercises() {
       setError("");
       setMessage("");
 
-      const musclesArray = muscles
-        .split(",")
-        .map((muscle) => muscle.trim())
-        .filter((muscle) => muscle.length > 0);
+      const payload = buildExercisePayload();
 
-      await api.post("/exercises", {
-        name,
-        description,
-        videoUrl,
-        imageUrl,
-        muscles: musclesArray,
-        difficulty,
-      });
+      if (editingExerciseId) {
+        await api.put(`/exercises/${editingExerciseId}`, payload);
+        setMessage("Ejercicio actualizado correctamente.");
+      } else {
+        await api.post("/exercises", payload);
+        setMessage("Ejercicio creado correctamente.");
+      }
 
-      setMessage("Ejercicio creado correctamente.");
-      setName("");
-      setDescription("");
-      setVideoUrl("");
-      setImageUrl("");
-      setMuscles("");
-      setDifficulty("principiante");
-
+      resetForm();
       await loadExercises();
-    } catch {
-      setError("No se pudo crear el ejercicio. Revisá los datos ingresados.");
+    } catch (error) {
+      console.error("Error al guardar ejercicio", error);
+
+      setError(
+        editingExerciseId
+          ? "No se pudo actualizar el ejercicio. Revisá los datos ingresados."
+          : "No se pudo crear el ejercicio. Revisá los datos ingresados."
+      );
     } finally {
       setSaving(false);
+    }
+  };
+
+  const handleEditExercise = (exercise: Exercise) => {
+    setEditingExerciseId(exercise._id);
+    setName(exercise.name);
+    setDescription(exercise.description || "");
+    setVideoUrl(exercise.videoUrl || "");
+    setImageUrl(exercise.imageUrl || "");
+    setMuscles(exercise.muscles.join(", "));
+    setDifficulty(exercise.difficulty);
+    setMessage("");
+    setError("");
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
+  const handleCancelEdit = () => {
+    resetForm();
+    setMessage("");
+    setError("");
+  };
+
+  const handleDeleteExercise = async (exercise: Exercise) => {
+    const confirmDelete = window.confirm(
+      `¿Seguro que querés eliminar el ejercicio "${exercise.name}"?`
+    );
+
+    if (!confirmDelete) return;
+
+    try {
+      setDeletingId(exercise._id);
+      setError("");
+      setMessage("");
+
+      await api.delete(`/exercises/${exercise._id}`);
+
+      if (editingExerciseId === exercise._id) {
+        resetForm();
+      }
+
+      setMessage("Ejercicio eliminado correctamente.");
+      await loadExercises();
+    } catch (error) {
+      console.error("Error al eliminar ejercicio", error);
+      setError(
+        "No se pudo eliminar el ejercicio. Puede estar usado en alguna rutina."
+      );
+    } finally {
+      setDeletingId(null);
     }
   };
 
@@ -91,16 +173,29 @@ export default function Exercises() {
 
         <section className="page-grid">
           <article className="form-card">
-            <h2>Crear ejercicio</h2>
+            <div className="form-card-header">
+              <h2>{editingExerciseId ? "Editar ejercicio" : "Crear ejercicio"}</h2>
 
-            <form onSubmit={handleCreateExercise} className="student-form">
+              {editingExerciseId && (
+                <button
+                  type="button"
+                  className="secondary-action-button"
+                  onClick={handleCancelEdit}
+                >
+                  Cancelar
+                </button>
+              )}
+            </div>
+
+            <form onSubmit={handleSubmitExercise} className="student-form">
               <label>
                 Nombre
                 <input
                   type="text"
                   placeholder="Press de banca"
                   value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  onChange={(event) => setName(event.target.value)}
+                  required
                 />
               </label>
 
@@ -109,7 +204,8 @@ export default function Exercises() {
                 <textarea
                   placeholder="Explicación breve del ejercicio..."
                   value={description}
-                  onChange={(e) => setDescription(e.target.value)}
+                  onChange={(event) => setDescription(event.target.value)}
+                  required
                 />
               </label>
 
@@ -119,7 +215,7 @@ export default function Exercises() {
                   type="text"
                   placeholder="https://youtube.com/..."
                   value={videoUrl}
-                  onChange={(e) => setVideoUrl(e.target.value)}
+                  onChange={(event) => setVideoUrl(event.target.value)}
                 />
               </label>
 
@@ -129,7 +225,7 @@ export default function Exercises() {
                   type="text"
                   placeholder="https://imagen.com/ejercicio.jpg"
                   value={imageUrl}
-                  onChange={(e) => setImageUrl(e.target.value)}
+                  onChange={(event) => setImageUrl(event.target.value)}
                 />
               </label>
 
@@ -139,7 +235,7 @@ export default function Exercises() {
                   type="text"
                   placeholder="Pecho, Tríceps, Hombros"
                   value={muscles}
-                  onChange={(e) => setMuscles(e.target.value)}
+                  onChange={(event) => setMuscles(event.target.value)}
                 />
               </label>
 
@@ -147,13 +243,8 @@ export default function Exercises() {
                 Dificultad
                 <select
                   value={difficulty}
-                  onChange={(e) =>
-                    setDifficulty(
-                      e.target.value as
-                        | "principiante"
-                        | "intermedio"
-                        | "avanzado"
-                    )
+                  onChange={(event) =>
+                    setDifficulty(event.target.value as Difficulty)
                   }
                 >
                   <option value="principiante">Principiante</option>
@@ -166,7 +257,11 @@ export default function Exercises() {
               {error && <p className="error-message">{error}</p>}
 
               <button type="submit" disabled={saving}>
-                {saving ? "Guardando..." : "Crear ejercicio"}
+                {saving
+                  ? "Guardando..."
+                  : editingExerciseId
+                    ? "Guardar cambios"
+                    : "Crear ejercicio"}
               </button>
             </form>
           </article>
@@ -174,7 +269,9 @@ export default function Exercises() {
           <article className="table-card">
             <div className="panel-header">
               <h2>Biblioteca de ejercicios</h2>
-              <button onClick={loadExercises}>Actualizar</button>
+              <button type="button" onClick={loadExercises}>
+                Actualizar
+              </button>
             </div>
 
             {loading ? (
@@ -191,7 +288,7 @@ export default function Exercises() {
                 {exercises.map((exercise) => (
                   <article key={exercise._id} className="exercise-card">
                     <div className="exercise-image">
-                      {exercise.imageUrl ? (
+                      {isValidImageUrl(exercise.imageUrl) ? (
                         <img src={exercise.imageUrl} alt={exercise.name} />
                       ) : (
                         <span>Sin imagen</span>
@@ -199,14 +296,48 @@ export default function Exercises() {
                     </div>
 
                     <div className="exercise-info">
-                      <div>
-                        <h3>{exercise.name}</h3>
-                        <span className="difficulty-pill">
-                          {exercise.difficulty}
-                        </span>
+                      <div className="exercise-info-header">
+                        <div>
+                          <h3>{exercise.name}</h3>
+                          <span className="difficulty-pill">
+                            {exercise.difficulty}
+                          </span>
+                        </div>
+
+                        <div className="exercise-admin-actions">
+                          <button
+                            type="button"
+                            className="edit-exercise-button"
+                            onClick={() => handleEditExercise(exercise)}
+                          >
+                            Editar
+                          </button>
+
+                          <button
+                            type="button"
+                            className="delete-exercise-button"
+                            onClick={() => handleDeleteExercise(exercise)}
+                            disabled={deletingId === exercise._id}
+                          >
+                            {deletingId === exercise._id
+                              ? "Eliminando..."
+                              : "Eliminar"}
+                          </button>
+                        </div>
                       </div>
 
                       <p>{exercise.description}</p>
+
+                      {exercise.videoUrl && (
+                        <a
+                          href={exercise.videoUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="exercise-admin-video-link"
+                        >
+                          Ver video
+                        </a>
+                      )}
 
                       <div className="muscle-list">
                         {exercise.muscles.map((muscle) => (

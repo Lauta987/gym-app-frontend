@@ -2230,3 +2230,79 @@ a,
     font-size: 40px;
   }
 } 
+.form-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.form-card-header h2 {
+  margin: 0;
+}
+
+.secondary-action-button {
+  border: 1px solid #d4d4d8;
+  border-radius: 12px;
+  background: #ffffff;
+  color: #52525b;
+  padding: 9px 12px;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.exercise-info-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.exercise-admin-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.exercise-admin-actions button {
+  border: none;
+  border-radius: 999px;
+  padding: 8px 11px;
+  font-size: 12px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.edit-exercise-button {
+  background: #111111;
+  color: #ffffff;
+}
+
+.delete-exercise-button {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.delete-exercise-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.exercise-admin-video-link {
+  color: #dc2626;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+@media (max-width: 700px) {
+  .exercise-info-header {
+    flex-direction: column;
+  }
+
+  .exercise-admin-actions {
+    justify-content: flex-start;
+  }
+}
