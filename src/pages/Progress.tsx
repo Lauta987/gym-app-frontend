@@ -157,8 +157,7 @@ export default function Progress() {
     return Math.max(best, group.bestWeight);
   }, 0);
 
-  const totalStudentsWithProgress = selectedStudentId && workoutLogs.length > 0 ? 1 : 0;
-
+ 
   return (
     <AdminLayout>
       <section className="dashboard-content">
