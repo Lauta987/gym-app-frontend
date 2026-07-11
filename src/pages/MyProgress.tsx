@@ -61,8 +61,6 @@ export default function MyProgress() {
 
     const numbers = value.match(/\d+/g)?.map(Number) || [];
 
-    if (numbers.length === 0) return 0;
-
     return numbers.reduce((total, number) => total + number, 0);
   };
 
@@ -156,9 +154,7 @@ export default function MyProgress() {
 
   const totalCompleted = workoutLogs.length;
 
-  const totalWeightLogs = workoutLogs.filter(
-    (log) => log.weight !== undefined && log.weight !== null
-  ).length;
+  const totalExercises = exerciseGroups.length;
 
   const lastLog = sortedWorkoutLogs[0];
 
@@ -192,55 +188,43 @@ export default function MyProgress() {
     : 0;
 
   return (
-    <main className="student-dark-page">
-      <section className="student-phone-shell">
-        <header className="student-dark-header">
-          <div className="student-app-brand">
-            <div className="student-app-logo">G</div>
-            <span>GymStart</span>
+    <main className="forma-page">
+      <section className="forma-app-shell">
+        <header className="forma-topbar">
+          <div>
+            <h1>
+              Gym<span>Start.</span>
+            </h1>
+            <p>Mi progreso</p>
           </div>
 
-          <h1>Mi progreso</h1>
-
-          <div className="student-user-menu">
+          <div className="forma-user-menu">
             <button
               type="button"
-              className="student-avatar-button"
+              className="forma-avatar-button"
               onClick={() => setShowUserMenu(!showUserMenu)}
             >
               {user?.name?.charAt(0).toUpperCase() || "U"}
             </button>
 
             {showUserMenu && (
-              <div className="student-user-dropdown">
-                <div className="student-user-info">
+              <div className="forma-user-dropdown">
+                <div>
                   <strong>
                     {user?.name} {user?.lastName}
                   </strong>
                   <span>{user?.email}</span>
                 </div>
 
-                <Link
-                  to="/my-routine"
-                  className="student-menu-link"
-                  onClick={() => setShowUserMenu(false)}
-                >
+                <Link to="/my-routine" onClick={() => setShowUserMenu(false)}>
                   Mi rutina
                 </Link>
 
-                <Link
-                  to="/my-progress"
-                  className="student-menu-link"
-                  onClick={() => setShowUserMenu(false)}
-                >
+                <Link to="/my-progress" onClick={() => setShowUserMenu(false)}>
                   Mi progreso
                 </Link>
 
-                <button
-                  type="button"
-                  onClick={handleLogout}
-                  className="logout-option"
-                >
+                <button type="button" onClick={handleLogout}>
                   Cerrar sesión
                 </button>
               </div>
@@ -248,50 +232,50 @@ export default function MyProgress() {
           </div>
         </header>
 
-        <section className="visual-progress-hero">
+        <section className="forma-progress-hero-card">
+          <span>Seguimiento personal</span>
+
           <div>
-            <span>Seguimiento personal</span>
-            <h2>Tu progreso</h2>
+            <h2>
+              Tu evolución
+              <br />
+              de entrenamiento
+            </h2>
+
             <p>
-              Mirá la evolución de tus ejercicios, pesos usados y repeticiones.
+              Revisá tus ejercicios, pesos usados y repeticiones registradas.
             </p>
           </div>
 
-          <div className="visual-progress-icon">📈</div>
-        </section>
+          <div className="forma-progress-hero-stats">
+            <article>
+              <small>Registros</small>
+              <strong>{totalCompleted}</strong>
+            </article>
 
-        <section className="visual-progress-summary">
-          <article>
-            <span>Completados</span>
-            <strong>{totalCompleted}</strong>
-            <p>ejercicios</p>
-          </article>
+            <article>
+              <small>Ejercicios</small>
+              <strong>{totalExercises}</strong>
+            </article>
 
-          <article>
-            <span>Con peso</span>
-            <strong>{totalWeightLogs}</strong>
-            <p>registros</p>
-          </article>
-
-          <article>
-            <span>Último</span>
-            <strong>{lastLog ? formatShortDate(lastLog.completedAt) : "-"}</strong>
-            <p>entrenamiento</p>
-          </article>
+            <article>
+              <small>Último</small>
+              <strong>{lastLog ? formatShortDate(lastLog.completedAt) : "-"}</strong>
+            </article>
+          </div>
         </section>
 
         {loading ? (
-          <div className="student-dark-empty">
+          <div className="forma-empty">
             <p>Cargando tu progreso...</p>
           </div>
         ) : error ? (
-          <div className="student-dark-empty">
+          <div className="forma-empty">
             <h2>Error</h2>
             <p>{error}</p>
           </div>
         ) : workoutLogs.length === 0 ? (
-          <div className="student-progress-empty">
-            <div>🏋️</div>
+          <div className="forma-empty">
             <h2>Sin progreso todavía</h2>
             <p>
               Cuando registres ejercicios desde tu rutina, van a aparecer acá.
@@ -303,7 +287,7 @@ export default function MyProgress() {
           </div>
         ) : (
           <>
-            <section className="visual-exercise-selector">
+            <section className="forma-progress-selector">
               <label>Ejercicio</label>
 
               <select
@@ -319,10 +303,18 @@ export default function MyProgress() {
             </section>
 
             {selectedExercise && (
-              <section className="visual-evolution-panel">
-                <div className="visual-stat-grid">
-                  <article className="visual-stat-card">
-                    <div>🏋️</div>
+              <section className="forma-progress-content">
+                <div className="forma-section-heading">
+                  <div>
+                    <span>Evolución</span>
+                    <h2>{selectedExercise.exerciseName}</h2>
+                  </div>
+
+                  <strong>{selectedExercise.logs.length} registros</strong>
+                </div>
+
+                <div className="forma-progress-stat-grid">
+                  <article>
                     <span>Último peso</span>
                     <strong>
                       {selectedExercise.latestWeight
@@ -332,8 +324,7 @@ export default function MyProgress() {
                     <p>kg</p>
                   </article>
 
-                  <article className="visual-stat-card featured">
-                    <div>🏆</div>
+                  <article className="highlight">
                     <span>Mejor peso</span>
                     <strong>
                       {selectedExercise.bestWeight
@@ -343,8 +334,7 @@ export default function MyProgress() {
                     <p>kg</p>
                   </article>
 
-                  <article className="visual-stat-card">
-                    <div>🔥</div>
+                  <article>
                     <span>Últimas reps</span>
                     <strong>
                       {selectedExercise.latestReps
@@ -354,8 +344,7 @@ export default function MyProgress() {
                     <p>reps</p>
                   </article>
 
-                  <article className="visual-stat-card featured">
-                    <div>⭐</div>
+                  <article className="highlight">
                     <span>Mejor reps</span>
                     <strong>
                       {selectedExercise.bestReps
@@ -366,13 +355,13 @@ export default function MyProgress() {
                   </article>
                 </div>
 
-                <div className="visual-chart-switch">
+                <div className="forma-chart-switch">
                   <button
                     type="button"
                     className={chartMode === "weight" ? "active" : ""}
                     onClick={() => setChartMode("weight")}
                   >
-                    Peso (kg)
+                    Peso
                   </button>
 
                   <button
@@ -384,53 +373,32 @@ export default function MyProgress() {
                   </button>
                 </div>
 
-                <article className="visual-chart-card">
-                  <div className="visual-chart-header">
+                <article className="forma-chart-card">
+                  <div className="forma-chart-header">
                     <div>
                       <span>
                         {chartMode === "weight"
                           ? "Evolución de peso"
-                          : "Evolución de repeticiones"}
+                          : "Evolución de reps"}
                       </span>
 
-                      <h3>{selectedExercise.exerciseName}</h3>
+                      <h3>
+                        {chartMaxValue || "-"}{" "}
+                        {chartMode === "weight" ? "kg" : "reps"}
+                      </h3>
                     </div>
 
-                    <strong>
-                      {chartMaxValue || "-"}{" "}
-                      {chartMode === "weight" ? "kg" : "reps"}
-                    </strong>
+                    <strong>{selectedExercise.logs.length}</strong>
                   </div>
 
-                  <svg viewBox="0 0 300 120" className="visual-svg-chart">
-                    <defs>
-                      <linearGradient
-                        id="progressGradient"
-                        x1="0"
-                        y1="0"
-                        x2="0"
-                        y2="1"
-                      >
-                        <stop
-                          offset="0%"
-                          stopColor="#ef4444"
-                          stopOpacity="0.5"
-                        />
-                        <stop
-                          offset="100%"
-                          stopColor="#ef4444"
-                          stopOpacity="0"
-                        />
-                      </linearGradient>
-                    </defs>
-
+                  <svg viewBox="0 0 300 120" className="forma-svg-chart">
                     <polyline
-                      className="chart-line-shadow"
+                      className="forma-chart-shadow"
                       points={buildChartPoints(selectedExercise.logs)}
                     />
 
                     <polyline
-                      className="chart-line"
+                      className="forma-chart-line"
                       points={buildChartPoints(selectedExercise.logs)}
                     />
 
@@ -455,13 +423,13 @@ export default function MyProgress() {
                           cx={x}
                           cy={y}
                           r="4"
-                          className="chart-dot"
+                          className="forma-chart-dot"
                         />
                       );
                     })}
                   </svg>
 
-                  <div className="visual-chart-dates">
+                  <div className="forma-chart-dates">
                     {selectedExercise.logs.slice(-4).map((log) => (
                       <span key={log._id}>
                         {formatShortDate(log.completedAt)}
@@ -470,25 +438,25 @@ export default function MyProgress() {
                   </div>
                 </article>
 
-                <section className="visual-history-section">
-                  <div className="visual-history-header">
+                <section className="forma-history-section">
+                  <div className="forma-history-heading">
                     <div>
-                      <span>Historial reciente</span>
-                      <h3>Registros del ejercicio</h3>
+                      <span>Historial</span>
+                      <h3>Registros recientes</h3>
                     </div>
-
-                    <strong>{selectedExercise.logs.length}</strong>
                   </div>
 
-                  <div className="visual-history-list">
+                  <div className="forma-history-list">
                     {selectedExercise.logs
                       .slice()
                       .reverse()
                       .map((log) => (
-                        <article key={log._id} className="visual-history-card">
-                          <div className="history-icon">🏋️</div>
+                        <article key={log._id} className="forma-history-card">
+                          <div className="forma-history-number">
+                            {formatShortDate(log.completedAt)}
+                          </div>
 
-                          <div>
+                          <div className="forma-history-main">
                             <strong>{formatDate(log.completedAt)}</strong>
                             <span>{formatHour(log.completedAt)}</span>
                           </div>
@@ -510,6 +478,23 @@ export default function MyProgress() {
             )}
           </>
         )}
+
+        <nav className="forma-bottom-nav">
+          <Link to="/my-routine">
+            <span>⌂</span>
+            Rutina
+          </Link>
+
+          <Link to="/my-progress" className="active">
+            <span>↗</span>
+            Progreso
+          </Link>
+
+          <button type="button" onClick={() => setShowUserMenu(true)}>
+            <span>○</span>
+            Perfil
+          </button>
+        </nav>
       </section>
     </main>
   );
