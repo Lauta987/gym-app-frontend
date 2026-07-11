@@ -5,8 +5,49 @@ interface AdminLayoutProps {
   children: ReactNode;
 }
 
+const adminLinks = [
+  {
+    to: "/dashboard",
+    label: "Dashboard",
+    icon: "⌂",
+  },
+  {
+    to: "/students",
+    label: "Alumnos",
+    icon: "○",
+  },
+  {
+    to: "/routines",
+    label: "Rutinas",
+    icon: "▣",
+  },
+  {
+    to: "/exercises",
+    label: "Ejercicios",
+    icon: "⌁",
+  },
+  {
+    to: "/assign-routine",
+    label: "Asignar rutina",
+    icon: "✓",
+  },
+  {
+    to: "/progress",
+    label: "Progreso",
+    icon: "↗",
+  },
+  {
+    to: "/settings",
+    label: "Configuración",
+    icon: "⚙",
+  },
+];
+
 export default function AdminLayout({ children }: AdminLayoutProps) {
   const navigate = useNavigate();
+
+  const userStorage = localStorage.getItem("user");
+  const user = userStorage ? JSON.parse(userStorage) : null;
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -15,26 +56,54 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
   };
 
   return (
-    <main className="dashboard-page">
-      <aside className="sidebar">
-        <div className="sidebar-logo">GymStart</div>
+    <main className="admin-forma-page">
+      <aside className="admin-forma-sidebar">
+        <div className="admin-forma-brand">
+          <h1>
+            Gym<span>Start.</span>
+          </h1>
+          <p>Admin panel</p>
+        </div>
 
-        <nav>
-          <NavLink to="/dashboard">Inicio</NavLink>
-          <NavLink to="/students">Alumnos</NavLink>
-          <NavLink to="/routines">Rutinas</NavLink>
-          <NavLink to="/exercises">Ejercicios</NavLink>
-          <NavLink to="/assign-routine">Asignar rutina</NavLink>
-          <NavLink to="/progress">Progreso</NavLink>
-          <NavLink to="/settings">Configuración</NavLink>
+        <nav className="admin-forma-nav">
+          {adminLinks.map((link) => (
+            <NavLink
+              key={link.to}
+              to={link.to}
+              className={({ isActive }) =>
+                isActive ? "admin-forma-link active" : "admin-forma-link"
+              }
+            >
+              <span>{link.icon}</span>
+              {link.label}
+            </NavLink>
+          ))}
         </nav>
 
-        <button onClick={handleLogout} className="logout-button">
-          Cerrar sesión
-        </button>
+        <div className="admin-forma-sidebar-bottom">
+          <div className="admin-forma-user-card">
+            <div className="admin-forma-user-avatar">
+              {user?.name?.charAt(0).toUpperCase() || "A"}
+            </div>
+
+            <div>
+              <strong>{user?.name || "Administrador"}</strong>
+              <p>{user?.role || "admin"}</p>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            onClick={handleLogout}
+            className="admin-forma-logout"
+          >
+            <span>↩</span>
+            Cerrar sesión
+          </button>
+        </div>
       </aside>
 
-      {children}
+      <section className="admin-forma-main">{children}</section>
     </main>
   );
 } 
