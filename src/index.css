@@ -2675,3 +2675,114 @@ a,
     font-size: 34px;
   }
 } 
+/* === ADMIN DASHBOARD QUICK SECTIONS === */
+
+.recent-students-list {
+  display: grid;
+  gap: 12px;
+}
+
+.recent-student-card {
+  display: grid;
+  grid-template-columns: 48px 1fr auto;
+  gap: 12px;
+  align-items: center;
+  border: 1px solid rgba(17, 17, 17, 0.08);
+  border-radius: 20px;
+  background: #fffaf2;
+  padding: 13px;
+}
+
+.recent-student-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  background: #111111;
+  color: #ff5a1f;
+  display: grid;
+  place-items: center;
+  font-weight: 950;
+  font-size: 18px;
+}
+
+.recent-student-info {
+  min-width: 0;
+}
+
+.recent-student-info strong {
+  display: block;
+  color: #111111;
+  font-size: 15px;
+}
+
+.recent-student-info span {
+  display: block;
+  margin-top: 4px;
+  color: #7c756d;
+  font-size: 13px;
+  font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.quick-actions-list {
+  display: grid;
+  gap: 12px;
+}
+
+.quick-action-card {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 12px;
+  align-items: center;
+  border: 1px solid rgba(17, 17, 17, 0.08);
+  border-radius: 20px;
+  background: #fffaf2;
+  padding: 14px;
+  text-decoration: none;
+  color: #111111;
+  transition: 0.2s ease;
+}
+
+.quick-action-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 34px rgba(17, 17, 17, 0.08);
+  opacity: 1;
+}
+
+.quick-action-card > span {
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  background: #111111;
+  color: #ff5a1f;
+  display: grid;
+  place-items: center;
+  font-size: 22px;
+  font-weight: 950;
+}
+
+.quick-action-card strong {
+  display: block;
+  color: #111111;
+  font-size: 15px;
+}
+
+.quick-action-card p {
+  margin: 5px 0 0;
+  color: #7c756d;
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+@media (max-width: 620px) {
+  .recent-student-card {
+    grid-template-columns: 48px 1fr;
+  }
+
+  .recent-student-card .status-pill {
+    grid-column: 2;
+    width: fit-content;
+  }
+} 
