@@ -5534,3 +5534,193 @@ a,
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
   }
 } 
+/* === MOBILE ADMIN POLISH FINAL === */
+
+@media (max-width: 900px) {
+  /* Dashboard: acciones rápidas más compactas */
+  .dashboard-actions-first {
+    margin-bottom: 16px !important;
+  }
+
+  .dashboard-actions-first .quick-actions-panel {
+    padding: 18px !important;
+  }
+
+  .dashboard-actions-first .quick-actions-list {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 12px !important;
+  }
+
+  .dashboard-actions-first .quick-action-card {
+    display: grid !important;
+    grid-template-columns: 44px 1fr !important;
+    align-items: center !important;
+    justify-items: start !important;
+    gap: 10px !important;
+    min-width: 0 !important;
+    padding: 14px !important;
+    text-align: left !important;
+  }
+
+  .dashboard-actions-first .quick-action-card span {
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    border-radius: 14px !important;
+  }
+
+  .dashboard-actions-first .quick-action-card strong {
+    display: block !important;
+    max-width: 100% !important;
+    color: #111111 !important;
+    font-size: 14px !important;
+    font-weight: 950 !important;
+    line-height: 1.05 !important;
+    white-space: normal !important;
+    overflow-wrap: anywhere !important;
+  }
+
+  .dashboard-actions-first .quick-action-card p {
+    display: none !important;
+  }
+
+  /* Dashboard: 4 cards principales, siempre 2 arriba y 2 abajo */
+  .stats-grid.dashboard-stats-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 14px !important;
+    align-items: stretch !important;
+  }
+
+  .stats-grid.dashboard-stats-grid .stat-card {
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 178px !important;
+    border-radius: 24px !important;
+    padding: 20px !important;
+  }
+
+  .stats-grid.dashboard-stats-grid .stat-card span {
+    display: block !important;
+    min-height: 28px !important;
+    color: #7c756d !important;
+    font-size: 10px !important;
+    font-weight: 950 !important;
+    letter-spacing: 0.18em !important;
+    line-height: 1.35 !important;
+    text-transform: uppercase !important;
+  }
+
+  .stats-grid.dashboard-stats-grid .stat-card strong {
+    display: block !important;
+    margin-top: 14px !important;
+    color: #111111 !important;
+    font-size: 42px !important;
+    line-height: 0.95 !important;
+  }
+
+  .stats-grid.dashboard-stats-grid .stat-card p {
+    margin-top: 12px !important;
+    color: #ff5a1f !important;
+    font-size: 14px !important;
+    font-weight: 950 !important;
+    line-height: 1.15 !important;
+    text-transform: uppercase !important;
+  }
+
+  .stats-grid.dashboard-stats-grid .dashboard-alert-card {
+    min-height: 178px !important;
+    padding: 20px !important;
+  }
+
+  .stats-grid.dashboard-stats-grid .dashboard-alert-card span,
+  .stats-grid.dashboard-stats-grid .dashboard-alert-card p {
+    color: rgba(255, 255, 255, 0.7) !important;
+    text-transform: uppercase !important;
+  }
+
+  .stats-grid.dashboard-stats-grid .dashboard-alert-card strong {
+    color: #ff5a1f !important;
+  }
+
+  .stats-grid.dashboard-stats-grid .dashboard-alert-card a {
+    margin-top: 14px !important;
+    padding: 9px 12px !important;
+    font-size: 12px !important;
+    white-space: nowrap !important;
+  }
+
+  /* Todas las cards de resumen admin con texto consistente */
+  .students-summary-grid article,
+  .exercises-summary-grid article,
+  .routines-summary-grid article,
+  .assign-summary-grid article,
+  .admin-progress-stats article,
+  .dashboard-mini-grid article {
+    min-width: 0 !important;
+  }
+
+  .students-summary-grid span,
+  .exercises-summary-grid span,
+  .routines-summary-grid span,
+  .assign-summary-grid span,
+  .admin-progress-stats span,
+  .dashboard-mini-grid span {
+    text-transform: uppercase !important;
+    letter-spacing: 0.18em !important;
+    line-height: 1.35 !important;
+  }
+
+  .students-summary-grid p,
+  .exercises-summary-grid p,
+  .routines-summary-grid p,
+  .assign-summary-grid p,
+  .admin-progress-stats p,
+  .dashboard-mini-grid p {
+    text-transform: uppercase !important;
+    line-height: 1.15 !important;
+  }
+
+  /* En mobile, que las cards de resumen queden 2 por fila */
+  .students-summary-grid,
+  .exercises-summary-grid,
+  .routines-summary-grid,
+  .assign-summary-grid,
+  .admin-progress-stats,
+  .dashboard-mini-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 14px !important;
+  }
+}
+
+@media (max-width: 390px) {
+  .dashboard-actions-first .quick-actions-list {
+    grid-template-columns: 1fr !important;
+  }
+
+  .stats-grid.dashboard-stats-grid,
+  .students-summary-grid,
+  .exercises-summary-grid,
+  .routines-summary-grid,
+  .assign-summary-grid,
+  .admin-progress-stats,
+  .dashboard-mini-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+  }
+
+  .stats-grid.dashboard-stats-grid .stat-card {
+    min-height: 160px !important;
+    padding: 16px !important;
+  }
+
+  .stats-grid.dashboard-stats-grid .stat-card strong {
+    font-size: 36px !important;
+  }
+
+  .stats-grid.dashboard-stats-grid .stat-card p {
+    font-size: 12px !important;
+  }
+} 
