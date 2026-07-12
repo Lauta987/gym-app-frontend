@@ -4117,3 +4117,318 @@ a,
   font-size: 13px;
   font-weight: 800;
 } 
+/* === STUDENT WAITING ROUTINE SCREEN === */
+
+.forma-waiting-routine {
+  display: grid;
+  gap: 22px;
+  padding-bottom: 90px;
+}
+
+.forma-waiting-intro {
+  padding: 10px 2px 0;
+}
+
+.forma-waiting-intro span {
+  display: block;
+  color: #111111;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 42px;
+  line-height: 1;
+  letter-spacing: -0.06em;
+}
+
+.forma-waiting-intro h2 {
+  margin: 0;
+  color: #ff5a1f;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 46px;
+  font-style: italic;
+  line-height: 1;
+  letter-spacing: -0.06em;
+}
+
+.forma-waiting-intro h2 strong {
+  color: #ff5a1f;
+}
+
+.forma-waiting-intro p {
+  margin: 16px 0 0;
+  color: #7c756d;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.forma-waiting-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 30px;
+  background:
+    radial-gradient(circle at top right, rgba(255, 255, 255, 0.12), transparent 34%),
+    linear-gradient(145deg, #111111, #181818);
+  color: #ffffff;
+  padding: 34px 24px 30px;
+  text-align: center;
+  box-shadow: 0 24px 70px rgba(17, 17, 17, 0.24);
+}
+
+.forma-waiting-card::before {
+  content: "";
+  position: absolute;
+  top: -80px;
+  right: -70px;
+  width: 190px;
+  height: 190px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+}
+
+.forma-waiting-card::after {
+  content: "";
+  position: absolute;
+  top: -35px;
+  right: -25px;
+  width: 130px;
+  height: 130px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+}
+
+.forma-waiting-status {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid #ff5a1f;
+  border-radius: 999px;
+  color: #ff5a1f;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 950;
+}
+
+.forma-waiting-status span {
+  font-size: 16px;
+}
+
+.forma-waiting-card h3 {
+  position: relative;
+  z-index: 1;
+  max-width: 460px;
+  margin: 30px auto 0;
+  color: #fffaf2;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 38px;
+  line-height: 1.08;
+  letter-spacing: -0.06em;
+}
+
+.forma-waiting-card h3 strong {
+  color: #ff5a1f;
+  font-style: italic;
+  font-weight: 900;
+}
+
+.forma-waiting-line {
+  position: relative;
+  z-index: 1;
+  width: 48px;
+  height: 2px;
+  margin: 26px auto;
+  background: #ff5a1f;
+  border-radius: 999px;
+}
+
+.forma-waiting-card p {
+  position: relative;
+  z-index: 1;
+  max-width: 420px;
+  margin: 0 auto;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 16px;
+  font-weight: 650;
+  line-height: 1.55;
+}
+
+.forma-waiting-illustration {
+  position: relative;
+  z-index: 1;
+  width: 190px;
+  height: 150px;
+  margin: 32px auto 0;
+}
+
+.forma-waiting-board {
+  position: absolute;
+  left: 34px;
+  bottom: 0;
+  width: 110px;
+  height: 128px;
+  border-radius: 18px;
+  background: linear-gradient(180deg, #fffaf2, #e7dccd);
+  box-shadow: 0 18px 32px rgba(0, 0, 0, 0.35);
+}
+
+.forma-waiting-board::before {
+  content: "";
+  position: absolute;
+  top: -16px;
+  left: 32px;
+  width: 46px;
+  height: 24px;
+  border-radius: 10px 10px 6px 6px;
+  background: #6f675e;
+}
+
+.forma-waiting-board span {
+  position: absolute;
+  left: 20px;
+  width: 70px;
+  height: 12px;
+  border-left: 16px solid rgba(17, 17, 17, 0.18);
+  border-radius: 4px;
+}
+
+.forma-waiting-board span:nth-child(1) {
+  top: 34px;
+}
+
+.forma-waiting-board span:nth-child(2) {
+  top: 64px;
+}
+
+.forma-waiting-board span:nth-child(3) {
+  top: 94px;
+}
+
+.forma-waiting-dumbbell {
+  position: absolute;
+  right: 10px;
+  bottom: 8px;
+  width: 88px;
+  height: 34px;
+  transform: rotate(-14deg);
+}
+
+.forma-waiting-dumbbell::before,
+.forma-waiting-dumbbell::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 28px;
+  height: 34px;
+  border-radius: 999px;
+  background: linear-gradient(145deg, #333333, #111111);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.forma-waiting-dumbbell::before {
+  left: 0;
+}
+
+.forma-waiting-dumbbell::after {
+  right: 0;
+}
+
+.forma-waiting-dumbbell span {
+  position: absolute;
+  top: 14px;
+  left: 24px;
+  width: 40px;
+  height: 7px;
+  border-radius: 999px;
+  background: #282828;
+}
+
+.forma-waiting-actions {
+  display: grid;
+  gap: 12px;
+}
+
+.forma-waiting-actions button {
+  width: 100%;
+  border: none;
+  border-radius: 19px;
+  padding: 18px 20px;
+  font-size: 17px;
+  font-weight: 950;
+  cursor: pointer;
+}
+
+.forma-waiting-refresh {
+  background: linear-gradient(135deg, #ff5a1f, #ff3f16);
+  color: #ffffff;
+  box-shadow: 0 14px 30px rgba(255, 90, 31, 0.25);
+}
+
+.forma-waiting-logout {
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  background: #111111;
+  color: #ffffff;
+}
+
+.forma-waiting-tip {
+  display: grid;
+  grid-template-columns: 46px 1fr auto;
+  align-items: center;
+  gap: 14px;
+  border: 1px solid rgba(17, 17, 17, 0.08);
+  border-radius: 22px;
+  background: rgba(255, 250, 242, 0.78);
+  padding: 18px;
+}
+
+.forma-waiting-tip div {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 999px;
+  background: #eee5da;
+  color: #7c756d;
+  font-size: 18px;
+  font-weight: 950;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.forma-waiting-tip p {
+  margin: 0;
+  color: #111111;
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+.forma-waiting-tip p strong {
+  display: block;
+  font-size: 16px;
+}
+
+.forma-waiting-tip > span {
+  color: #5f574f;
+  font-size: 30px;
+  line-height: 1;
+}
+
+@media (max-width: 520px) {
+  .forma-waiting-intro span {
+    font-size: 36px;
+  }
+
+  .forma-waiting-intro h2 {
+    font-size: 40px;
+  }
+
+  .forma-waiting-card {
+    border-radius: 26px;
+    padding: 30px 20px 26px;
+  }
+
+  .forma-waiting-card h3 {
+    font-size: 32px;
+  }
+
+  .forma-waiting-tip {
+    grid-template-columns: 42px 1fr auto;
+  }
+} 

@@ -54,6 +54,8 @@ export default function MyRoutine() {
       setActiveDayIndex(0);
     } catch (error) {
       console.error("Error al cargar datos del alumno", error);
+      setRoutine(null);
+      setWorkoutLogs([]);
       setError("Todavía no tenés una rutina asignada.");
     } finally {
       setLoading(false);
@@ -83,6 +85,10 @@ export default function MyRoutine() {
   const getDefaultReps = (reps: string) => {
     const match = reps.match(/\d+/);
     return match ? match[0] : "10";
+  };
+
+  const formatDayTabName = (dayName: string, order: number) => {
+    return dayName.replace(`Día ${order} -`, "").trim();
   };
 
   const openProgressForm = (
@@ -219,17 +225,76 @@ export default function MyRoutine() {
             <p>Cargando tu rutina...</p>
           </div>
         ) : error && !routine ? (
-          <div className="forma-empty">
-            <h2>Sin rutina asignada</h2>
-            <p>
-              Todavía no tenés una rutina cargada. Cuando el profesor te asigne
-              una, va a aparecer en esta pantalla.
-            </p>
+          <section className="forma-waiting-routine">
+            <div className="forma-waiting-intro">
+              <span>Buen día,</span>
+              <h2>
+                {user?.name || "Alumno"}
+                <strong>.</strong>
+              </h2>
+              <p>Estás un paso más cerca de tu mejor versión.</p>
+            </div>
 
-            <button type="button" onClick={handleLogout}>
-              Cerrar sesión
-            </button>
-          </div>
+            <article className="forma-waiting-card">
+              <div className="forma-waiting-status">
+                <span>◷</span>
+                Esperando rutina
+              </div>
+
+              <h3>
+                Tu profesor todavía no te asignó <strong>una rutina</strong>
+              </h3>
+
+              <div className="forma-waiting-line"></div>
+
+              <p>
+                Cuando tu rutina esté lista, la vas a ver acá junto con tus
+                ejercicios, series, descansos y progreso.
+              </p>
+
+              <div className="forma-waiting-illustration">
+                <div className="forma-waiting-board">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+
+                <div className="forma-waiting-dumbbell">
+                  <span></span>
+                </div>
+              </div>
+            </article>
+
+            <div className="forma-waiting-actions">
+              <button
+                type="button"
+                className="forma-waiting-refresh"
+                onClick={loadMyData}
+              >
+                ↻ Actualizar
+              </button>
+
+              <button
+                type="button"
+                className="forma-waiting-logout"
+                onClick={handleLogout}
+              >
+                ↪ Cerrar sesión
+              </button>
+            </div>
+
+            <article className="forma-waiting-tip">
+              <div>i</div>
+
+              <p>
+                <strong>Mientras tanto,</strong>
+                mantené tus datos al día y consultá con tu gimnasio si tu rutina
+                ya fue creada.
+              </p>
+
+              <span>›</span>
+            </article>
+          </section>
         ) : routine ? (
           <>
             <section className="forma-hero-card">
@@ -238,7 +303,8 @@ export default function MyRoutine() {
               <div>
                 <h2>{routine.name}</h2>
                 <p>
-                  Objetivo: <strong>{routine.objective || "No definido"}</strong>
+                  Objetivo:{" "}
+                  <strong>{routine.objective || "No definido"}</strong>
                 </p>
               </div>
 
@@ -273,9 +339,7 @@ export default function MyRoutine() {
                   onClick={() => setActiveDayIndex(index)}
                 >
                   <strong>Día {day.order}</strong>
-                  <span>
-                    {day.dayName.replace(`Día ${day.order} -`, "").trim()}
-                  </span>
+                  <span>{formatDayTabName(day.dayName, day.order)}</span>
                 </button>
               ))}
             </nav>
