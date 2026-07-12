@@ -8,6 +8,7 @@ import Exercises from "./pages/Exercises";
 import Routines from "./pages/Routines";
 import AssignRoutine from "./pages/AssignRoutine";
 import Progress from "./pages/Progress";
+import Settings from "./pages/Settings";
 import MyRoutine from "./pages/MyRoutine";
 import MyProgress from "./pages/MyProgress";
 
@@ -120,6 +121,15 @@ export default function App() {
         element={
           <AdminRoute>
             <Progress />
+          </AdminRoute>
+        }
+      />
+
+      <Route
+        path="/settings"
+        element={
+          <AdminRoute>
+            <Settings />
           </AdminRoute>
         }
       />
