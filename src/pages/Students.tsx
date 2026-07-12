@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { FormEvent } from "react";
 import api from "../api/api";
 import AdminLayout from "../components/AdminLayout";
 import type { Student } from "../types";
+
+type StudentStatusFilter = "all" | "active" | "inactive";
 
 export default function Students() {
   const [students, setStudents] = useState<Student[]>([]);
@@ -13,6 +15,10 @@ export default function Students() {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("123456");
+
+  const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] =
+    useState<StudentStatusFilter>("all");
 
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -39,6 +45,28 @@ export default function Students() {
   useEffect(() => {
     loadStudents();
   }, []);
+
+  const filteredStudents = useMemo(() => {
+    const normalizedSearch = searchTerm.trim().toLowerCase();
+
+    return students.filter((student) => {
+      const matchesSearch =
+        normalizedSearch.length === 0 ||
+        `${student.name} ${student.lastName} ${student.email}`
+          .toLowerCase()
+          .includes(normalizedSearch);
+
+      const matchesStatus =
+        statusFilter === "all" ||
+        (statusFilter === "active" && student.active) ||
+        (statusFilter === "inactive" && !student.active);
+
+      return matchesSearch && matchesStatus;
+    });
+  }, [students, searchTerm, statusFilter]);
+
+  const activeStudents = students.filter((student) => student.active).length;
+  const inactiveStudents = students.length - activeStudents;
 
   const resetForm = () => {
     setEditingStudentId(null);
@@ -179,8 +207,30 @@ export default function Students() {
             <p>Gestioná los alumnos registrados en el gimnasio.</p>
           </div>
 
-          <div className="date-pill">{students.length} alumnos</div>
+          <div className="date-pill">
+            {filteredStudents.length} de {students.length} alumnos
+          </div>
         </header>
+
+        <section className="students-summary-grid">
+          <article>
+            <span>Total</span>
+            <strong>{students.length}</strong>
+            <p>alumnos registrados</p>
+          </article>
+
+          <article>
+            <span>Activos</span>
+            <strong>{activeStudents}</strong>
+            <p>pueden ingresar a la app</p>
+          </article>
+
+          <article>
+            <span>Inactivos</span>
+            <strong>{inactiveStudents}</strong>
+            <p>sin acceso activo</p>
+          </article>
+        </section>
 
         <section className="page-grid">
           <article className="form-card">
@@ -271,12 +321,48 @@ export default function Students() {
               </button>
             </div>
 
+            <div className="students-toolbar">
+              <label>
+                Buscar alumno
+                <input
+                  type="text"
+                  placeholder="Buscar por nombre, apellido o email..."
+                  value={searchTerm}
+                  onChange={(event) => setSearchTerm(event.target.value)}
+                />
+              </label>
+
+              <label>
+                Estado
+                <select
+                  value={statusFilter}
+                  onChange={(event) =>
+                    setStatusFilter(event.target.value as StudentStatusFilter)
+                  }
+                >
+                  <option value="all">Todos</option>
+                  <option value="active">Activos</option>
+                  <option value="inactive">Inactivos</option>
+                </select>
+              </label>
+            </div>
+
+            <p className="students-results-text">
+              Mostrando {filteredStudents.length} resultado
+              {filteredStudents.length === 1 ? "" : "s"}.
+            </p>
+
             {loading ? (
               <p className="loading-text">Cargando alumnos...</p>
             ) : students.length === 0 ? (
               <div className="empty-state">
                 <h3>No hay alumnos registrados</h3>
                 <p>Cuando crees alumnos, van a aparecer en esta sección.</p>
+              </div>
+            ) : filteredStudents.length === 0 ? (
+              <div className="empty-state">
+                <h3>No se encontraron alumnos</h3>
+                <p>Probá cambiar el texto de búsqueda o el filtro de estado.</p>
               </div>
             ) : (
               <div className="table-wrapper">
@@ -293,7 +379,7 @@ export default function Students() {
                   </thead>
 
                   <tbody>
-                    {students.map((student) => (
+                    {filteredStudents.map((student) => (
                       <tr key={student._id}>
                         <td>
                           <strong>
