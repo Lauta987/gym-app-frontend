@@ -3956,3 +3956,137 @@ a,
     grid-template-columns: 1fr;
   }
 } 
+/* === ASSIGN ROUTINE FILTERS === */
+
+.assign-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.assign-summary-grid article {
+  border: 1px solid rgba(17, 17, 17, 0.08);
+  border-radius: 24px;
+  background: #fffaf2;
+  padding: 18px;
+  box-shadow: 0 12px 34px rgba(17, 17, 17, 0.05);
+}
+
+.assign-summary-grid span {
+  display: block;
+  color: #7c756d;
+  font-size: 11px;
+  font-weight: 950;
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+}
+
+.assign-summary-grid strong {
+  display: block;
+  margin-top: 12px;
+  color: #111111;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 34px;
+  line-height: 1;
+  letter-spacing: -0.05em;
+}
+
+.assign-summary-grid p {
+  margin: 8px 0 0;
+  color: #ff5a1f;
+  font-size: 13px;
+  font-weight: 850;
+}
+
+.assign-field input {
+  width: 100%;
+  border: 1px solid rgba(17, 17, 17, 0.1);
+  border-radius: 17px;
+  background: #fffaf2;
+  color: #111111;
+  padding: 13px 14px;
+  outline: none;
+}
+
+.assign-main-card.featured .assign-field input {
+  border-color: rgba(255, 255, 255, 0.1);
+  background: #1c1c1c;
+  color: #ffffff;
+}
+
+.assign-field input:focus {
+  border-color: #ff5a1f;
+  box-shadow: 0 0 0 4px rgba(255, 92, 31, 0.1);
+}
+
+.assign-helper-text {
+  margin: 9px 0 0;
+  color: #7c756d;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.assign-helper-text.dark {
+  color: #b9b0a6;
+}
+
+.assign-toolbar {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.assign-toolbar label {
+  display: grid;
+  gap: 8px;
+  color: #5f574f;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.assign-toolbar select {
+  min-width: 190px;
+  border: 1px solid rgba(17, 17, 17, 0.1);
+  border-radius: 17px;
+  background: #fffaf2;
+  color: #111111;
+  padding: 13px 14px;
+  outline: none;
+}
+
+.assign-toolbar select:focus {
+  border-color: #ff5a1f;
+  box-shadow: 0 0 0 4px rgba(255, 92, 31, 0.1);
+}
+
+.assign-toolbar p {
+  margin: 0;
+  color: #7c756d;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+@media (max-width: 1050px) {
+  .assign-summary-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 700px) {
+  .assign-summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .assign-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .assign-toolbar select {
+    width: 100%;
+    min-width: 0;
+  }
+} 
