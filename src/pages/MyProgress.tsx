@@ -260,7 +260,9 @@ export default function MyProgress() {
 
             <article>
               <small>Último</small>
-              <strong>{lastLog ? formatShortDate(lastLog.completedAt) : "-"}</strong>
+              <strong>
+                {lastLog ? formatShortDate(lastLog.completedAt) : "-"}
+              </strong>
             </article>
           </div>
         </section>
@@ -275,16 +277,67 @@ export default function MyProgress() {
             <p>{error}</p>
           </div>
         ) : workoutLogs.length === 0 ? (
-          <div className="forma-empty">
-            <h2>Sin progreso todavía</h2>
-            <p>
-              Cuando registres ejercicios desde tu rutina, van a aparecer acá.
-            </p>
+          <section className="forma-no-progress">
+            <article className="forma-no-progress-card">
+              <div className="forma-no-progress-status">
+                <span>↗</span>
+                Sin registros todavía
+              </div>
 
-            <button type="button" onClick={() => navigate("/my-routine")}>
-              Ir a mi rutina
-            </button>
-          </div>
+              <h2>
+                Todavía no registraste <strong>tu progreso</strong>
+              </h2>
+
+              <p>
+                Cuando completes ejercicios desde tu rutina, tus pesos,
+                repeticiones e historial van a aparecer en esta pantalla.
+              </p>
+
+              <div className="forma-no-progress-steps">
+                <article>
+                  <span>1</span>
+                  <div>
+                    <strong>Entrá a tu rutina</strong>
+                    <p>Elegí el día y el ejercicio que vas a completar.</p>
+                  </div>
+                </article>
+
+                <article>
+                  <span>2</span>
+                  <div>
+                    <strong>Registrá peso y reps</strong>
+                    <p>Guardá lo que hiciste para medir tu evolución.</p>
+                  </div>
+                </article>
+
+                <article>
+                  <span>3</span>
+                  <div>
+                    <strong>Volvé a progreso</strong>
+                    <p>Acá vas a ver tus marcas y tu historial.</p>
+                  </div>
+                </article>
+              </div>
+
+              <div className="forma-no-progress-actions">
+                <button type="button" onClick={() => navigate("/my-routine")}>
+                  Ir a mi rutina
+                </button>
+
+                <button type="button" onClick={loadMyProgress}>
+                  ↻ Actualizar
+                </button>
+              </div>
+            </article>
+
+            <article className="forma-no-progress-tip">
+              <div>💡</div>
+              <p>
+                <strong>Tip:</strong> registrá aunque sea un peso aproximado.
+                Con el tiempo vas a poder comparar tu evolución real.
+              </p>
+            </article>
+          </section>
         ) : (
           <>
             <section className="forma-progress-selector">
@@ -463,7 +516,9 @@ export default function MyProgress() {
 
                           <div>
                             <span>Peso</span>
-                            <strong>{log.weight ? `${log.weight} kg` : "-"}</strong>
+                            <strong>
+                              {log.weight ? `${log.weight} kg` : "-"}
+                            </strong>
                           </div>
 
                           <div>
