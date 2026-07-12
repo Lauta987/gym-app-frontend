@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { FormEvent } from "react";
 import api from "../api/api";
 import AdminLayout from "../components/AdminLayout";
@@ -22,6 +22,7 @@ interface RoutineFormDay {
 }
 
 type RoutineLevel = "principiante" | "intermedio" | "avanzado";
+type RoutineLevelFilter = "all" | RoutineLevel;
 
 export default function Routines() {
   const [routines, setRoutines] = useState<Routine[]>([]);
@@ -47,6 +48,9 @@ export default function Routines() {
   const [reps, setReps] = useState("10-12");
   const [rest, setRest] = useState("60 segundos");
   const [notes, setNotes] = useState("");
+
+  const [searchTerm, setSearchTerm] = useState("");
+  const [levelFilter, setLevelFilter] = useState<RoutineLevelFilter>("all");
 
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -76,6 +80,39 @@ export default function Routines() {
   useEffect(() => {
     loadData();
   }, []);
+
+  const filteredRoutines = useMemo(() => {
+    const normalizedSearch = searchTerm.trim().toLowerCase();
+
+    return routines.filter((routine) => {
+      const daysText = routine.days.map((day) => day.dayName).join(" ");
+
+      const matchesSearch =
+        normalizedSearch.length === 0 ||
+        `${routine.name} ${routine.description || ""} ${
+          routine.objective || ""
+        } ${daysText}`
+          .toLowerCase()
+          .includes(normalizedSearch);
+
+      const matchesLevel =
+        levelFilter === "all" || routine.level === levelFilter;
+
+      return matchesSearch && matchesLevel;
+    });
+  }, [routines, searchTerm, levelFilter]);
+
+  const beginnerCount = routines.filter(
+    (routine) => routine.level === "principiante"
+  ).length;
+
+  const intermediateCount = routines.filter(
+    (routine) => routine.level === "intermedio"
+  ).length;
+
+  const advancedCount = routines.filter(
+    (routine) => routine.level === "avanzado"
+  ).length;
 
   const resetForm = () => {
     setEditingRoutineId(null);
@@ -408,8 +445,36 @@ export default function Routines() {
             <p>Creá rutinas divididas por días y ejercicios.</p>
           </div>
 
-          <div className="date-pill">{routines.length} rutinas</div>
+          <div className="date-pill">
+            {filteredRoutines.length} de {routines.length} rutinas
+          </div>
         </header>
+
+        <section className="routines-summary-grid">
+          <article>
+            <span>Total</span>
+            <strong>{routines.length}</strong>
+            <p>rutinas creadas</p>
+          </article>
+
+          <article>
+            <span>Principiante</span>
+            <strong>{beginnerCount}</strong>
+            <p>nivel inicial</p>
+          </article>
+
+          <article>
+            <span>Intermedio</span>
+            <strong>{intermediateCount}</strong>
+            <p>nivel medio</p>
+          </article>
+
+          <article>
+            <span>Avanzado</span>
+            <strong>{advancedCount}</strong>
+            <p>nivel alto</p>
+          </article>
+        </section>
 
         <section className="page-grid">
           <article className="form-card">
@@ -587,7 +652,8 @@ export default function Routines() {
                       <div className="routine-day-header">
                         <div>
                           <strong>
-                            Día {day.order}: {formatDayName(day.dayName, day.order)}
+                            Día {day.order}:{" "}
+                            {formatDayName(day.dayName, day.order)}
                           </strong>
                           <span>{day.exercises.length} ejercicios</span>
                         </div>
@@ -662,6 +728,38 @@ export default function Routines() {
               </button>
             </div>
 
+            <div className="routines-toolbar">
+              <label>
+                Buscar rutina
+                <input
+                  type="text"
+                  placeholder="Buscar por nombre, objetivo o día..."
+                  value={searchTerm}
+                  onChange={(event) => setSearchTerm(event.target.value)}
+                />
+              </label>
+
+              <label>
+                Nivel
+                <select
+                  value={levelFilter}
+                  onChange={(event) =>
+                    setLevelFilter(event.target.value as RoutineLevelFilter)
+                  }
+                >
+                  <option value="all">Todas</option>
+                  <option value="principiante">Principiante</option>
+                  <option value="intermedio">Intermedio</option>
+                  <option value="avanzado">Avanzado</option>
+                </select>
+              </label>
+            </div>
+
+            <p className="routines-results-text">
+              Mostrando {filteredRoutines.length} resultado
+              {filteredRoutines.length === 1 ? "" : "s"}.
+            </p>
+
             {loading ? (
               <p className="loading-text">Cargando rutinas...</p>
             ) : routines.length === 0 ? (
@@ -669,9 +767,14 @@ export default function Routines() {
                 <h3>No hay rutinas cargadas</h3>
                 <p>Cuando crees rutinas, van a aparecer en esta sección.</p>
               </div>
+            ) : filteredRoutines.length === 0 ? (
+              <div className="empty-state">
+                <h3>No se encontraron rutinas</h3>
+                <p>Probá cambiar el texto de búsqueda o el filtro de nivel.</p>
+              </div>
             ) : (
               <div className="routine-list">
-                {routines.map((routine) => (
+                {filteredRoutines.map((routine) => (
                   <article key={routine._id} className="routine-card">
                     <div className="routine-card-header">
                       <div>
