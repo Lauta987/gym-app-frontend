@@ -4,9 +4,15 @@ import api from "../api/api";
 import AdminLayout from "../components/AdminLayout";
 import type { Exercise, Routine, Student } from "../types";
 
-interface DashboardStudent extends Student {
+type DashboardStudent = Omit<Student, "assignedRoutine"> & {
   createdAt?: string;
-}
+  assignedRoutine?:
+    | string
+    | {
+        _id: string;
+        name: string;
+      };
+};
 
 export default function Dashboard() {
   const [students, setStudents] = useState<DashboardStudent[]>([]);
@@ -42,7 +48,21 @@ export default function Dashboard() {
     loadDashboardData();
   }, []);
 
+  const hasAssignedRoutine = (student: DashboardStudent) => {
+    return Boolean(student.assignedRoutine);
+  };
+
   const activeStudents = students.filter((student) => student.active).length;
+
+  const inactiveStudents = students.length - activeStudents;
+
+  const studentsWithoutRoutine = students.filter(
+    (student) => student.active && !hasAssignedRoutine(student)
+  );
+
+  const studentsWithRoutine = students.filter((student) =>
+    hasAssignedRoutine(student)
+  ).length;
 
   const recentStudents = [...students]
     .sort((a, b) => {
@@ -55,6 +75,8 @@ export default function Dashboard() {
       return b._id.localeCompare(a._id);
     })
     .slice(0, 5);
+
+  const recentStudentsWithoutRoutine = studentsWithoutRoutine.slice(0, 5);
 
   return (
     <AdminLayout>
@@ -80,23 +102,55 @@ export default function Dashboard() {
           <p className="loading-text">Cargando información...</p>
         ) : (
           <>
-            <section className="stats-grid">
+            <section className="stats-grid dashboard-stats-grid">
               <article className="stat-card">
                 <span>Alumnos activos</span>
                 <strong>{activeStudents}</strong>
                 <p>{students.length} alumnos totales</p>
               </article>
 
+              <article className="stat-card dashboard-alert-card">
+                <span>Sin rutina</span>
+                <strong>{studentsWithoutRoutine.length}</strong>
+                <p>alumnos activos pendientes</p>
+
+                {studentsWithoutRoutine.length > 0 && (
+                  <Link to="/assign-routine">Asignar ahora</Link>
+                )}
+              </article>
+
               <article className="stat-card">
                 <span>Rutinas creadas</span>
                 <strong>{routines.length}</strong>
-                <p>Planes disponibles</p>
+                <p>{studentsWithRoutine} alumnos con rutina</p>
               </article>
 
               <article className="stat-card">
                 <span>Ejercicios cargados</span>
                 <strong>{exercises.length}</strong>
                 <p>Biblioteca del gimnasio</p>
+              </article>
+            </section>
+
+            <section className="dashboard-mini-grid">
+              <article>
+                <span>Total alumnos</span>
+                <strong>{students.length}</strong>
+              </article>
+
+              <article>
+                <span>Activos</span>
+                <strong>{activeStudents}</strong>
+              </article>
+
+              <article>
+                <span>Inactivos</span>
+                <strong>{inactiveStudents}</strong>
+              </article>
+
+              <article>
+                <span>Con rutina</span>
+                <strong>{studentsWithRoutine}</strong>
               </article>
             </section>
 
@@ -184,6 +238,96 @@ export default function Dashboard() {
                       <p>Asignale un plan de entrenamiento a un alumno.</p>
                     </div>
                   </Link>
+                </div>
+              </article>
+            </section>
+
+            <section className="dashboard-grid">
+              <article className="panel-card dashboard-pending-panel">
+                <div className="panel-header">
+                  <h2>Alumnos sin rutina</h2>
+                  <Link to="/assign-routine">Asignar rutina</Link>
+                </div>
+
+                {recentStudentsWithoutRoutine.length === 0 ? (
+                  <div className="empty-state">
+                    <h3>Todo al día</h3>
+                    <p>Todos los alumnos activos tienen una rutina asignada.</p>
+                  </div>
+                ) : (
+                  <div className="recent-students-list">
+                    {recentStudentsWithoutRoutine.map((student) => (
+                      <article
+                        key={student._id}
+                        className="recent-student-card pending"
+                      >
+                        <div className="recent-student-avatar">
+                          {student.name.charAt(0).toUpperCase()}
+                        </div>
+
+                        <div className="recent-student-info">
+                          <strong>
+                            {student.name} {student.lastName}
+                          </strong>
+                          <span>{student.email}</span>
+                        </div>
+
+                        <Link
+                          to="/assign-routine"
+                          className="dashboard-assign-link"
+                        >
+                          Asignar
+                        </Link>
+                      </article>
+                    ))}
+                  </div>
+                )}
+              </article>
+
+              <article className="panel-card dashboard-health-panel">
+                <div className="panel-header">
+                  <h2>Estado del sistema</h2>
+                </div>
+
+                <div className="dashboard-health-list">
+                  <article>
+                    <div>
+                      <strong>Base de alumnos</strong>
+                      <span>
+                        {students.length > 0
+                          ? "Ya hay alumnos cargados"
+                          : "Todavía no hay alumnos"}
+                      </span>
+                    </div>
+
+                    <b>{students.length > 0 ? "OK" : "Pendiente"}</b>
+                  </article>
+
+                  <article>
+                    <div>
+                      <strong>Rutinas disponibles</strong>
+                      <span>
+                        {routines.length > 0
+                          ? "Hay planes para asignar"
+                          : "Faltan rutinas"}
+                      </span>
+                    </div>
+
+                    <b>{routines.length > 0 ? "OK" : "Pendiente"}</b>
+                  </article>
+
+                  <article>
+                    <div>
+                      <strong>Ejercicios cargados</strong>
+                      <span>
+                        {exercises.length > 0
+                          ? "La biblioteca está lista"
+                          : "Faltan ejercicios"}
+                      </span>
+                    </div>
+
+                    <b>{exercises.length > 0 ? "OK" : "Pendiente"}</b>
+                  </article>
                 </div>
               </article>
             </section>
