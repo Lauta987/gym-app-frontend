@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { FormEvent } from "react";
 import api from "../api/api";
 import AdminLayout from "../components/AdminLayout";
@@ -6,6 +6,7 @@ import type { Exercise } from "../types";
 import { isValidImageUrl } from "../utils/image";
 
 type Difficulty = "principiante" | "intermedio" | "avanzado";
+type DifficultyFilter = "all" | Difficulty;
 
 export default function Exercises() {
   const [exercises, setExercises] = useState<Exercise[]>([]);
@@ -20,6 +21,10 @@ export default function Exercises() {
   const [imageUrl, setImageUrl] = useState("");
   const [muscles, setMuscles] = useState("");
   const [difficulty, setDifficulty] = useState<Difficulty>("principiante");
+
+  const [searchTerm, setSearchTerm] = useState("");
+  const [difficultyFilter, setDifficultyFilter] =
+    useState<DifficultyFilter>("all");
 
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -46,6 +51,37 @@ export default function Exercises() {
   useEffect(() => {
     loadExercises();
   }, []);
+
+  const filteredExercises = useMemo(() => {
+    const normalizedSearch = searchTerm.trim().toLowerCase();
+
+    return exercises.filter((exercise) => {
+      const musclesText = exercise.muscles.join(" ");
+
+      const matchesSearch =
+        normalizedSearch.length === 0 ||
+        `${exercise.name} ${exercise.description} ${musclesText}`
+          .toLowerCase()
+          .includes(normalizedSearch);
+
+      const matchesDifficulty =
+        difficultyFilter === "all" || exercise.difficulty === difficultyFilter;
+
+      return matchesSearch && matchesDifficulty;
+    });
+  }, [exercises, searchTerm, difficultyFilter]);
+
+  const beginnerCount = exercises.filter(
+    (exercise) => exercise.difficulty === "principiante"
+  ).length;
+
+  const intermediateCount = exercises.filter(
+    (exercise) => exercise.difficulty === "intermedio"
+  ).length;
+
+  const advancedCount = exercises.filter(
+    (exercise) => exercise.difficulty === "avanzado"
+  ).length;
 
   const resetForm = () => {
     setEditingExerciseId(null);
@@ -168,8 +204,36 @@ export default function Exercises() {
             <p>Gestioná la biblioteca de ejercicios del gimnasio.</p>
           </div>
 
-          <div className="date-pill">{exercises.length} ejercicios</div>
+          <div className="date-pill">
+            {filteredExercises.length} de {exercises.length} ejercicios
+          </div>
         </header>
+
+        <section className="exercises-summary-grid">
+          <article>
+            <span>Total</span>
+            <strong>{exercises.length}</strong>
+            <p>ejercicios cargados</p>
+          </article>
+
+          <article>
+            <span>Principiante</span>
+            <strong>{beginnerCount}</strong>
+            <p>nivel inicial</p>
+          </article>
+
+          <article>
+            <span>Intermedio</span>
+            <strong>{intermediateCount}</strong>
+            <p>nivel medio</p>
+          </article>
+
+          <article>
+            <span>Avanzado</span>
+            <strong>{advancedCount}</strong>
+            <p>nivel alto</p>
+          </article>
+        </section>
 
         <section className="page-grid">
           <article className="form-card">
@@ -274,6 +338,38 @@ export default function Exercises() {
               </button>
             </div>
 
+            <div className="exercises-toolbar">
+              <label>
+                Buscar ejercicio
+                <input
+                  type="text"
+                  placeholder="Buscar por nombre, descripción o músculo..."
+                  value={searchTerm}
+                  onChange={(event) => setSearchTerm(event.target.value)}
+                />
+              </label>
+
+              <label>
+                Dificultad
+                <select
+                  value={difficultyFilter}
+                  onChange={(event) =>
+                    setDifficultyFilter(event.target.value as DifficultyFilter)
+                  }
+                >
+                  <option value="all">Todas</option>
+                  <option value="principiante">Principiante</option>
+                  <option value="intermedio">Intermedio</option>
+                  <option value="avanzado">Avanzado</option>
+                </select>
+              </label>
+            </div>
+
+            <p className="exercises-results-text">
+              Mostrando {filteredExercises.length} resultado
+              {filteredExercises.length === 1 ? "" : "s"}.
+            </p>
+
             {loading ? (
               <p className="loading-text">Cargando ejercicios...</p>
             ) : exercises.length === 0 ? (
@@ -283,9 +379,16 @@ export default function Exercises() {
                   Cuando crees ejercicios, van a aparecer en esta biblioteca.
                 </p>
               </div>
+            ) : filteredExercises.length === 0 ? (
+              <div className="empty-state">
+                <h3>No se encontraron ejercicios</h3>
+                <p>
+                  Probá cambiar el texto de búsqueda o el filtro de dificultad.
+                </p>
+              </div>
             ) : (
               <div className="exercise-grid">
-                {exercises.map((exercise) => (
+                {filteredExercises.map((exercise) => (
                   <article key={exercise._id} className="exercise-card">
                     <div className="exercise-image">
                       {isValidImageUrl(exercise.imageUrl) ? (
