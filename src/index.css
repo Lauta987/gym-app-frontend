@@ -4090,3 +4090,30 @@ a,
     min-width: 0;
   }
 } 
+/* === ADMIN PROGRESS SEARCH === */
+
+.admin-progress-field {
+  margin-bottom: 12px;
+}
+
+.admin-progress-field input {
+  width: 100%;
+  border: 1px solid rgba(17, 17, 17, 0.1);
+  border-radius: 17px;
+  background: #fffaf2;
+  color: #111111;
+  padding: 13px 14px;
+  outline: none;
+}
+
+.admin-progress-field input:focus {
+  border-color: #ff5a1f;
+  box-shadow: 0 0 0 4px rgba(255, 92, 31, 0.1);
+}
+
+.admin-progress-results-text {
+  margin: 0;
+  color: #7c756d;
+  font-size: 13px;
+  font-weight: 800;
+} 

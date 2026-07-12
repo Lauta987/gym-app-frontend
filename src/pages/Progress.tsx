@@ -16,6 +16,7 @@ interface ExerciseProgressGroup {
 export default function Progress() {
   const [students, setStudents] = useState<Student[]>([]);
   const [selectedStudentId, setSelectedStudentId] = useState("");
+  const [studentSearch, setStudentSearch] = useState("");
   const [workoutLogs, setWorkoutLogs] = useState<WorkoutLog[]>([]);
 
   const [loadingStudents, setLoadingStudents] = useState(true);
@@ -45,6 +46,18 @@ export default function Progress() {
   const selectedStudent = useMemo(() => {
     return students.find((student) => student._id === selectedStudentId);
   }, [students, selectedStudentId]);
+
+  const filteredStudents = useMemo(() => {
+    const normalizedSearch = studentSearch.trim().toLowerCase();
+
+    return students.filter((student) => {
+      if (!normalizedSearch) return true;
+
+      return `${student.name} ${student.lastName} ${student.email}`
+        .toLowerCase()
+        .includes(normalizedSearch);
+    });
+  }, [students, studentSearch]);
 
   const parseReps = (value?: string) => {
     if (!value) return 0;
@@ -157,7 +170,6 @@ export default function Progress() {
     return Math.max(best, group.bestWeight);
   }, 0);
 
- 
   return (
     <AdminLayout>
       <section className="dashboard-content">
@@ -203,27 +215,44 @@ export default function Progress() {
             <div className="admin-progress-heading">
               <span>Alumno</span>
               <h2>Seleccionar alumno</h2>
-              <p>Elegí un alumno para analizar su historial de entrenamiento.</p>
+              <p>Buscá un alumno para analizar su historial de entrenamiento.</p>
             </div>
 
             {loadingStudents ? (
               <p className="loading-text">Cargando alumnos...</p>
             ) : (
-              <label className="admin-progress-field">
-                Alumno
-                <select
-                  value={selectedStudentId}
-                  onChange={(event) => loadStudentProgress(event.target.value)}
-                >
-                  <option value="">Seleccionar alumno</option>
+              <>
+                <label className="admin-progress-field">
+                  Buscar alumno
+                  <input
+                    type="text"
+                    placeholder="Nombre, apellido o email..."
+                    value={studentSearch}
+                    onChange={(event) => setStudentSearch(event.target.value)}
+                  />
+                </label>
 
-                  {students.map((student) => (
-                    <option key={student._id} value={student._id}>
-                      {student.name} {student.lastName} - {student.email}
-                    </option>
-                  ))}
-                </select>
-              </label>
+                <label className="admin-progress-field">
+                  Alumno
+                  <select
+                    value={selectedStudentId}
+                    onChange={(event) => loadStudentProgress(event.target.value)}
+                  >
+                    <option value="">Seleccionar alumno</option>
+
+                    {filteredStudents.map((student) => (
+                      <option key={student._id} value={student._id}>
+                        {student.name} {student.lastName} - {student.email}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+
+                <p className="admin-progress-results-text">
+                  Mostrando {filteredStudents.length} de {students.length}{" "}
+                  alumnos.
+                </p>
+              </>
             )}
 
             {selectedStudent ? (
