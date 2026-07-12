@@ -5307,3 +5307,230 @@ a,
     grid-column: 2 !important;
   }
 } 
+/* === ADMIN MOBILE FINAL LAYOUT FIX === */
+
+@media (max-width: 900px) {
+  .admin-forma-brand {
+    padding-top: max(58px, calc(env(safe-area-inset-top) + 24px)) !important;
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+    padding-bottom: 18px !important;
+    background: #111111 !important;
+  }
+
+  .admin-forma-brand h1 {
+    font-size: 30px !important;
+    line-height: 1 !important;
+  }
+
+  .admin-forma-main {
+    padding: 28px 14px calc(120px + env(safe-area-inset-bottom)) !important;
+    background: #f5efe5 !important;
+  }
+
+  .dashboard-header {
+    color: #111111 !important;
+    margin-bottom: 20px !important;
+  }
+
+  .dashboard-header h1 {
+    color: #111111 !important;
+    font-size: 38px !important;
+    line-height: 1 !important;
+    letter-spacing: -0.06em !important;
+  }
+
+  .dashboard-header p {
+    color: #7c756d !important;
+    font-size: 14px !important;
+    font-weight: 800 !important;
+  }
+
+  .date-pill {
+    background: #ff5a1f !important;
+    color: #ffffff !important;
+    border-radius: 999px !important;
+    padding: 13px 18px !important;
+    font-size: 15px !important;
+    font-weight: 950 !important;
+    box-shadow: 0 14px 30px rgba(255, 90, 31, 0.22) !important;
+  }
+
+  .stats-grid,
+  .stats-grid.dashboard-stats-grid,
+  .dashboard-mini-grid,
+  .students-summary-grid,
+  .exercises-summary-grid,
+  .routines-summary-grid,
+  .assign-summary-grid,
+  .admin-progress-stats {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 12px !important;
+  }
+
+  .stat-card,
+  .students-summary-grid article,
+  .exercises-summary-grid article,
+  .routines-summary-grid article,
+  .assign-summary-grid article,
+  .dashboard-mini-grid article,
+  .admin-progress-stats article {
+    border-radius: 22px !important;
+    padding: 18px !important;
+    min-height: 142px !important;
+  }
+
+  .stat-card span,
+  .students-summary-grid span,
+  .exercises-summary-grid span,
+  .routines-summary-grid span,
+  .assign-summary-grid span,
+  .dashboard-mini-grid span,
+  .admin-progress-stats span {
+    font-size: 9px !important;
+    letter-spacing: 0.16em !important;
+  }
+
+  .stat-card strong,
+  .students-summary-grid strong,
+  .exercises-summary-grid strong,
+  .routines-summary-grid strong,
+  .assign-summary-grid strong,
+  .dashboard-mini-grid strong,
+  .admin-progress-stats strong {
+    font-size: 34px !important;
+    line-height: 1 !important;
+  }
+
+  .stat-card p,
+  .students-summary-grid p,
+  .exercises-summary-grid p,
+  .routines-summary-grid p,
+  .assign-summary-grid p,
+  .dashboard-mini-grid p,
+  .admin-progress-stats p {
+    font-size: 13px !important;
+    line-height: 1.2 !important;
+  }
+
+  .dashboard-alert-card {
+    min-height: 142px !important;
+    padding: 18px !important;
+  }
+
+  .dashboard-alert-card a {
+    margin-top: 10px !important;
+    padding: 8px 11px !important;
+    font-size: 11px !important;
+  }
+
+  .quick-actions-panel {
+    order: -5 !important;
+  }
+
+  .quick-actions-list {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+  }
+
+  .quick-action-card {
+    display: grid !important;
+    justify-items: center !important;
+    text-align: center !important;
+    gap: 8px !important;
+    padding: 14px 10px !important;
+    border-radius: 18px !important;
+  }
+
+  .quick-action-card span {
+    width: 42px !important;
+    height: 42px !important;
+    min-width: 42px !important;
+  }
+
+  .quick-action-card strong {
+    font-size: 12px !important;
+    line-height: 1.15 !important;
+  }
+
+  .quick-action-card p {
+    display: none !important;
+  }
+
+  .recent-students-panel {
+    order: 2 !important;
+  }
+
+  .dashboard-pending-panel,
+  .dashboard-health-panel {
+    order: 3 !important;
+  }
+
+  .form-card {
+    order: -2 !important;
+  }
+
+  .table-card {
+    order: 3 !important;
+  }
+
+  .page-grid {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+  }
+
+  .form-card,
+  .table-card,
+  .panel-card,
+  .settings-card,
+  .assign-main-card,
+  .admin-progress-selector-card,
+  .admin-progress-summary-card {
+    border-radius: 24px !important;
+    padding: 18px !important;
+  }
+
+  .admin-forma-nav {
+    bottom: calc(14px + env(safe-area-inset-bottom)) !important;
+  }
+}
+
+@media (max-width: 390px) {
+  .stats-grid,
+  .stats-grid.dashboard-stats-grid,
+  .dashboard-mini-grid,
+  .students-summary-grid,
+  .exercises-summary-grid,
+  .routines-summary-grid,
+  .assign-summary-grid,
+  .admin-progress-stats {
+    gap: 10px !important;
+  }
+
+  .stat-card,
+  .students-summary-grid article,
+  .exercises-summary-grid article,
+  .routines-summary-grid article,
+  .assign-summary-grid article,
+  .dashboard-mini-grid article,
+  .admin-progress-stats article {
+    padding: 15px !important;
+    min-height: 128px !important;
+  }
+
+  .stat-card strong,
+  .students-summary-grid strong,
+  .exercises-summary-grid strong,
+  .routines-summary-grid strong,
+  .assign-summary-grid strong,
+  .dashboard-mini-grid strong,
+  .admin-progress-stats strong {
+    font-size: 30px !important;
+  }
+
+  .quick-actions-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+} 

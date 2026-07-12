@@ -102,6 +102,48 @@ export default function Dashboard() {
           <p className="loading-text">Cargando información...</p>
         ) : (
           <>
+            <section className="dashboard-grid dashboard-actions-first">
+              <article className="panel-card quick-actions-panel">
+                <div className="panel-header">
+                  <h2>Acciones rápidas</h2>
+                </div>
+
+                <div className="quick-actions-list">
+                  <Link to="/students" className="quick-action-card">
+                    <span>＋</span>
+                    <div>
+                      <strong>Crear alumno</strong>
+                      <p>Agregá un nuevo alumno al gimnasio.</p>
+                    </div>
+                  </Link>
+
+                  <Link to="/routines" className="quick-action-card">
+                    <span>▣</span>
+                    <div>
+                      <strong>Crear rutina</strong>
+                      <p>Armá una rutina con días y ejercicios.</p>
+                    </div>
+                  </Link>
+
+                  <Link to="/exercises" className="quick-action-card">
+                    <span>⌁</span>
+                    <div>
+                      <strong>Crear ejercicio</strong>
+                      <p>Cargá ejercicios para usar en rutinas.</p>
+                    </div>
+                  </Link>
+
+                  <Link to="/assign-routine" className="quick-action-card">
+                    <span>✓</span>
+                    <div>
+                      <strong>Asignar rutina</strong>
+                      <p>Asignale un plan de entrenamiento a un alumno.</p>
+                    </div>
+                  </Link>
+                </div>
+              </article>
+            </section>
+
             <section className="stats-grid dashboard-stats-grid">
               <article className="stat-card">
                 <span>Alumnos activos</span>
@@ -201,48 +243,6 @@ export default function Dashboard() {
                 )}
               </article>
 
-              <article className="panel-card quick-actions-panel">
-                <div className="panel-header">
-                  <h2>Acciones rápidas</h2>
-                </div>
-
-                <div className="quick-actions-list">
-                  <Link to="/students" className="quick-action-card">
-                    <span>＋</span>
-                    <div>
-                      <strong>Crear alumno</strong>
-                      <p>Agregá un nuevo alumno al gimnasio.</p>
-                    </div>
-                  </Link>
-
-                  <Link to="/routines" className="quick-action-card">
-                    <span>▣</span>
-                    <div>
-                      <strong>Crear rutina</strong>
-                      <p>Armá una rutina con días y ejercicios.</p>
-                    </div>
-                  </Link>
-
-                  <Link to="/exercises" className="quick-action-card">
-                    <span>⌁</span>
-                    <div>
-                      <strong>Crear ejercicio</strong>
-                      <p>Cargá ejercicios para usar en rutinas.</p>
-                    </div>
-                  </Link>
-
-                  <Link to="/assign-routine" className="quick-action-card">
-                    <span>✓</span>
-                    <div>
-                      <strong>Asignar rutina</strong>
-                      <p>Asignale un plan de entrenamiento a un alumno.</p>
-                    </div>
-                  </Link>
-                </div>
-              </article>
-            </section>
-
-            <section className="dashboard-grid">
               <article className="panel-card dashboard-pending-panel">
                 <div className="panel-header">
                   <h2>Alumnos sin rutina</h2>
@@ -283,7 +283,9 @@ export default function Dashboard() {
                   </div>
                 )}
               </article>
+            </section>
 
+            <section className="dashboard-grid">
               <article className="panel-card dashboard-health-panel">
                 <div className="panel-header">
                   <h2>Estado del sistema</h2>
