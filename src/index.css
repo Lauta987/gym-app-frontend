@@ -4990,3 +4990,320 @@ a,
     width: 100%;
   }
 } 
+/* === ADMIN MOBILE FLOATING NAV === */
+
+@media (max-width: 900px) {
+  .admin-forma-page {
+    display: block !important;
+    min-height: 100dvh !important;
+    background:
+      radial-gradient(circle at top right, rgba(255, 90, 31, 0.12), transparent 32%),
+      linear-gradient(180deg, #111111 0%, #1a1a1a 260px, #f5efe5 260px) !important;
+  }
+
+  .admin-forma-sidebar {
+    position: static !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    border-right: none !important;
+    background: transparent !important;
+  }
+
+  .admin-forma-brand {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 40 !important;
+    margin: 0 !important;
+    padding: 18px 16px 12px !important;
+    background: rgba(17, 17, 17, 0.94) !important;
+    backdrop-filter: blur(14px) !important;
+  }
+
+  .admin-forma-brand h1 {
+    color: #ffffff !important;
+    font-size: 25px !important;
+    line-height: 1 !important;
+  }
+
+  .admin-forma-brand h1 span {
+    color: #ff5a1f !important;
+  }
+
+  .admin-forma-brand p {
+    color: rgba(255, 255, 255, 0.58) !important;
+    font-size: 9px !important;
+    letter-spacing: 0.24em !important;
+  }
+
+  .admin-forma-nav {
+    position: fixed !important;
+    left: 50% !important;
+    bottom: 14px !important;
+    z-index: 100 !important;
+    transform: translateX(-50%) !important;
+
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 8px !important;
+
+    width: calc(100% - 24px) !important;
+    max-width: 520px !important;
+
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    scrollbar-width: none !important;
+
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    border-radius: 999px !important;
+    background:
+      linear-gradient(145deg, rgba(22, 22, 22, 0.96), rgba(8, 8, 8, 0.96)) !important;
+    box-shadow:
+      0 20px 55px rgba(0, 0, 0, 0.45),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+    backdrop-filter: blur(18px) !important;
+
+    padding: 9px !important;
+  }
+
+  .admin-forma-nav::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .admin-forma-link {
+    flex: 0 0 auto !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+
+    width: auto !important;
+    min-width: 48px !important;
+    height: 46px !important;
+
+    border: none !important;
+    border-radius: 999px !important;
+    background: transparent !important;
+    color: rgba(255, 255, 255, 0.74) !important;
+
+    padding: 0 13px !important;
+    font-size: 0 !important;
+    font-weight: 950 !important;
+    white-space: nowrap !important;
+  }
+
+  .admin-forma-link span {
+    display: grid !important;
+    place-items: center !important;
+    width: 22px !important;
+    height: 22px !important;
+    min-width: 22px !important;
+    color: currentColor !important;
+    font-size: 15px !important;
+  }
+
+  .admin-forma-link.active {
+    min-width: auto !important;
+    background:
+      radial-gradient(circle at center, rgba(255, 90, 31, 0.32), rgba(255, 90, 31, 0.12)) !important;
+    color: #ff5a1f !important;
+  }
+
+  .admin-forma-link.active span {
+    color: #ff5a1f !important;
+  }
+
+  .admin-forma-sidebar-bottom {
+    display: none !important;
+  }
+
+  .admin-forma-main {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 20px 14px 110px !important;
+  }
+
+  .dashboard-content {
+    width: 100% !important;
+  }
+
+  .dashboard-header {
+    align-items: flex-start !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    margin-bottom: 18px !important;
+    color: #ffffff !important;
+  }
+
+  .dashboard-header h1 {
+    color: #ffffff !important;
+    font-size: 34px !important;
+    line-height: 1 !important;
+  }
+
+  .dashboard-header p {
+    color: rgba(255, 255, 255, 0.68) !important;
+    font-size: 13px !important;
+  }
+
+  .date-pill {
+    width: fit-content !important;
+    background: #ff5a1f !important;
+    color: #ffffff !important;
+  }
+
+  .page-grid,
+  .dashboard-grid,
+  .admin-progress-grid,
+  .assign-hero-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .stats-grid,
+  .stats-grid.dashboard-stats-grid,
+  .dashboard-mini-grid,
+  .students-summary-grid,
+  .exercises-summary-grid,
+  .routines-summary-grid,
+  .assign-summary-grid,
+  .admin-progress-stats,
+  .settings-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .table-card,
+  .form-card,
+  .panel-card,
+  .settings-card,
+  .assign-main-card,
+  .admin-progress-selector-card,
+  .admin-progress-summary-card {
+    border-radius: 24px !important;
+    padding: 18px !important;
+  }
+
+  .panel-header {
+    align-items: flex-start !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+  }
+
+  .students-toolbar,
+  .exercises-toolbar,
+  .routines-toolbar,
+  .assign-toolbar {
+    grid-template-columns: 1fr !important;
+  }
+
+  .assign-toolbar {
+    display: grid !important;
+  }
+
+  .table-wrapper {
+    overflow-x: auto !important;
+    width: 100% !important;
+  }
+
+  .students-table {
+    min-width: 760px !important;
+  }
+
+  .student-admin-actions,
+  .exercise-admin-actions,
+  .routine-admin-actions {
+    justify-content: flex-start !important;
+  }
+
+  .exercise-grid,
+  .routine-list,
+  .assign-students-grid,
+  .admin-progress-list {
+    grid-template-columns: 1fr !important;
+  }
+
+  .exercise-card {
+    grid-template-columns: 1fr !important;
+  }
+
+  .exercise-image {
+    min-height: 180px !important;
+  }
+
+  .routine-card-header,
+  .exercise-info-header {
+    align-items: flex-start !important;
+    flex-direction: column !important;
+  }
+
+  .settings-profile-card {
+    grid-template-columns: 1fr !important;
+  }
+} 
+/* === ADMIN MOBILE EXTRA SMALL === */
+
+@media (max-width: 520px) {
+  .admin-forma-main {
+    padding: 18px 10px 108px !important;
+  }
+
+  .admin-forma-nav {
+    width: calc(100% - 18px) !important;
+    bottom: 10px !important;
+    padding: 8px !important;
+  }
+
+  .admin-forma-link {
+    min-width: 44px !important;
+    height: 44px !important;
+    padding: 0 12px !important;
+  }
+
+  .admin-forma-link span {
+    font-size: 14px !important;
+  }
+
+  .dashboard-header h1 {
+    font-size: 30px !important;
+  }
+
+  .stat-card strong,
+  .students-summary-grid strong,
+  .exercises-summary-grid strong,
+  .routines-summary-grid strong,
+  .assign-summary-grid strong,
+  .dashboard-mini-grid strong {
+    font-size: 30px !important;
+  }
+
+  .recent-student-card,
+  .assign-student-row,
+  .admin-progress-log-card {
+    align-items: flex-start !important;
+    grid-template-columns: 42px 1fr !important;
+    gap: 12px !important;
+  }
+
+  .recent-student-card .status-pill,
+  .assign-student-row .status-pill,
+  .dashboard-assign-link {
+    grid-column: 2 !important;
+    width: fit-content !important;
+  }
+
+  .quick-action-card {
+    align-items: flex-start !important;
+  }
+
+  .routine-days-summary div {
+    grid-template-columns: 1fr !important;
+  }
+
+  .admin-progress-log-stat,
+  .assign-student-routine {
+    grid-column: 2 !important;
+  }
+} 
