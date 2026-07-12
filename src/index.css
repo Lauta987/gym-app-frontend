@@ -4619,3 +4619,146 @@ a,
     font-size: 32px;
   }
 } 
+/* === DASHBOARD IMPROVEMENTS === */
+
+.dashboard-stats-grid {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.dashboard-alert-card {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at top right, rgba(255, 90, 31, 0.16), transparent 34%),
+    #111111 !important;
+  color: #ffffff;
+}
+
+.dashboard-alert-card span,
+.dashboard-alert-card p {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.dashboard-alert-card strong {
+  color: #ff5a1f !important;
+}
+
+.dashboard-alert-card a {
+  display: inline-flex;
+  width: fit-content;
+  margin-top: 14px;
+  border-radius: 999px;
+  background: #ff5a1f;
+  color: #ffffff;
+  padding: 9px 13px;
+  font-size: 12px;
+  font-weight: 950;
+  text-decoration: none;
+}
+
+.dashboard-mini-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+.dashboard-mini-grid article {
+  border: 1px solid rgba(17, 17, 17, 0.08);
+  border-radius: 18px;
+  background: #fffaf2;
+  padding: 15px;
+}
+
+.dashboard-mini-grid span {
+  display: block;
+  color: #7c756d;
+  font-size: 11px;
+  font-weight: 950;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.dashboard-mini-grid strong {
+  display: block;
+  margin-top: 8px;
+  color: #111111;
+  font-size: 24px;
+  font-weight: 950;
+}
+
+.recent-student-card.pending {
+  border-color: rgba(255, 90, 31, 0.2);
+  background: #fffaf2;
+}
+
+.dashboard-assign-link {
+  border-radius: 999px;
+  background: #ff5a1f;
+  color: #ffffff;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 950;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.dashboard-health-list {
+  display: grid;
+  gap: 12px;
+}
+
+.dashboard-health-list article {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  border: 1px solid rgba(17, 17, 17, 0.08);
+  border-radius: 18px;
+  background: #fffaf2;
+  padding: 15px;
+}
+
+.dashboard-health-list strong {
+  display: block;
+  color: #111111;
+  font-size: 15px;
+  font-weight: 950;
+}
+
+.dashboard-health-list span {
+  display: block;
+  margin-top: 4px;
+  color: #7c756d;
+  font-size: 13px;
+  font-weight: 750;
+}
+
+.dashboard-health-list b {
+  border-radius: 999px;
+  background: #eee5da;
+  color: #5f574f;
+  padding: 7px 10px;
+  font-size: 11px;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+@media (max-width: 1150px) {
+  .dashboard-stats-grid,
+  .dashboard-mini-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 650px) {
+  .dashboard-stats-grid,
+  .dashboard-mini-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-health-list article {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+} 
