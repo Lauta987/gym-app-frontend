@@ -5724,3 +5724,26 @@ a,
     font-size: 12px !important;
   }
 } 
+/* === DASHBOARD QUICK ACTIONS SPACING FIX === */
+
+.dashboard-actions-first {
+  margin-bottom: 22px !important;
+}
+
+.dashboard-actions-first + .dashboard-stats-grid {
+  margin-top: 0 !important;
+}
+
+@media (max-width: 900px) {
+  .dashboard-actions-first {
+    margin-bottom: 22px !important;
+  }
+
+  .dashboard-actions-first .quick-actions-panel {
+    margin-bottom: 0 !important;
+  }
+
+  .stats-grid.dashboard-stats-grid {
+    margin-top: 0 !important;
+  }
+} 
