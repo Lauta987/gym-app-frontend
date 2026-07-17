@@ -15,6 +15,7 @@ import SuperAdminDashboard from "./pages/SuperAdminDashboard";
 import SuperAdminCreateGym from "./pages/SuperAdminCreateGym";
 import SuperAdminGymDetail from "./pages/SuperAdminGymDetail";
 import SuperAdminEditGym from "./pages/SuperAdminEditGym";
+import SuperAdminGymAdmins from "./pages/SuperAdminGymAdmins";
 
 import type { User } from "./types";
 
@@ -140,7 +141,14 @@ export default function App() {
           </SuperAdminRoute>
         }
       />
-
+      <Route
+        path="/superadmin/gyms/:id/admins"
+        element={
+          <SuperAdminRoute>
+            <SuperAdminGymAdmins />
+          </SuperAdminRoute>
+  } 
+/>
       <Route 
         path="/admin"
         element={<Navigate to="/dashboard" replace />}

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import api from "../api/api";
 import "../styles/superadmin.css";
 
@@ -258,34 +258,31 @@ export default function SuperAdminGymDetail() {
           </div>
 
           <div className="sa-topbar-actions">
-  <button
-    type="button"
-    className="sa-secondary-button"
-    onClick={loadGym}
-  >
-    Actualizar
-  </button>
+            <button
+              type="button"
+              className="sa-secondary-button"
+              onClick={loadGym}
+             >
+              Actualizar
+            </button>
 
-  <button
-    type="button"
-    className="sa-secondary-button"
-    onClick={() =>
-      navigate(`/superadmin/gyms/${gym._id}/admins`)
-    }
-  >
-    Administradores
-  </button>
+             <Link
+               className="sa-secondary-button"
+               to={`/superadmin/gyms/${gym._id}/admins`}
+             >
+               Administradores
+             </Link>
 
-  <button
-    type="button"
-    className="sa-primary-button"
-    onClick={() =>
-      navigate(`/superadmin/gyms/${gym._id}/edit`)
-    }
-  >
-    Editar gimnasio
-  </button>
-</div>
+            <button
+              type="button"
+             className="sa-primary-button"
+              onClick={() =>
+               navigate(`/superadmin/gyms/${gym._id}/edit`)
+            }
+        >
+          Editar gimnasio
+        </button>
+     </div>
         </header>
 
         {error && <p className="sa-error">{error}</p>}

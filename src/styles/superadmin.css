@@ -2128,3 +2128,10 @@
     width: 100%;
   }
 } 
+a.sa-secondary-button,
+a.sa-primary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+} 
