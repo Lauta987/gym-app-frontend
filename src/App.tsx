@@ -11,6 +11,10 @@ import Progress from "./pages/Progress";
 import Settings from "./pages/Settings";
 import MyRoutine from "./pages/MyRoutine";
 import MyProgress from "./pages/MyProgress";
+import SuperAdminDashboard from "./pages/SuperAdminDashboard";
+import SuperAdminCreateGym from "./pages/SuperAdminCreateGym";
+import SuperAdminGymDetail from "./pages/SuperAdminGymDetail";
+import SuperAdminEditGym from "./pages/SuperAdminEditGym";
 
 import type { User } from "./types";
 
@@ -21,7 +25,13 @@ function getLoggedUser(): User | null {
     return null;
   }
 
-  return JSON.parse(userStorage);
+  try {
+    return JSON.parse(userStorage);
+  } catch {
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    return null;
+  }
 }
 
 function AdminRoute({ children }: { children: ReactNode }) {
@@ -36,6 +46,10 @@ function AdminRoute({ children }: { children: ReactNode }) {
     return <Navigate to="/my-routine" replace />;
   }
 
+  if (user.role === "superadmin") {
+    return <Navigate to="/superadmin" replace />;
+  }
+
   return children;
 }
 
@@ -48,7 +62,22 @@ function StudentRoute({ children }: { children: ReactNode }) {
   }
 
   if (user.role !== "student") {
-    return <Navigate to="/dashboard" replace />;
+    return <RedirectByRole />;
+  }
+
+  return children;
+}
+
+function SuperAdminRoute({ children }: { children: ReactNode }) {
+  const token = localStorage.getItem("token");
+  const user = getLoggedUser();
+
+  if (!token || !user) {
+    return <Navigate to="/" replace />;
+  }
+
+  if (user.role !== "superadmin") {
+    return <RedirectByRole />;
   }
 
   return children;
@@ -57,7 +86,15 @@ function StudentRoute({ children }: { children: ReactNode }) {
 function RedirectByRole() {
   const user = getLoggedUser();
 
-  if (user?.role === "student") {
+  if (!user) {
+    return <Navigate to="/" replace />;
+  }
+
+  if (user.role === "superadmin") {
+    return <Navigate to="/superadmin" replace />;
+  }
+
+  if (user.role === "student") {
     return <Navigate to="/my-routine" replace />;
   }
 
@@ -69,7 +106,45 @@ export default function App() {
     <Routes>
       <Route path="/" element={<Login />} />
 
-      <Route path="/admin" element={<Navigate to="/dashboard" replace />} />
+      <Route
+        path="/superadmin"
+        element={
+          <SuperAdminRoute>
+            <SuperAdminDashboard />
+          </SuperAdminRoute>
+        }
+      />
+
+      <Route
+        path="/superadmin/gyms/new"
+        element={
+          <SuperAdminRoute>
+            <SuperAdminCreateGym />
+          </SuperAdminRoute>
+        }
+      />
+      <Route
+        path="/superadmin/gyms/:id"
+        element={
+         <SuperAdminRoute>
+          <SuperAdminGymDetail />
+        </SuperAdminRoute>
+  }
+/>
+
+      <Route
+        path="/superadmin/gyms/:id/edit"
+        element={
+          <SuperAdminRoute>
+            <SuperAdminEditGym />
+          </SuperAdminRoute>
+        }
+      />
+
+      <Route 
+        path="/admin"
+        element={<Navigate to="/dashboard" replace />}
+      />
 
       <Route
         path="/dashboard"

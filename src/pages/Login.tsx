@@ -29,6 +29,11 @@ export default function Login() {
       localStorage.setItem("token", token);
       localStorage.setItem("user", JSON.stringify(user));
 
+      if (user.role === "superadmin") {
+        navigate("/superadmin");
+        return;
+      }
+
       if (user.role === "student") {
         navigate("/my-routine");
         return;
@@ -84,6 +89,7 @@ export default function Login() {
               value={email}
               onChange={(event) => setEmail(event.target.value)}
               autoComplete="email"
+              required
             />
           </label>
 
@@ -95,6 +101,7 @@ export default function Login() {
               value={password}
               onChange={(event) => setPassword(event.target.value)}
               autoComplete="current-password"
+              required
             />
           </label>
 
