@@ -28,12 +28,23 @@ function getLoggedUser(): User | null {
   }
 
   try {
-    return JSON.parse(userStorage);
+    return JSON.parse(userStorage) as User;
   } catch {
     localStorage.removeItem("user");
     localStorage.removeItem("token");
+
     return null;
   }
+}
+
+function getLoginPath(): string {
+  const gymSlug = localStorage.getItem("gymSlug");
+
+  if (gymSlug) {
+    return `/gym/${gymSlug}`;
+  }
+
+  return "/";
 }
 
 function AdminRoute({ children }: { children: ReactNode }) {
@@ -41,7 +52,7 @@ function AdminRoute({ children }: { children: ReactNode }) {
   const user = getLoggedUser();
 
   if (!token || !user) {
-    return <Navigate to="/" replace />;
+    return <Navigate to={getLoginPath()} replace />;
   }
 
   if (user.role === "student") {
@@ -60,7 +71,7 @@ function StudentRoute({ children }: { children: ReactNode }) {
   const user = getLoggedUser();
 
   if (!token || !user) {
-    return <Navigate to="/" replace />;
+    return <Navigate to={getLoginPath()} replace />;
   }
 
   if (user.role !== "student") {
@@ -90,7 +101,7 @@ function RedirectByRole() {
   const user = getLoggedUser();
 
   if (!token || !user) {
-    return <Navigate to="/" replace />;
+    return <Navigate to={getLoginPath()} replace />;
   }
 
   if (user.role === "superadmin") {
@@ -107,7 +118,11 @@ function RedirectByRole() {
 export default function App() {
   return (
     <Routes>
+      {/* Login general de GymStart */}
       <Route path="/" element={<Login />} />
+
+      {/* Login personalizado de cada gimnasio */}
+      <Route path="/gym/:slug" element={<Login />} />
 
       {/* SuperAdmin */}
       <Route
@@ -155,7 +170,7 @@ export default function App() {
         }
       />
 
-      {/* Admin */}
+      {/* Admin y entrenador */}
       <Route
         path="/admin"
         element={<Navigate to="/dashboard" replace />}
@@ -224,7 +239,7 @@ export default function App() {
         }
       />
 
-      {/* Student */}
+      {/* Alumno */}
       <Route
         path="/my-routine"
         element={
@@ -243,7 +258,8 @@ export default function App() {
         }
       />
 
+      {/* Ruta desconocida */}
       <Route path="*" element={<RedirectByRole />} />
     </Routes>
   );
-}
+} 

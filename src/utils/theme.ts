@@ -66,4 +66,4 @@ export function loadStoredGymTheme() {
 export function clearGymTheme() {
   localStorage.removeItem(STORAGE_KEY);
   applyGymTheme(null);
-} 
+}  
