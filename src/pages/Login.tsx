@@ -3,16 +3,10 @@ import type { FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api/api";
 import type { LoginResponse } from "../types";
-import { applyGymTheme, saveGymTheme } from "../utils/theme";
-
-interface GymTheme {
-  _id: string;
-  name: string;
-  slug?: string;
-  logoUrl?: string;
-  primaryColor: string;
-  secondaryColor: string;
-}
+import {
+  applyGymTheme,
+  type GymTheme,
+} from "../utils/theme";
 
 interface ThemedLoginResponse extends LoginResponse {
   gym?: GymTheme | null;
@@ -26,7 +20,7 @@ export default function Login() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleLogin = async (event: FormEvent) => {
+  const handleLogin = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     try {
@@ -34,7 +28,7 @@ export default function Login() {
       setError("");
 
       const response = await api.post<ThemedLoginResponse>("/auth/login", {
-        email,
+        email: email.trim().toLowerCase(),
         password,
       });
 
@@ -51,8 +45,10 @@ export default function Login() {
       }
 
       if (gym) {
-        saveGymTheme(gym);
+        localStorage.setItem("gymTheme", JSON.stringify(gym));
         applyGymTheme(gym);
+      } else {
+        localStorage.removeItem("gymTheme");
       }
 
       if (user.role === "student") {
