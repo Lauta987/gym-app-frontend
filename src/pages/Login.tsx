@@ -3,6 +3,20 @@ import type { FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api/api";
 import type { LoginResponse } from "../types";
+import { applyGymTheme, saveGymTheme } from "../utils/theme";
+
+interface GymTheme {
+  _id: string;
+  name: string;
+  slug?: string;
+  logoUrl?: string;
+  primaryColor: string;
+  secondaryColor: string;
+}
+
+interface ThemedLoginResponse extends LoginResponse {
+  gym?: GymTheme | null;
+}
 
 export default function Login() {
   const navigate = useNavigate();
@@ -19,19 +33,26 @@ export default function Login() {
       setLoading(true);
       setError("");
 
-      const response = await api.post<LoginResponse>("/auth/login", {
+      const response = await api.post<ThemedLoginResponse>("/auth/login", {
         email,
         password,
       });
 
-      const { token, user } = response.data;
+      const { token, user, gym } = response.data;
 
       localStorage.setItem("token", token);
       localStorage.setItem("user", JSON.stringify(user));
 
       if (user.role === "superadmin") {
+        localStorage.removeItem("gymTheme");
+
         navigate("/superadmin");
         return;
+      }
+
+      if (gym) {
+        saveGymTheme(gym);
+        applyGymTheme(gym);
       }
 
       if (user.role === "student") {
@@ -58,6 +79,7 @@ export default function Login() {
               <h1>
                 Gym<span>Start.</span>
               </h1>
+
               <p>Entrená, registrá y medí tu evolución</p>
             </div>
           </div>
@@ -83,6 +105,7 @@ export default function Login() {
         <form onSubmit={handleLogin} className="forma-login-form">
           <label>
             Email
+
             <input
               type="email"
               placeholder="tuemail@gymstart.com"
@@ -95,6 +118,7 @@ export default function Login() {
 
           <label>
             Contraseña
+
             <input
               type="password"
               placeholder="Tu contraseña"

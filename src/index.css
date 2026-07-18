@@ -1,3 +1,18 @@
+:root {
+  --gym-primary: #dc2626;
+  --gym-secondary: #111111;
+  --gym-primary-soft: color-mix(
+    in srgb,
+    var(--gym-primary) 12%,
+    transparent
+  );
+  --gym-secondary-soft: color-mix(
+    in srgb,
+    var(--gym-secondary) 12%,
+    transparent
+  );
+}
+
 * {
   box-sizing: border-box;
 }
@@ -58,7 +73,7 @@ button:hover {
 
 .sidebar {
   width: 270px;
-  background: #111111;
+  background: var(--gym-secondary);
   color: #ffffff;
   padding: 28px 20px;
   display: flex;
@@ -88,7 +103,7 @@ button:hover {
 .sidebar a.active,
 .sidebar a:hover,
 .sidebar nav a.active {
-  background: #dc2626;
+  background: var(--gym-primary);
   color: #ffffff;
 }
 
@@ -206,7 +221,7 @@ button:hover {
 .panel-header button {
   border: none;
   background: transparent;
-  color: #dc2626;
+  color: var(--gym-primary);
   font-weight: 800;
   cursor: pointer;
 }
@@ -241,7 +256,7 @@ button:hover {
   display: block;
   flex: 1;
   border-radius: 999px 999px 0 0;
-  background: #dc2626;
+  background: var(--gym-primary);
 }
 
 .fake-chart span:nth-child(1) {
@@ -318,7 +333,7 @@ button:hover {
 .student-form input:focus,
 .student-form textarea:focus,
 .student-form select:focus {
-  border-color: #dc2626;
+  border-color: var(--gym-primary);
   background: #ffffff;
 }
 
@@ -326,7 +341,7 @@ button:hover {
   border: none;
   border-radius: 14px;
   padding: 14px 16px;
-  background: #dc2626;
+  background: var(--gym-primary);
   color: #ffffff;
   font-weight: 800;
   cursor: pointer;
@@ -509,7 +524,7 @@ button:hover {
 .selected-exercise button {
   border: none;
   background: transparent;
-  color: #dc2626;
+  color: var(--gym-primary);
   font-weight: 800;
   cursor: pointer;
 }
@@ -533,7 +548,7 @@ button:hover {
 .routine-day-header button {
   border: none;
   background: transparent;
-  color: #dc2626;
+  color: var(--gym-primary);
   font-weight: 800;
   cursor: pointer;
 }
@@ -818,7 +833,7 @@ a,
 .forma-page {
   min-height: 100dvh;
   background: #e9e1d4;
-  color: #111111;
+  color: var(--gym-secondary);
   display: flex;
   justify-content: center;
   font-family:
@@ -836,7 +851,7 @@ a,
   max-width: 720px;
   min-height: 100dvh;
   background:
-    radial-gradient(circle at top right, rgba(255, 73, 35, 0.12), transparent 34%),
+    radial-gradient(circle at top right, color-mix(in srgb, var(--gym-primary) 12%, transparent), transparent 34%),
     #f5efe5;
   padding: max(54px, calc(env(safe-area-inset-top, 0px) + 26px)) 18px
     max(26px, calc(env(safe-area-inset-bottom, 0px) + 18px));
@@ -852,14 +867,14 @@ a,
 
 .forma-topbar h1 {
   margin: 0;
-  color: #111111;
+  color: var(--gym-secondary);
   font-family: Georgia, "Times New Roman", serif;
   font-size: 26px;
   letter-spacing: -0.06em;
 }
 
 .forma-topbar h1 span {
-  color: #ff3b1f;
+  color: var(--gym-primary);
   font-style: italic;
 }
 
@@ -881,7 +896,7 @@ a,
   height: 46px;
   border: none;
   border-radius: 999px;
-  background: #111111;
+  background: var(--gym-secondary);
   color: #ffffff;
   font-size: 18px;
   font-weight: 950;
@@ -909,7 +924,7 @@ a,
 
 .forma-user-dropdown strong {
   display: block;
-  color: #111111;
+  color: var(--gym-secondary);
   font-size: 14px;
 }
 
@@ -928,7 +943,7 @@ a,
   background: transparent;
   display: block;
   padding: 10px;
-  color: #111111;
+  color: var(--gym-secondary);
   text-align: left;
   text-decoration: none;
   font-weight: 800;
@@ -944,7 +959,11 @@ a,
   border-radius: 28px;
   background:
     radial-gradient(circle at top right, rgba(255, 255, 255, 0.16), transparent 30%),
-    linear-gradient(135deg, #161616, #050505);
+    linear-gradient(
+      135deg,
+      var(--gym-secondary),
+      color-mix(in srgb, var(--gym-secondary) 72%, #000000)
+    );
   color: #ffffff;
   padding: 22px;
   box-shadow: 0 24px 60px rgba(17, 17, 17, 0.18);
@@ -952,7 +971,7 @@ a,
 }
 
 .forma-hero-card > span {
-  color: #ff4a2f;
+  color: var(--gym-primary);
   font-size: 11px;
   font-weight: 950;
   text-transform: uppercase;
@@ -1041,8 +1060,8 @@ a,
 }
 
 .forma-day-tabs button.active {
-  color: #ff3b1f;
-  border-color: #ff3b1f;
+  color: var(--gym-primary);
+  border-color: var(--gym-primary);
 }
 
 .forma-day-tabs strong {
@@ -1074,7 +1093,7 @@ a,
 }
 
 .forma-section-heading span {
-  color: #ff3b1f;
+  color: var(--gym-primary);
   font-size: 11px;
   font-weight: 950;
   text-transform: uppercase;
@@ -1119,7 +1138,7 @@ a,
   width: 58px;
   height: 58px;
   border-radius: 18px;
-  background: #111111;
+  background: var(--gym-secondary);
   color: #ffffff;
   display: grid;
   place-items: center;
@@ -1144,7 +1163,7 @@ a,
 
 .forma-exercise-title strong {
   display: block;
-  color: #111111;
+  color: var(--gym-secondary);
   font-size: 18px;
   line-height: 1.1;
 }
@@ -1168,14 +1187,14 @@ a,
 }
 
 .forma-done-pill {
-  background: #111111;
+  background: var(--gym-secondary);
   color: #ffffff;
   font-weight: 950;
 }
 
 .forma-open-progress {
   background: #f0e7dc;
-  color: #111111;
+  color: var(--gym-secondary);
   font-size: 24px;
   cursor: pointer;
 }
@@ -1205,7 +1224,7 @@ a,
 }
 
 .forma-exercise-actions a {
-  color: #ff3b1f;
+  color: var(--gym-primary);
   font-size: 13px;
   font-weight: 950;
   text-decoration: none;
@@ -1214,7 +1233,7 @@ a,
 .forma-exercise-actions button {
   border: none;
   border-radius: 999px;
-  background: #111111;
+  background: var(--gym-secondary);
   color: #ffffff;
   padding: 9px 13px;
   font-size: 12px;
@@ -1232,9 +1251,9 @@ a,
   display: grid;
   grid-template-columns: 48px 1fr;
   gap: 12px;
-  border: 1px solid rgba(255, 59, 31, 0.22);
+  border: 1px solid color-mix(in srgb, var(--gym-primary) 22%, transparent);
   border-radius: 22px;
-  background: rgba(255, 59, 31, 0.08);
+  background: color-mix(in srgb, var(--gym-primary) 8%, transparent);
   padding: 16px;
 }
 
@@ -1242,14 +1261,14 @@ a,
   width: 48px;
   height: 48px;
   border-radius: 17px;
-  background: #111111;
+  background: var(--gym-secondary);
   display: grid;
   place-items: center;
 }
 
 .forma-coach-card h3 {
   margin: 0;
-  color: #111111;
+  color: var(--gym-secondary);
   font-size: 16px;
 }
 
@@ -1267,7 +1286,7 @@ a,
   z-index: 40;
   width: min(680px, calc(100% - 28px));
   border-radius: 999px;
-  background: #111111;
+  background: var(--gym-secondary);
   padding: 8px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -1291,7 +1310,7 @@ a,
 }
 
 .forma-bottom-nav .active {
-  color: #ff3b1f;
+  color: var(--gym-primary);
 }
 
 .forma-bottom-nav span {
@@ -1308,7 +1327,7 @@ a,
 
 .forma-empty h2 {
   margin: 0 0 8px;
-  color: #111111;
+  color: var(--gym-secondary);
 }
 
 .forma-empty p {
@@ -1318,7 +1337,7 @@ a,
 .forma-empty button {
   border: none;
   border-radius: 999px;
-  background: #111111;
+  background: var(--gym-secondary);
   color: #ffffff;
   padding: 12px 18px;
   font-weight: 900;
@@ -1381,7 +1400,7 @@ a,
   border: 1px solid rgba(17, 17, 17, 0.08);
   border-radius: 999px;
   background: #fffaf2;
-  color: #111111;
+  color: var(--gym-secondary);
   font-size: 24px;
   cursor: pointer;
 }
@@ -1404,7 +1423,7 @@ a,
 
 .forma-sheet-header p {
   margin: 0;
-  color: #ff3b1f;
+  color: var(--gym-primary);
   font-size: 12px;
   font-weight: 950;
   text-transform: uppercase;
@@ -1436,7 +1455,7 @@ a,
 .forma-progress-info strong {
   display: block;
   margin-top: 6px;
-  color: #111111;
+  color: var(--gym-secondary);
   font-size: 15px;
 }
 
@@ -1467,11 +1486,11 @@ a,
   border-radius: 18px;
   background: #eee5da;
   padding: 8px;
-  border: 1px solid rgba(255, 59, 31, 0.16);
+  border: 1px solid color-mix(in srgb, var(--gym-primary) 16%, transparent);
 }
 
 .forma-progress-row.active > span:first-child {
-  color: #ff3b1f;
+  color: var(--gym-primary);
   font-family: Georgia, "Times New Roman", serif;
   font-size: 26px;
   font-weight: 900;
@@ -1491,7 +1510,7 @@ a,
 .forma-counter-mini button {
   border: none;
   background: transparent;
-  color: #111111;
+  color: var(--gym-secondary);
   font-size: 19px;
   font-weight: 950;
   cursor: pointer;
@@ -1501,14 +1520,14 @@ a,
   text-align: center;
   font-size: 22px;
   font-family: Georgia, "Times New Roman", serif;
-  color: #111111;
+  color: var(--gym-secondary);
 }
 
 .forma-current-dot {
   width: 28px;
   height: 28px;
   border-radius: 999px;
-  background: #ff3b1f;
+  background: var(--gym-primary);
   color: #ffffff;
   display: grid;
   place-items: center;
@@ -1522,7 +1541,7 @@ a,
   border: 1px solid rgba(17, 17, 17, 0.12);
   border-radius: 18px;
   background: #fffaf2;
-  color: #111111;
+  color: var(--gym-secondary);
   padding: 14px;
   resize: none;
   outline: none;
@@ -1530,7 +1549,7 @@ a,
 }
 
 .forma-progress-notes:focus {
-  border-color: #ff3b1f;
+  border-color: var(--gym-primary);
 }
 
 .forma-save-progress {
@@ -1538,13 +1557,13 @@ a,
   margin-top: 14px;
   border: none;
   border-radius: 18px;
-  background: #ff3b1f;
+  background: var(--gym-primary);
   color: #ffffff;
   padding: 17px;
   font-size: 15px;
   font-weight: 950;
   cursor: pointer;
-  box-shadow: 0 18px 40px rgba(255, 59, 31, 0.28);
+  box-shadow: 0 18px 40px color-mix(in srgb, var(--gym-primary) 28%, transparent);
 }
 
 .forma-save-progress:disabled {
@@ -1611,7 +1630,11 @@ a,
   border-radius: 28px;
   background:
     radial-gradient(circle at top right, rgba(255, 255, 255, 0.14), transparent 30%),
-    linear-gradient(135deg, #161616, #050505);
+    linear-gradient(
+      135deg,
+      var(--gym-secondary),
+      color-mix(in srgb, var(--gym-secondary) 72%, #000000)
+    );
   color: #ffffff;
   padding: 22px;
   box-shadow: 0 24px 60px rgba(17, 17, 17, 0.18);
@@ -1619,7 +1642,7 @@ a,
 }
 
 .forma-progress-hero-card > span {
-  color: #ff4a2f;
+  color: var(--gym-primary);
   font-size: 11px;
   font-weight: 950;
   text-transform: uppercase;
@@ -1683,7 +1706,7 @@ a,
   border: 1px solid rgba(17, 17, 17, 0.1);
   border-radius: 18px;
   background: #fffaf2;
-  color: #111111;
+  color: var(--gym-secondary);
   padding: 15px;
   font-size: 16px;
   font-weight: 900;
@@ -1692,7 +1715,7 @@ a,
 }
 
 .forma-progress-selector select:focus {
-  border-color: #ff3b1f;
+  border-color: var(--gym-primary);
 }
 
 .forma-progress-content {
@@ -1719,8 +1742,8 @@ a,
 
 .forma-progress-stat-grid article.highlight {
   background:
-    radial-gradient(circle at top right, rgba(255, 59, 31, 0.18), transparent 45%),
-    #111111;
+    radial-gradient(circle at top right, color-mix(in srgb, var(--gym-primary) 18%, transparent), transparent 45%),
+    var(--gym-secondary);
   color: #ffffff;
 }
 
@@ -1740,14 +1763,14 @@ a,
 .forma-progress-stat-grid strong {
   display: block;
   margin-top: 16px;
-  color: #111111;
+  color: var(--gym-secondary);
   font-family: Georgia, "Times New Roman", serif;
   font-size: 34px;
   line-height: 0.9;
 }
 
 .forma-progress-stat-grid article.highlight strong {
-  color: #ff4a2f;
+  color: var(--gym-primary);
 }
 
 .forma-progress-stat-grid p {
@@ -1781,8 +1804,8 @@ a,
 }
 
 .forma-chart-switch button.active {
-  background: #111111;
-  color: #ff4a2f;
+  background: var(--gym-secondary);
+  color: var(--gym-primary);
   box-shadow: 0 10px 30px rgba(17, 17, 17, 0.16);
 }
 
@@ -1803,7 +1826,7 @@ a,
 }
 
 .forma-chart-header span {
-  color: #ff3b1f;
+  color: var(--gym-primary);
   font-size: 11px;
   font-weight: 950;
   text-transform: uppercase;
@@ -1812,7 +1835,7 @@ a,
 
 .forma-chart-header h3 {
   margin: 6px 0 0;
-  color: #111111;
+  color: var(--gym-secondary);
   font-family: Georgia, "Times New Roman", serif;
   font-size: 34px;
   letter-spacing: -0.06em;
@@ -1822,8 +1845,8 @@ a,
   min-width: 38px;
   height: 38px;
   border-radius: 999px;
-  background: #111111;
-  color: #ff4a2f;
+  background: var(--gym-secondary);
+  color: var(--gym-primary);
   display: grid;
   place-items: center;
   font-size: 14px;
@@ -1845,7 +1868,7 @@ a,
 
 .forma-chart-shadow {
   fill: none;
-  stroke: rgba(255, 59, 31, 0.14);
+  stroke: color-mix(in srgb, var(--gym-primary) 14%, transparent);
   stroke-width: 12;
   stroke-linecap: round;
   stroke-linejoin: round;
@@ -1853,15 +1876,15 @@ a,
 
 .forma-chart-line {
   fill: none;
-  stroke: #ff3b1f;
+  stroke: var(--gym-primary);
   stroke-width: 4;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
 
 .forma-chart-dot {
-  fill: #111111;
-  stroke: #ff3b1f;
+  fill: var(--gym-secondary);
+  stroke: var(--gym-primary);
   stroke-width: 3;
 }
 
@@ -1884,7 +1907,7 @@ a,
 }
 
 .forma-history-heading span {
-  color: #ff3b1f;
+  color: var(--gym-primary);
   font-size: 11px;
   font-weight: 950;
   text-transform: uppercase;
@@ -1893,7 +1916,7 @@ a,
 
 .forma-history-heading h3 {
   margin: 6px 0 0;
-  color: #111111;
+  color: var(--gym-secondary);
   font-family: Georgia, "Times New Roman", serif;
   font-size: 28px;
   letter-spacing: -0.05em;
@@ -1920,8 +1943,8 @@ a,
   width: 58px;
   height: 58px;
   border-radius: 18px;
-  background: #111111;
-  color: #ff4a2f;
+  background: var(--gym-secondary);
+  color: var(--gym-primary);
   display: grid;
   place-items: center;
   font-size: 12px;
@@ -1934,7 +1957,7 @@ a,
 
 .forma-history-main strong {
   display: block;
-  color: #111111;
+  color: var(--gym-secondary);
   font-size: 14px;
 }
 
@@ -1961,7 +1984,7 @@ a,
 
 .forma-history-card > div:not(.forma-history-number):not(.forma-history-main)
   strong {
-  color: #111111;
+  color: var(--gym-secondary);
   font-size: 13px;
   font-weight: 950;
 }
@@ -2006,7 +2029,7 @@ a,
   background: #e9e1d4;
   display: flex;
   justify-content: center;
-  color: #111111;
+  color: var(--gym-secondary);
   font-family:
     Inter,
     ui-sans-serif,
@@ -2048,8 +2071,8 @@ a,
   width: 48px;
   height: 48px;
   border-radius: 16px;
-  background: #111111;
-  color: #ff4a2f;
+  background: var(--gym-secondary);
+  color: var(--gym-primary);
   display: grid;
   place-items: center;
   font-size: 24px;
@@ -2059,14 +2082,14 @@ a,
 
 .forma-login-brand h1 {
   margin: 0;
-  color: #111111;
+  color: var(--gym-secondary);
   font-family: Georgia, "Times New Roman", serif;
   font-size: 27px;
   letter-spacing: -0.06em;
 }
 
 .forma-login-brand h1 span {
-  color: #ff3b1f;
+  color: var(--gym-primary);
   font-style: italic;
 }
 
@@ -2094,7 +2117,11 @@ a,
   border-radius: 30px;
   background:
     radial-gradient(circle at top right, rgba(255, 255, 255, 0.16), transparent 32%),
-    linear-gradient(135deg, #161616, #050505);
+    linear-gradient(
+      135deg,
+      var(--gym-secondary),
+      color-mix(in srgb, var(--gym-secondary) 72%, #000000)
+    );
   color: #ffffff;
   padding: 26px 22px;
   box-shadow: 0 24px 60px rgba(17, 17, 17, 0.18);
@@ -2102,7 +2129,7 @@ a,
 }
 
 .forma-login-hero > span {
-  color: #ff4a2f;
+  color: var(--gym-primary);
   font-size: 11px;
   font-weight: 950;
   text-transform: uppercase;
@@ -2146,7 +2173,7 @@ a,
   border: 1px solid rgba(17, 17, 17, 0.1);
   border-radius: 18px;
   background: #fffaf2;
-  color: #111111;
+  color: var(--gym-secondary);
   padding: 16px;
   font-size: 16px;
   font-weight: 800;
@@ -2159,14 +2186,14 @@ a,
 }
 
 .forma-login-form input:focus {
-  border-color: #ff3b1f;
-  box-shadow: 0 0 0 4px rgba(255, 59, 31, 0.12);
+  border-color: var(--gym-primary);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--gym-primary) 12%, transparent);
 }
 
 .forma-login-error {
   margin: 0;
   border-radius: 16px;
-  background: rgba(255, 59, 31, 0.12);
+  background: color-mix(in srgb, var(--gym-primary) 12%, transparent);
   color: #b91c1c;
   padding: 12px 14px;
   font-size: 13px;
@@ -2177,13 +2204,13 @@ a,
   margin-top: 4px;
   border: none;
   border-radius: 19px;
-  background: #ff3b1f;
+  background: var(--gym-primary);
   color: #ffffff;
   padding: 17px;
   font-size: 15px;
   font-weight: 950;
   cursor: pointer;
-  box-shadow: 0 18px 40px rgba(255, 59, 31, 0.28);
+  box-shadow: 0 18px 40px color-mix(in srgb, var(--gym-primary) 28%, transparent);
 }
 
 .forma-login-form button:disabled {
@@ -2198,7 +2225,7 @@ a,
 }
 
 .forma-login-footer span {
-  color: #111111;
+  color: var(--gym-secondary);
   font-family: Georgia, "Times New Roman", serif;
   font-size: 22px;
   font-weight: 900;
@@ -2229,7 +2256,7 @@ a,
   .forma-login-hero h2 {
     font-size: 40px;
   }
-} 
+}
 .form-card-header {
   display: flex;
   justify-content: space-between;
@@ -2277,7 +2304,7 @@ a,
 }
 
 .edit-exercise-button {
-  background: #111111;
+  background: var(--gym-secondary);
   color: #ffffff;
 }
 
@@ -2292,7 +2319,7 @@ a,
 }
 
 .exercise-admin-video-link {
-  color: #dc2626;
+  color: var(--gym-primary);
   font-size: 13px;
   font-weight: 900;
 }
@@ -2305,7 +2332,7 @@ a,
   .exercise-admin-actions {
     justify-content: flex-start;
   }
-} 
+}
 /* === FORMA STYLE - ADMIN LAYOUT === */
 
 .admin-forma-page {
@@ -2313,7 +2340,7 @@ a,
   display: grid;
   grid-template-columns: 280px 1fr;
   background: #e9e1d4;
-  color: #111111;
+  color: var(--gym-secondary);
   font-family:
     Inter,
     ui-sans-serif,
@@ -2428,7 +2455,7 @@ a,
   height: 46px;
   border-radius: 999px;
   background: #f8f1e8;
-  color: #111111;
+  color: var(--gym-secondary);
   display: grid;
   place-items: center;
   font-weight: 950;
@@ -2488,7 +2515,7 @@ a,
 
 .admin-forma-main .dashboard-header h1 {
   margin: 0;
-  color: #111111;
+  color: var(--gym-secondary);
   font-family: Georgia, "Times New Roman", serif;
   font-size: 48px;
   line-height: 0.95;
@@ -2505,7 +2532,7 @@ a,
 .admin-forma-main .date-pill {
   border: 1px solid rgba(17, 17, 17, 0.1);
   background: #fffaf2;
-  color: #111111;
+  color: var(--gym-secondary);
   border-radius: 999px;
   padding: 12px 16px;
   font-weight: 900;
@@ -2530,7 +2557,7 @@ a,
 }
 
 .admin-forma-main .stat-card strong {
-  color: #111111;
+  color: var(--gym-secondary);
   font-family: Georgia, "Times New Roman", serif;
   font-size: 44px;
   letter-spacing: -0.05em;
@@ -2553,7 +2580,7 @@ a,
 .admin-forma-main .panel-header h2,
 .admin-forma-main .form-card h2,
 .admin-forma-main .table-card h2 {
-  color: #111111;
+  color: var(--gym-secondary);
   font-family: Georgia, "Times New Roman", serif;
   font-size: 28px;
   letter-spacing: -0.05em;
@@ -2581,7 +2608,7 @@ a,
 }
 
 .admin-forma-main .student-form button {
-  background: #111111;
+  background: var(--gym-secondary);
   color: #ffffff;
   border-radius: 17px;
 }
@@ -2674,7 +2701,7 @@ a,
   .admin-forma-main .dashboard-header h1 {
     font-size: 34px;
   }
-} 
+}
 /* === ADMIN DASHBOARD QUICK SECTIONS === */
 
 .recent-students-list {
@@ -2697,7 +2724,7 @@ a,
   width: 48px;
   height: 48px;
   border-radius: 16px;
-  background: #111111;
+  background: var(--gym-secondary);
   color: #ff5a1f;
   display: grid;
   place-items: center;
@@ -2711,7 +2738,7 @@ a,
 
 .recent-student-info strong {
   display: block;
-  color: #111111;
+  color: var(--gym-secondary);
   font-size: 15px;
 }
 
@@ -2741,7 +2768,7 @@ a,
   background: #fffaf2;
   padding: 14px;
   text-decoration: none;
-  color: #111111;
+  color: var(--gym-secondary);
   transition: 0.2s ease;
 }
 
@@ -2755,7 +2782,7 @@ a,
   width: 48px;
   height: 48px;
   border-radius: 16px;
-  background: #111111;
+  background: var(--gym-secondary);
   color: #ff5a1f;
   display: grid;
   place-items: center;
@@ -2765,7 +2792,7 @@ a,
 
 .quick-action-card strong {
   display: block;
-  color: #111111;
+  color: var(--gym-secondary);
   font-size: 15px;
 }
 
@@ -2785,7 +2812,7 @@ a,
     grid-column: 2;
     width: fit-content;
   }
-} 
+}
 .student-admin-actions {
   display: flex;
   gap: 8px;
@@ -2803,7 +2830,7 @@ a,
 }
 
 .edit-student-button {
-  background: #111111;
+  background: var(--gym-secondary);
   color: #ffffff;
 }
 
@@ -2820,7 +2847,7 @@ a,
 .student-admin-actions button:disabled {
   opacity: 0.7;
   cursor: not-allowed;
-} 
+}
 /* === ROUTINE ADMIN ACTIONS === */
 
 .routine-admin-actions {
@@ -2840,7 +2867,7 @@ a,
 }
 
 .edit-routine-button {
-  background: #111111;
+  background: var(--gym-secondary);
   color: #ffffff;
 }
 
@@ -2892,7 +2919,7 @@ a,
   .routine-admin-actions button {
     width: 100%;
   }
-} 
+}
 .routine-days-summary {
   display: grid;
   gap: 10px;
@@ -2911,7 +2938,7 @@ a,
 }
 
 .routine-days-summary strong {
-  color: #111111;
+  color: var(--gym-secondary);
   font-size: 13px;
   font-weight: 950;
   white-space: nowrap;
@@ -2919,7 +2946,7 @@ a,
 
 .routine-days-summary span {
   min-width: 0;
-  color: #111111;
+  color: var(--gym-secondary);
   font-size: 14px;
   font-weight: 800;
   overflow: hidden;
@@ -2943,7 +2970,7 @@ a,
   .routine-days-summary span {
     white-space: normal;
   }
-} 
+}
 /* === ASSIGN ROUTINE PAGE === */
 
 .assign-hero-grid {
@@ -2966,7 +2993,7 @@ a,
 .assign-main-card.featured {
   background:
     radial-gradient(circle at top right, rgba(255, 92, 31, 0.2), transparent 42%),
-    #111111;
+    var(--gym-secondary);
   color: #ffffff;
 }
 
@@ -3026,7 +3053,7 @@ a,
   border: 1px solid rgba(17, 17, 17, 0.1);
   border-radius: 17px;
   background: #fffaf2;
-  color: #111111;
+  color: var(--gym-secondary);
   padding: 13px 14px;
   outline: none;
 }
@@ -3057,7 +3084,7 @@ a,
   width: 52px;
   height: 52px;
   border-radius: 18px;
-  background: #111111;
+  background: var(--gym-secondary);
   color: #ff5a1f;
   display: grid;
   place-items: center;
@@ -3075,7 +3102,7 @@ a,
 
 .assign-selected-card strong {
   display: block;
-  color: #111111;
+  color: var(--gym-secondary);
   font-size: 15px;
 }
 
@@ -3175,7 +3202,7 @@ a,
   border: none;
   border-radius: 18px;
   background: #ff5a1f;
-  color: #111111;
+  color: var(--gym-secondary);
   padding: 14px;
   font-weight: 950;
   cursor: pointer;
@@ -3219,7 +3246,7 @@ a,
 
 .assign-student-main strong {
   display: block;
-  color: #111111;
+  color: var(--gym-secondary);
   font-size: 15px;
 }
 
@@ -3246,7 +3273,7 @@ a,
 .assign-student-routine strong {
   display: block;
   margin-top: 4px;
-  color: #111111;
+  color: var(--gym-secondary);
   font-size: 13px;
   font-weight: 900;
 }
@@ -3279,7 +3306,7 @@ a,
   .assign-selected-card {
     align-items: flex-start;
   }
-} 
+}
 /* === ADMIN PROGRESS PAGE === */
 
 .admin-progress-stats {
@@ -3309,7 +3336,7 @@ a,
 .admin-progress-stats strong {
   display: block;
   margin-top: 12px;
-  color: #111111;
+  color: var(--gym-secondary);
   font-family: Georgia, "Times New Roman", serif;
   font-size: 32px;
   line-height: 1;
@@ -3347,7 +3374,7 @@ a,
 .admin-progress-summary-card {
   background:
     radial-gradient(circle at top right, rgba(255, 92, 31, 0.2), transparent 42%),
-    #111111;
+    var(--gym-secondary);
   color: #ffffff;
 }
 
@@ -3403,7 +3430,7 @@ a,
   border: 1px solid rgba(17, 17, 17, 0.1);
   border-radius: 17px;
   background: #fffaf2;
-  color: #111111;
+  color: var(--gym-secondary);
   padding: 13px 14px;
   outline: none;
 }
@@ -3428,7 +3455,7 @@ a,
   width: 52px;
   height: 52px;
   border-radius: 18px;
-  background: #111111;
+  background: var(--gym-secondary);
   color: #ff5a1f;
   display: grid;
   place-items: center;
@@ -3439,7 +3466,7 @@ a,
 
 .admin-progress-student-card strong {
   display: block;
-  color: #111111;
+  color: var(--gym-secondary);
   font-size: 15px;
 }
 
@@ -3478,7 +3505,7 @@ a,
   margin-top: 18px;
   border: none;
   border-radius: 18px;
-  background: #111111;
+  background: var(--gym-secondary);
   color: #ffffff;
   padding: 14px;
   font-weight: 950;
@@ -3567,7 +3594,7 @@ a,
 
 .admin-progress-date strong {
   display: block;
-  color: #111111;
+  color: var(--gym-secondary);
   font-size: 13px;
 }
 
@@ -3585,7 +3612,7 @@ a,
 
 .admin-progress-log-main strong {
   display: block;
-  color: #111111;
+  color: var(--gym-secondary);
   font-size: 15px;
 }
 
@@ -3609,7 +3636,7 @@ a,
 .admin-progress-log-stat strong {
   display: block;
   margin-top: 5px;
-  color: #111111;
+  color: var(--gym-secondary);
   font-size: 13px;
   font-weight: 950;
 }
@@ -3670,7 +3697,7 @@ a,
   .admin-progress-notes {
     grid-column: auto;
   }
-}  
+}
 /* === STUDENTS FILTERS === */
 
 .students-summary-grid {
@@ -3700,7 +3727,7 @@ a,
 .students-summary-grid strong {
   display: block;
   margin-top: 12px;
-  color: #111111;
+  color: var(--gym-secondary);
   font-family: Georgia, "Times New Roman", serif;
   font-size: 34px;
   line-height: 1;
@@ -3735,7 +3762,7 @@ a,
   border: 1px solid rgba(17, 17, 17, 0.1);
   border-radius: 17px;
   background: #fffaf2;
-  color: #111111;
+  color: var(--gym-secondary);
   padding: 13px 14px;
   outline: none;
 }
@@ -3761,7 +3788,7 @@ a,
   .students-toolbar {
     grid-template-columns: 1fr;
   }
-} 
+}
 /* === EXERCISES FILTERS === */
 
 .exercises-summary-grid {
@@ -3791,7 +3818,7 @@ a,
 .exercises-summary-grid strong {
   display: block;
   margin-top: 12px;
-  color: #111111;
+  color: var(--gym-secondary);
   font-family: Georgia, "Times New Roman", serif;
   font-size: 34px;
   line-height: 1;
@@ -3826,7 +3853,7 @@ a,
   border: 1px solid rgba(17, 17, 17, 0.1);
   border-radius: 17px;
   background: #fffaf2;
-  color: #111111;
+  color: var(--gym-secondary);
   padding: 13px 14px;
   outline: none;
 }
@@ -3858,7 +3885,7 @@ a,
   .exercises-toolbar {
     grid-template-columns: 1fr;
   }
-} 
+}
 /* === ROUTINES FILTERS === */
 
 .routines-summary-grid {
@@ -3888,7 +3915,7 @@ a,
 .routines-summary-grid strong {
   display: block;
   margin-top: 12px;
-  color: #111111;
+  color: var(--gym-secondary);
   font-family: Georgia, "Times New Roman", serif;
   font-size: 34px;
   line-height: 1;
@@ -3923,7 +3950,7 @@ a,
   border: 1px solid rgba(17, 17, 17, 0.1);
   border-radius: 17px;
   background: #fffaf2;
-  color: #111111;
+  color: var(--gym-secondary);
   padding: 13px 14px;
   outline: none;
 }
@@ -3955,7 +3982,7 @@ a,
   .routines-toolbar {
     grid-template-columns: 1fr;
   }
-} 
+}
 /* === ASSIGN ROUTINE FILTERS === */
 
 .assign-summary-grid {
@@ -3985,7 +4012,7 @@ a,
 .assign-summary-grid strong {
   display: block;
   margin-top: 12px;
-  color: #111111;
+  color: var(--gym-secondary);
   font-family: Georgia, "Times New Roman", serif;
   font-size: 34px;
   line-height: 1;
@@ -4004,7 +4031,7 @@ a,
   border: 1px solid rgba(17, 17, 17, 0.1);
   border-radius: 17px;
   background: #fffaf2;
-  color: #111111;
+  color: var(--gym-secondary);
   padding: 13px 14px;
   outline: none;
 }
@@ -4052,7 +4079,7 @@ a,
   border: 1px solid rgba(17, 17, 17, 0.1);
   border-radius: 17px;
   background: #fffaf2;
-  color: #111111;
+  color: var(--gym-secondary);
   padding: 13px 14px;
   outline: none;
 }
@@ -4089,7 +4116,7 @@ a,
     width: 100%;
     min-width: 0;
   }
-} 
+}
 /* === ADMIN PROGRESS SEARCH === */
 
 .admin-progress-field {
@@ -4101,7 +4128,7 @@ a,
   border: 1px solid rgba(17, 17, 17, 0.1);
   border-radius: 17px;
   background: #fffaf2;
-  color: #111111;
+  color: var(--gym-secondary);
   padding: 13px 14px;
   outline: none;
 }
@@ -4116,7 +4143,7 @@ a,
   color: #7c756d;
   font-size: 13px;
   font-weight: 800;
-} 
+}
 /* === STUDENT WAITING ROUTINE SCREEN === */
 
 .forma-waiting-routine {
@@ -4131,7 +4158,7 @@ a,
 
 .forma-waiting-intro span {
   display: block;
-  color: #111111;
+  color: var(--gym-secondary);
   font-family: Georgia, "Times New Roman", serif;
   font-size: 42px;
   line-height: 1;
@@ -4165,7 +4192,7 @@ a,
   border-radius: 30px;
   background:
     radial-gradient(circle at top right, rgba(255, 255, 255, 0.12), transparent 34%),
-    linear-gradient(145deg, #111111, #181818);
+    linear-gradient(145deg, var(--gym-secondary), #181818);
   color: #ffffff;
   padding: 34px 24px 30px;
   text-align: center;
@@ -4319,7 +4346,7 @@ a,
   width: 28px;
   height: 34px;
   border-radius: 999px;
-  background: linear-gradient(145deg, #333333, #111111);
+  background: linear-gradient(145deg, #333333, var(--gym-secondary));
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
 }
 
@@ -4364,7 +4391,7 @@ a,
 
 .forma-waiting-logout {
   border: 1px solid rgba(255, 255, 255, 0.08) !important;
-  background: #111111;
+  background: var(--gym-secondary);
   color: #ffffff;
 }
 
@@ -4394,7 +4421,7 @@ a,
 
 .forma-waiting-tip p {
   margin: 0;
-  color: #111111;
+  color: var(--gym-secondary);
   font-size: 15px;
   line-height: 1.45;
 }
@@ -4431,7 +4458,7 @@ a,
   .forma-waiting-tip {
     grid-template-columns: 42px 1fr auto;
   }
-} 
+}
 /* === STUDENT NO PROGRESS SCREEN === */
 
 .forma-no-progress {
@@ -4446,7 +4473,7 @@ a,
   border-radius: 30px;
   background:
     radial-gradient(circle at top right, rgba(255, 90, 31, 0.16), transparent 34%),
-    linear-gradient(145deg, #111111, #1a1a1a);
+    linear-gradient(145deg, var(--gym-secondary), #1a1a1a);
   color: #ffffff;
   padding: 30px 22px;
   box-shadow: 0 24px 70px rgba(17, 17, 17, 0.24);
@@ -4600,7 +4627,7 @@ a,
 
 .forma-no-progress-tip p {
   margin: 0;
-  color: #111111;
+  color: var(--gym-secondary);
   font-size: 15px;
   line-height: 1.45;
 }
@@ -4618,7 +4645,7 @@ a,
   .forma-no-progress-card h2 {
     font-size: 32px;
   }
-} 
+}
 /* === DASHBOARD IMPROVEMENTS FINAL === */
 
 .stats-grid.dashboard-stats-grid {
@@ -4633,7 +4660,7 @@ a,
   overflow: hidden !important;
   background:
     radial-gradient(circle at top right, rgba(255, 90, 31, 0.2), transparent 36%),
-    linear-gradient(145deg, #111111, #1b1b1b) !important;
+    linear-gradient(145deg, var(--gym-secondary), #1b1b1b) !important;
   color: #ffffff !important;
 }
 
@@ -4685,7 +4712,7 @@ a,
 .dashboard-mini-grid strong {
   display: block !important;
   margin-top: 8px !important;
-  color: #111111 !important;
+  color: var(--gym-secondary) !important;
   font-size: 24px !important;
   font-weight: 950 !important;
 }
@@ -4728,7 +4755,7 @@ a,
 
 .dashboard-health-list strong {
   display: block !important;
-  color: #111111 !important;
+  color: var(--gym-secondary) !important;
   font-size: 15px !important;
   font-weight: 950 !important;
 }
@@ -4768,7 +4795,7 @@ a,
     align-items: flex-start !important;
     flex-direction: column !important;
   }
-} 
+}
 /* === SETTINGS PAGE === */
 
 .settings-grid {
@@ -4786,7 +4813,7 @@ a,
   border-radius: 28px;
   background:
     radial-gradient(circle at top right, rgba(255, 90, 31, 0.16), transparent 35%),
-    linear-gradient(145deg, #111111, #1a1a1a);
+    linear-gradient(145deg, var(--gym-secondary), #1a1a1a);
   color: #ffffff;
   padding: 24px;
   box-shadow: 0 22px 60px rgba(17, 17, 17, 0.16);
@@ -4832,7 +4859,7 @@ a,
   border: none;
   border-radius: 999px;
   background: #ffffff;
-  color: #111111;
+  color: var(--gym-secondary);
   padding: 12px 16px;
   font-size: 13px;
   font-weight: 950;
@@ -4850,7 +4877,7 @@ a,
 .settings-card.dark {
   background:
     radial-gradient(circle at top right, rgba(255, 90, 31, 0.15), transparent 35%),
-    #111111;
+    var(--gym-secondary);
   color: #ffffff;
 }
 
@@ -4865,7 +4892,7 @@ a,
 
 .settings-card-header h2 {
   margin: 8px 0 0;
-  color: #111111;
+  color: var(--gym-secondary);
   font-size: 24px;
   line-height: 1.1;
   letter-spacing: -0.04em;
@@ -4924,7 +4951,7 @@ a,
 
 .settings-info-list strong,
 .settings-status-list strong {
-  color: #111111;
+  color: var(--gym-secondary);
   font-size: 14px;
   font-weight: 950;
 }
@@ -4963,7 +4990,7 @@ a,
 
 .settings-module-list strong {
   display: block;
-  color: #111111;
+  color: var(--gym-secondary);
   font-size: 15px;
   font-weight: 950;
 }
@@ -4989,7 +5016,7 @@ a,
   .settings-profile-card button {
     width: 100%;
   }
-} 
+}
 /* === ADMIN MOBILE FLOATING NAV === */
 
 @media (max-width: 900px) {
@@ -4998,7 +5025,7 @@ a,
     min-height: 100dvh !important;
     background:
       radial-gradient(circle at top right, rgba(255, 90, 31, 0.12), transparent 32%),
-      linear-gradient(180deg, #111111 0%, #1a1a1a 260px, #f5efe5 260px) !important;
+      linear-gradient(180deg, var(--gym-secondary) 0%, #1a1a1a 260px, #f5efe5 260px) !important;
   }
 
   .admin-forma-sidebar {
@@ -5242,7 +5269,7 @@ a,
   .settings-profile-card {
     grid-template-columns: 1fr !important;
   }
-} 
+}
 /* === ADMIN MOBILE EXTRA SMALL === */
 
 @media (max-width: 520px) {
@@ -5306,7 +5333,7 @@ a,
   .assign-student-routine {
     grid-column: 2 !important;
   }
-} 
+}
 /* === ADMIN MOBILE FINAL LAYOUT FIX === */
 
 @media (max-width: 900px) {
@@ -5315,7 +5342,7 @@ a,
     padding-left: 18px !important;
     padding-right: 18px !important;
     padding-bottom: 18px !important;
-    background: #111111 !important;
+    background: var(--gym-secondary) !important;
   }
 
   .admin-forma-brand h1 {
@@ -5329,12 +5356,12 @@ a,
   }
 
   .dashboard-header {
-    color: #111111 !important;
+    color: var(--gym-secondary) !important;
     margin-bottom: 20px !important;
   }
 
   .dashboard-header h1 {
-    color: #111111 !important;
+    color: var(--gym-secondary) !important;
     font-size: 38px !important;
     line-height: 1 !important;
     letter-spacing: -0.06em !important;
@@ -5533,7 +5560,7 @@ a,
   .quick-actions-list {
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
   }
-} 
+}
 /* === MOBILE ADMIN POLISH FINAL === */
 
 @media (max-width: 900px) {
@@ -5573,7 +5600,7 @@ a,
   .dashboard-actions-first .quick-action-card strong {
     display: block !important;
     max-width: 100% !important;
-    color: #111111 !important;
+    color: var(--gym-secondary) !important;
     font-size: 14px !important;
     font-weight: 950 !important;
     line-height: 1.05 !important;
@@ -5615,7 +5642,7 @@ a,
   .stats-grid.dashboard-stats-grid .stat-card strong {
     display: block !important;
     margin-top: 14px !important;
-    color: #111111 !important;
+    color: var(--gym-secondary) !important;
     font-size: 42px !important;
     line-height: 0.95 !important;
   }
@@ -5723,7 +5750,7 @@ a,
   .stats-grid.dashboard-stats-grid .stat-card p {
     font-size: 12px !important;
   }
-} 
+}
 /* === DASHBOARD QUICK ACTIONS SPACING FIX === */
 
 .dashboard-actions-first {
