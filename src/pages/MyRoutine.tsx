@@ -68,14 +68,26 @@ export default function MyRoutine() {
 
   const activeDay = routine?.days?.[activeDayIndex];
 
+  /*
+   * Una rutina puede conservar referencias a ejercicios eliminados.
+   * Cuando MongoDB hace populate, esas referencias llegan como null.
+   * Filtramos esos elementos para evitar que la pantalla se rompa.
+   */
+  const validActiveExercises =
+    activeDay?.exercises?.filter((item) => Boolean(item?.exerciseId)) ?? [];
+
   const isCompletedToday = (exerciseId: string, dayOrder: number) => {
     const today = new Date().toDateString();
 
     return workoutLogs.some((log) => {
       const logDate = new Date(log.completedAt).toDateString();
+      const populatedExercise = log.exerciseId as
+        | { _id?: string }
+        | null
+        | undefined;
 
       return (
-        log.exerciseId._id === exerciseId &&
+        populatedExercise?._id === exerciseId &&
         log.dayOrder === dayOrder &&
         logDate === today
       );
@@ -146,6 +158,16 @@ export default function MyRoutine() {
   const handleSaveProgress = async () => {
     if (!routine || !selectedExercise) return;
 
+    const exercise = selectedExercise.item.exerciseId;
+
+    if (!exercise) {
+      setError(
+        "Este ejercicio ya no está disponible. Pedile al gimnasio que actualice tu rutina."
+      );
+      closeProgressForm();
+      return;
+    }
+
     try {
       setSavingProgress(true);
       setSuccessMessage("");
@@ -153,7 +175,7 @@ export default function MyRoutine() {
 
       await api.post("/workout-logs", {
         routineId: routine._id,
-        exerciseId: selectedExercise.item.exerciseId._id,
+        exerciseId: exercise._id,
         dayName: selectedExercise.dayName,
         dayOrder: selectedExercise.dayOrder,
         setsPlanned: selectedExercise.item.sets,
@@ -352,19 +374,23 @@ export default function MyRoutine() {
                     <h2>{activeDay.dayName}</h2>
                   </div>
 
-                  <strong>{activeDay.exercises.length} de rutina</strong>
+                  <strong>{validActiveExercises.length} de rutina</strong>
                 </div>
 
                 <div className="forma-exercise-list">
-                  {activeDay.exercises.map((item) => {
+                  {validActiveExercises.map((item) => {
+                    const exercise = item.exerciseId;
+
+                    if (!exercise) return null;
+
                     const completedToday = isCompletedToday(
-                      item.exerciseId._id,
+                      exercise._id,
                       activeDay.order
                     );
 
                     return (
                       <article
-                        key={`${activeDay.order}-${item.exerciseId._id}`}
+                        key={`${activeDay.order}-${exercise._id}`}
                         className={
                           completedToday
                             ? "forma-exercise-card completed"
@@ -372,10 +398,10 @@ export default function MyRoutine() {
                         }
                       >
                         <div className="forma-exercise-number">
-                          {isValidImageUrl(item.exerciseId.imageUrl) ? (
+                          {isValidImageUrl(exercise.imageUrl) ? (
                             <img
-                              src={item.exerciseId.imageUrl}
-                              alt={item.exerciseId.name}
+                              src={exercise.imageUrl}
+                              alt={exercise.name}
                               onError={(event) => {
                                 event.currentTarget.style.display = "none";
                               }}
@@ -388,7 +414,7 @@ export default function MyRoutine() {
                         <div className="forma-exercise-main">
                           <div className="forma-exercise-title">
                             <div>
-                              <strong>{item.exerciseId.name}</strong>
+                              <strong>{exercise.name}</strong>
                               <p>
                                 {item.sets} series · {item.reps} reps ·{" "}
                                 {item.rest} descanso
@@ -414,18 +440,18 @@ export default function MyRoutine() {
                             )}
                           </div>
 
-                          {item.exerciseId.muscles?.length > 0 && (
+                          {exercise.muscles?.length > 0 && (
                             <div className="forma-muscle-row">
-                              {item.exerciseId.muscles.map((muscle) => (
+                              {exercise.muscles.map((muscle) => (
                                 <span key={muscle}>{muscle}</span>
                               ))}
                             </div>
                           )}
 
                           <div className="forma-exercise-actions">
-                            {item.exerciseId.videoUrl && (
+                            {exercise.videoUrl && (
                               <a
-                                href={item.exerciseId.videoUrl}
+                                href={exercise.videoUrl}
                                 target="_blank"
                                 rel="noreferrer"
                               >
@@ -586,4 +612,4 @@ export default function MyRoutine() {
       )}
     </main>
   );
-} 
+}  

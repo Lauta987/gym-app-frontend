@@ -5,6 +5,8 @@ export interface GymTheme {
   secondaryColor?: string;
 }
 
+const STORAGE_KEY = "gymTheme";
+
 const DEFAULT_PRIMARY_COLOR = "#dc2626";
 const DEFAULT_SECONDARY_COLOR = "#111111";
 
@@ -36,33 +38,32 @@ export function applyGymTheme(gym?: GymTheme | null) {
 
 export function saveAndApplyGymTheme(gym?: GymTheme | null) {
   if (!gym) {
-    localStorage.removeItem("gym");
-    applyGymTheme(null);
+    clearGymTheme();
     return;
   }
 
-  localStorage.setItem("gym", JSON.stringify(gym));
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(gym));
   applyGymTheme(gym);
 }
 
 export function loadStoredGymTheme() {
-  const gymStorage = localStorage.getItem("gym");
+  const storedTheme = localStorage.getItem(STORAGE_KEY);
 
-  if (!gymStorage) {
+  if (!storedTheme) {
     applyGymTheme(null);
     return;
   }
 
   try {
-    const gym = JSON.parse(gymStorage) as GymTheme;
+    const gym = JSON.parse(storedTheme) as GymTheme;
     applyGymTheme(gym);
   } catch {
-    localStorage.removeItem("gym");
+    localStorage.removeItem(STORAGE_KEY);
     applyGymTheme(null);
   }
 }
 
 export function clearGymTheme() {
-  localStorage.removeItem("gym");
+  localStorage.removeItem(STORAGE_KEY);
   applyGymTheme(null);
 } 

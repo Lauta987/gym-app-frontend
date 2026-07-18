@@ -1,10 +1,12 @@
 import { useState } from "react";
 import type { FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
+
 import api from "../api/api";
 import type { LoginResponse } from "../types";
 import {
-  applyGymTheme,
+  clearGymTheme,
+  saveAndApplyGymTheme,
   type GymTheme,
 } from "../utils/theme";
 
@@ -38,17 +40,15 @@ export default function Login() {
       localStorage.setItem("user", JSON.stringify(user));
 
       if (user.role === "superadmin") {
-        localStorage.removeItem("gymTheme");
-
+        clearGymTheme();
         navigate("/superadmin");
         return;
       }
 
       if (gym) {
-        localStorage.setItem("gymTheme", JSON.stringify(gym));
-        applyGymTheme(gym);
+        saveAndApplyGymTheme(gym);
       } else {
-        localStorage.removeItem("gymTheme");
+        clearGymTheme();
       }
 
       if (user.role === "student") {
@@ -57,7 +57,8 @@ export default function Login() {
       }
 
       navigate("/dashboard");
-    } catch {
+    } catch (error) {
+      console.error("Error al iniciar sesión:", error);
       setError("Email o contraseña incorrectos.");
     } finally {
       setLoading(false);

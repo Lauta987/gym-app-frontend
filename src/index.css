@@ -2045,7 +2045,7 @@ a,
   max-width: 720px;
   min-height: 100dvh;
   background:
-    radial-gradient(circle at top right, rgba(255, 73, 35, 0.14), transparent 34%),
+    radial-gradient(circle at top right, color-mix(in srgb, var(--gym-primary) 14%, transparent), transparent 34%),
     #f5efe5;
   padding: max(54px, calc(env(safe-area-inset-top, 0px) + 26px)) 18px
     max(26px, calc(env(safe-area-inset-bottom, 0px) + 18px));
@@ -2356,8 +2356,12 @@ a,
   position: sticky;
   top: 0;
   background:
-    radial-gradient(circle at top left, rgba(255, 92, 31, 0.12), transparent 34%),
-    linear-gradient(180deg, #151515, #050505);
+    radial-gradient(circle at top left, color-mix(in srgb, var(--gym-primary) 12%, transparent), transparent 34%),
+    linear-gradient(
+      180deg,
+      var(--gym-secondary),
+      color-mix(in srgb, var(--gym-secondary) 72%, #000000)
+    );
   color: #ffffff;
   padding: 30px 20px;
   display: flex;
@@ -2374,7 +2378,7 @@ a,
 }
 
 .admin-forma-brand h1 span {
-  color: #ff5a1f;
+  color: var(--gym-primary);
   font-style: italic;
 }
 
@@ -2412,7 +2416,7 @@ a,
   border-radius: 10px;
   display: grid;
   place-items: center;
-  color: #ff5a1f;
+  color: var(--gym-primary);
   font-size: 17px;
 }
 
@@ -2424,14 +2428,14 @@ a,
 
 .admin-forma-link.active {
   background:
-    radial-gradient(circle at top right, rgba(255, 92, 31, 0.28), transparent 45%),
+    radial-gradient(circle at top right, color-mix(in srgb, var(--gym-primary) 28%, transparent), transparent 45%),
     rgba(255, 255, 255, 0.09);
   color: #ffffff;
-  box-shadow: inset 3px 0 0 #ff5a1f;
+  box-shadow: inset 3px 0 0 var(--gym-primary);
 }
 
 .admin-forma-link.active span {
-  background: rgba(255, 92, 31, 0.13);
+  background: color-mix(in srgb, var(--gym-primary) 13%, transparent);
 }
 
 .admin-forma-sidebar-bottom {
@@ -2478,10 +2482,10 @@ a,
 .admin-forma-logout {
   width: 100%;
   min-height: 50px;
-  border: 1px solid rgba(255, 92, 31, 0.28);
+  border: 1px solid color-mix(in srgb, var(--gym-primary) 28%, transparent);
   border-radius: 18px;
   background: transparent;
-  color: #ff5a1f;
+  color: var(--gym-primary);
   font-weight: 950;
   cursor: pointer;
   display: flex;
@@ -2491,14 +2495,14 @@ a,
 }
 
 .admin-forma-logout:hover {
-  background: rgba(255, 92, 31, 0.1);
+  background: color-mix(in srgb, var(--gym-primary) 10%, transparent);
   opacity: 1;
 }
 
 .admin-forma-main {
   min-width: 0;
   background:
-    radial-gradient(circle at top right, rgba(255, 92, 31, 0.08), transparent 32%),
+    radial-gradient(circle at top right, color-mix(in srgb, var(--gym-primary) 8%, transparent), transparent 32%),
     #f5efe5;
 }
 
@@ -2543,7 +2547,7 @@ a,
   border: 1px solid rgba(17, 17, 17, 0.08);
   border-radius: 24px;
   background:
-    radial-gradient(circle at top right, rgba(255, 92, 31, 0.08), transparent 40%),
+    radial-gradient(circle at top right, color-mix(in srgb, var(--gym-primary) 8%, transparent), transparent 40%),
     #fffaf2;
   box-shadow: 0 14px 38px rgba(17, 17, 17, 0.07);
 }
@@ -2564,7 +2568,7 @@ a,
 }
 
 .admin-forma-main .stat-card p {
-  color: #ff5a1f;
+  color: var(--gym-primary);
   font-weight: 950;
 }
 
@@ -2587,7 +2591,7 @@ a,
 }
 
 .admin-forma-main .panel-header button {
-  color: #ff5a1f;
+  color: var(--gym-primary);
   font-weight: 950;
 }
 
@@ -2602,9 +2606,9 @@ a,
 .admin-forma-main .student-form input:focus,
 .admin-forma-main .student-form textarea:focus,
 .admin-forma-main .student-form select:focus {
-  border-color: #ff5a1f;
+  border-color: var(--gym-primary);
   background: #fffaf2;
-  box-shadow: 0 0 0 4px rgba(255, 92, 31, 0.1);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--gym-primary) 10%, transparent);
 }
 
 .admin-forma-main .student-form button {
@@ -2614,7 +2618,7 @@ a,
 }
 
 .admin-forma-main .student-form button:hover {
-  background: #ff5a1f;
+  background: var(--gym-primary);
   opacity: 1;
 }
 
@@ -2725,7 +2729,7 @@ a,
   height: 48px;
   border-radius: 16px;
   background: var(--gym-secondary);
-  color: #ff5a1f;
+  color: var(--gym-primary);
   display: grid;
   place-items: center;
   font-weight: 950;
@@ -2783,7 +2787,7 @@ a,
   height: 48px;
   border-radius: 16px;
   background: var(--gym-secondary);
-  color: #ff5a1f;
+  color: var(--gym-primary);
   display: grid;
   place-items: center;
   font-size: 22px;
@@ -2984,7 +2988,7 @@ a,
   border: 1px solid rgba(17, 17, 17, 0.08);
   border-radius: 28px;
   background:
-    radial-gradient(circle at top right, rgba(255, 92, 31, 0.08), transparent 40%),
+    radial-gradient(circle at top right, color-mix(in srgb, var(--gym-primary) 8%, transparent), transparent 40%),
     #fffaf2;
   padding: 22px;
   box-shadow: 0 14px 40px rgba(17, 17, 17, 0.06);
@@ -2992,7 +2996,7 @@ a,
 
 .assign-main-card.featured {
   background:
-    radial-gradient(circle at top right, rgba(255, 92, 31, 0.2), transparent 42%),
+    radial-gradient(circle at top right, color-mix(in srgb, var(--gym-primary) 20%, transparent), transparent 42%),
     var(--gym-secondary);
   color: #ffffff;
 }
@@ -3011,8 +3015,8 @@ a,
 }
 
 .assign-main-card.featured .assign-card-heading span {
-  background: rgba(255, 92, 31, 0.16);
-  color: #ff5a1f;
+  background: color-mix(in srgb, var(--gym-primary) 16%, transparent);
+  color: var(--gym-primary);
 }
 
 .assign-card-heading h2 {
@@ -3060,13 +3064,13 @@ a,
 
 .assign-main-card.featured .assign-field select {
   border-color: rgba(255, 255, 255, 0.1);
-  background: #1c1c1c;
+  background: color-mix(in srgb, var(--gym-secondary) 88%, #000000);
   color: #ffffff;
 }
 
 .assign-field select:focus {
-  border-color: #ff5a1f;
-  box-shadow: 0 0 0 4px rgba(255, 92, 31, 0.1);
+  border-color: var(--gym-primary);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--gym-primary) 10%, transparent);
 }
 
 .assign-selected-card {
@@ -3085,7 +3089,7 @@ a,
   height: 52px;
   border-radius: 18px;
   background: var(--gym-secondary);
-  color: #ff5a1f;
+  color: var(--gym-primary);
   display: grid;
   place-items: center;
   font-size: 19px;
@@ -3122,7 +3126,7 @@ a,
 }
 
 .assign-selected-card b {
-  color: #ff5a1f;
+  color: var(--gym-primary);
 }
 
 .assign-empty-box {
@@ -3154,8 +3158,8 @@ a,
   display: inline-flex;
   width: fit-content;
   border-radius: 999px;
-  background: rgba(255, 92, 31, 0.16);
-  color: #ff5a1f;
+  background: color-mix(in srgb, var(--gym-primary) 16%, transparent);
+  color: var(--gym-primary);
   padding: 7px 10px;
   font-size: 11px;
   font-weight: 950;
@@ -3185,7 +3189,7 @@ a,
 }
 
 .assign-routine-preview strong {
-  color: #ff5a1f;
+  color: var(--gym-primary);
   font-size: 34px;
   font-family: Georgia, "Times New Roman", serif;
 }
@@ -3201,7 +3205,7 @@ a,
   margin-top: 18px;
   border: none;
   border-radius: 18px;
-  background: #ff5a1f;
+  background: var(--gym-primary);
   color: var(--gym-secondary);
   padding: 14px;
   font-weight: 950;
@@ -3234,9 +3238,9 @@ a,
 }
 
 .assign-student-row.highlighted {
-  border-color: rgba(255, 92, 31, 0.35);
+  border-color: color-mix(in srgb, var(--gym-primary) 35%, transparent);
   background:
-    radial-gradient(circle at top right, rgba(255, 92, 31, 0.1), transparent 35%),
+    radial-gradient(circle at top right, color-mix(in srgb, var(--gym-primary) 10%, transparent), transparent 35%),
     #fffaf2;
 }
 
@@ -3345,7 +3349,7 @@ a,
 
 .admin-progress-stats p {
   margin: 8px 0 0;
-  color: #ff5a1f;
+  color: var(--gym-primary);
   font-size: 13px;
   font-weight: 850;
 }
@@ -3367,13 +3371,13 @@ a,
 
 .admin-progress-selector-card {
   background:
-    radial-gradient(circle at top right, rgba(255, 92, 31, 0.08), transparent 42%),
+    radial-gradient(circle at top right, color-mix(in srgb, var(--gym-primary) 8%, transparent), transparent 42%),
     #fffaf2;
 }
 
 .admin-progress-summary-card {
   background:
-    radial-gradient(circle at top right, rgba(255, 92, 31, 0.2), transparent 42%),
+    radial-gradient(circle at top right, color-mix(in srgb, var(--gym-primary) 20%, transparent), transparent 42%),
     var(--gym-secondary);
   color: #ffffff;
 }
@@ -3392,8 +3396,8 @@ a,
 }
 
 .admin-progress-heading.dark span {
-  background: rgba(255, 92, 31, 0.16);
-  color: #ff5a1f;
+  background: color-mix(in srgb, var(--gym-primary) 16%, transparent);
+  color: var(--gym-primary);
 }
 
 .admin-progress-heading h2 {
@@ -3436,8 +3440,8 @@ a,
 }
 
 .admin-progress-field select:focus {
-  border-color: #ff5a1f;
-  box-shadow: 0 0 0 4px rgba(255, 92, 31, 0.1);
+  border-color: var(--gym-primary);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--gym-primary) 10%, transparent);
 }
 
 .admin-progress-student-card {
@@ -3456,7 +3460,7 @@ a,
   height: 52px;
   border-radius: 18px;
   background: var(--gym-secondary);
-  color: #ff5a1f;
+  color: var(--gym-primary);
   display: grid;
   place-items: center;
   font-size: 19px;
@@ -3486,7 +3490,7 @@ a,
 }
 
 .admin-progress-student-card b {
-  color: #ff5a1f;
+  color: var(--gym-primary);
 }
 
 .admin-progress-empty-box {
@@ -3555,7 +3559,7 @@ a,
 }
 
 .admin-progress-exercise-grid strong {
-  color: #ff5a1f;
+  color: var(--gym-primary);
   font-size: 34px;
   font-family: Georgia, "Times New Roman", serif;
 }
@@ -3736,7 +3740,7 @@ a,
 
 .students-summary-grid p {
   margin: 8px 0 0;
-  color: #ff5a1f;
+  color: var(--gym-primary);
   font-size: 13px;
   font-weight: 850;
 }
@@ -3769,8 +3773,8 @@ a,
 
 .students-toolbar input:focus,
 .students-toolbar select:focus {
-  border-color: #ff5a1f;
-  box-shadow: 0 0 0 4px rgba(255, 92, 31, 0.1);
+  border-color: var(--gym-primary);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--gym-primary) 10%, transparent);
 }
 
 .students-results-text {
@@ -3827,7 +3831,7 @@ a,
 
 .exercises-summary-grid p {
   margin: 8px 0 0;
-  color: #ff5a1f;
+  color: var(--gym-primary);
   font-size: 13px;
   font-weight: 850;
 }
@@ -3860,8 +3864,8 @@ a,
 
 .exercises-toolbar input:focus,
 .exercises-toolbar select:focus {
-  border-color: #ff5a1f;
-  box-shadow: 0 0 0 4px rgba(255, 92, 31, 0.1);
+  border-color: var(--gym-primary);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--gym-primary) 10%, transparent);
 }
 
 .exercises-results-text {
@@ -3924,7 +3928,7 @@ a,
 
 .routines-summary-grid p {
   margin: 8px 0 0;
-  color: #ff5a1f;
+  color: var(--gym-primary);
   font-size: 13px;
   font-weight: 850;
 }
@@ -3957,8 +3961,8 @@ a,
 
 .routines-toolbar input:focus,
 .routines-toolbar select:focus {
-  border-color: #ff5a1f;
-  box-shadow: 0 0 0 4px rgba(255, 92, 31, 0.1);
+  border-color: var(--gym-primary);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--gym-primary) 10%, transparent);
 }
 
 .routines-results-text {
@@ -4021,7 +4025,7 @@ a,
 
 .assign-summary-grid p {
   margin: 8px 0 0;
-  color: #ff5a1f;
+  color: var(--gym-primary);
   font-size: 13px;
   font-weight: 850;
 }
@@ -4038,13 +4042,13 @@ a,
 
 .assign-main-card.featured .assign-field input {
   border-color: rgba(255, 255, 255, 0.1);
-  background: #1c1c1c;
+  background: color-mix(in srgb, var(--gym-secondary) 88%, #000000);
   color: #ffffff;
 }
 
 .assign-field input:focus {
-  border-color: #ff5a1f;
-  box-shadow: 0 0 0 4px rgba(255, 92, 31, 0.1);
+  border-color: var(--gym-primary);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--gym-primary) 10%, transparent);
 }
 
 .assign-helper-text {
@@ -4085,8 +4089,8 @@ a,
 }
 
 .assign-toolbar select:focus {
-  border-color: #ff5a1f;
-  box-shadow: 0 0 0 4px rgba(255, 92, 31, 0.1);
+  border-color: var(--gym-primary);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--gym-primary) 10%, transparent);
 }
 
 .assign-toolbar p {
@@ -4134,8 +4138,8 @@ a,
 }
 
 .admin-progress-field input:focus {
-  border-color: #ff5a1f;
-  box-shadow: 0 0 0 4px rgba(255, 92, 31, 0.1);
+  border-color: var(--gym-primary);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--gym-primary) 10%, transparent);
 }
 
 .admin-progress-results-text {
@@ -4167,7 +4171,7 @@ a,
 
 .forma-waiting-intro h2 {
   margin: 0;
-  color: #ff5a1f;
+  color: var(--gym-primary);
   font-family: Georgia, "Times New Roman", serif;
   font-size: 46px;
   font-style: italic;
@@ -4176,7 +4180,7 @@ a,
 }
 
 .forma-waiting-intro h2 strong {
-  color: #ff5a1f;
+  color: var(--gym-primary);
 }
 
 .forma-waiting-intro p {
@@ -4192,7 +4196,11 @@ a,
   border-radius: 30px;
   background:
     radial-gradient(circle at top right, rgba(255, 255, 255, 0.12), transparent 34%),
-    linear-gradient(145deg, var(--gym-secondary), #181818);
+    linear-gradient(
+      145deg,
+      var(--gym-secondary),
+      color-mix(in srgb, var(--gym-secondary) 78%, #000000)
+    );
   color: #ffffff;
   padding: 34px 24px 30px;
   text-align: center;
@@ -4227,9 +4235,9 @@ a,
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  border: 1px solid #ff5a1f;
+  border: 1px solid var(--gym-primary);
   border-radius: 999px;
-  color: #ff5a1f;
+  color: var(--gym-primary);
   padding: 10px 16px;
   font-size: 14px;
   font-weight: 950;
@@ -4252,7 +4260,7 @@ a,
 }
 
 .forma-waiting-card h3 strong {
-  color: #ff5a1f;
+  color: var(--gym-primary);
   font-style: italic;
   font-weight: 900;
 }
@@ -4263,7 +4271,7 @@ a,
   width: 48px;
   height: 2px;
   margin: 26px auto;
-  background: #ff5a1f;
+  background: var(--gym-primary);
   border-radius: 999px;
 }
 
@@ -4346,7 +4354,11 @@ a,
   width: 28px;
   height: 34px;
   border-radius: 999px;
-  background: linear-gradient(145deg, #333333, var(--gym-secondary));
+  background: linear-gradient(
+      145deg,
+      color-mix(in srgb, var(--gym-secondary) 78%, #ffffff),
+      var(--gym-secondary)
+    );
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
 }
 
@@ -4365,7 +4377,7 @@ a,
   width: 40px;
   height: 7px;
   border-radius: 999px;
-  background: #282828;
+  background: color-mix(in srgb, var(--gym-secondary) 82%, #ffffff);
 }
 
 .forma-waiting-actions {
@@ -4384,9 +4396,9 @@ a,
 }
 
 .forma-waiting-refresh {
-  background: linear-gradient(135deg, #ff5a1f, #ff3f16);
+  background: linear-gradient(135deg, var(--gym-primary), color-mix(in srgb, var(--gym-primary) 82%, #000000));
   color: #ffffff;
-  box-shadow: 0 14px 30px rgba(255, 90, 31, 0.25);
+  box-shadow: 0 14px 30px color-mix(in srgb, var(--gym-primary) 25%, transparent);
 }
 
 .forma-waiting-logout {
@@ -4472,8 +4484,12 @@ a,
   overflow: hidden;
   border-radius: 30px;
   background:
-    radial-gradient(circle at top right, rgba(255, 90, 31, 0.16), transparent 34%),
-    linear-gradient(145deg, var(--gym-secondary), #1a1a1a);
+    radial-gradient(circle at top right, color-mix(in srgb, var(--gym-primary) 16%, transparent), transparent 34%),
+    linear-gradient(
+      145deg,
+      var(--gym-secondary),
+      color-mix(in srgb, var(--gym-secondary) 78%, #000000)
+    );
   color: #ffffff;
   padding: 30px 22px;
   box-shadow: 0 24px 70px rgba(17, 17, 17, 0.24);
@@ -4496,9 +4512,9 @@ a,
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  border: 1px solid #ff5a1f;
+  border: 1px solid var(--gym-primary);
   border-radius: 999px;
-  color: #ff5a1f;
+  color: var(--gym-primary);
   padding: 10px 16px;
   font-size: 13px;
   font-weight: 950;
@@ -4516,7 +4532,7 @@ a,
 }
 
 .forma-no-progress-card h2 strong {
-  color: #ff5a1f;
+  color: var(--gym-primary);
   font-style: italic;
 }
 
@@ -4555,7 +4571,7 @@ a,
   width: 42px;
   height: 42px;
   border-radius: 999px;
-  background: #ff5a1f;
+  background: var(--gym-primary);
   color: #ffffff;
   font-size: 16px;
   font-weight: 950;
@@ -4594,9 +4610,9 @@ a,
 }
 
 .forma-no-progress-actions button:first-child {
-  background: linear-gradient(135deg, #ff5a1f, #ff3f16);
+  background: linear-gradient(135deg, var(--gym-primary), color-mix(in srgb, var(--gym-primary) 82%, #000000));
   color: #ffffff;
-  box-shadow: 0 14px 30px rgba(255, 90, 31, 0.25);
+  box-shadow: 0 14px 30px color-mix(in srgb, var(--gym-primary) 25%, transparent);
 }
 
 .forma-no-progress-actions button:last-child {
@@ -4633,7 +4649,7 @@ a,
 }
 
 .forma-no-progress-tip strong {
-  color: #ff5a1f;
+  color: var(--gym-primary);
 }
 
 @media (max-width: 520px) {
@@ -4659,7 +4675,7 @@ a,
   position: relative !important;
   overflow: hidden !important;
   background:
-    radial-gradient(circle at top right, rgba(255, 90, 31, 0.2), transparent 36%),
+    radial-gradient(circle at top right, color-mix(in srgb, var(--gym-primary) 20%, transparent), transparent 36%),
     linear-gradient(145deg, var(--gym-secondary), #1b1b1b) !important;
   color: #ffffff !important;
 }
@@ -4670,7 +4686,7 @@ a,
 }
 
 .dashboard-alert-card strong {
-  color: #ff5a1f !important;
+  color: var(--gym-primary) !important;
 }
 
 .dashboard-alert-card a {
@@ -4678,7 +4694,7 @@ a,
   width: fit-content !important;
   margin-top: 14px !important;
   border-radius: 999px !important;
-  background: #ff5a1f !important;
+  background: var(--gym-primary) !important;
   color: #ffffff !important;
   padding: 9px 13px !important;
   font-size: 12px !important;
@@ -4718,17 +4734,17 @@ a,
 }
 
 .dashboard-pending-panel {
-  border: 1px solid rgba(255, 90, 31, 0.16) !important;
+  border: 1px solid color-mix(in srgb, var(--gym-primary) 16%, transparent) !important;
 }
 
 .recent-student-card.pending {
-  border: 1px solid rgba(255, 90, 31, 0.2) !important;
+  border: 1px solid color-mix(in srgb, var(--gym-primary) 20%, transparent) !important;
   background: #fffaf2 !important;
 }
 
 .dashboard-assign-link {
   border-radius: 999px !important;
-  background: #ff5a1f !important;
+  background: var(--gym-primary) !important;
   color: #ffffff !important;
   padding: 8px 12px !important;
   font-size: 12px !important;
@@ -4812,8 +4828,12 @@ a,
   gap: 18px;
   border-radius: 28px;
   background:
-    radial-gradient(circle at top right, rgba(255, 90, 31, 0.16), transparent 35%),
-    linear-gradient(145deg, var(--gym-secondary), #1a1a1a);
+    radial-gradient(circle at top right, color-mix(in srgb, var(--gym-primary) 16%, transparent), transparent 35%),
+    linear-gradient(
+      145deg,
+      var(--gym-secondary),
+      color-mix(in srgb, var(--gym-secondary) 78%, #000000)
+    );
   color: #ffffff;
   padding: 24px;
   box-shadow: 0 22px 60px rgba(17, 17, 17, 0.16);
@@ -4825,7 +4845,7 @@ a,
   width: 72px;
   height: 72px;
   border-radius: 22px;
-  background: #ff5a1f;
+  background: var(--gym-primary);
   color: #ffffff;
   font-size: 30px;
   font-weight: 950;
@@ -4833,7 +4853,7 @@ a,
 
 .settings-profile-card span {
   display: block;
-  color: #ff5a1f;
+  color: var(--gym-primary);
   font-size: 12px;
   font-weight: 950;
   text-transform: uppercase;
@@ -4876,14 +4896,14 @@ a,
 
 .settings-card.dark {
   background:
-    radial-gradient(circle at top right, rgba(255, 90, 31, 0.15), transparent 35%),
+    radial-gradient(circle at top right, color-mix(in srgb, var(--gym-primary) 15%, transparent), transparent 35%),
     var(--gym-secondary);
   color: #ffffff;
 }
 
 .settings-card-header span {
   display: block;
-  color: #ff5a1f;
+  color: var(--gym-primary);
   font-size: 11px;
   font-weight: 950;
   text-transform: uppercase;
@@ -4957,7 +4977,7 @@ a,
 }
 
 .settings-status-list strong {
-  color: #ff5a1f;
+  color: var(--gym-primary);
 }
 
 .settings-module-list {
@@ -4983,7 +5003,7 @@ a,
   width: 38px;
   height: 38px;
   border-radius: 999px;
-  background: #ff5a1f;
+  background: var(--gym-primary);
   color: #ffffff;
   font-weight: 950;
 }
@@ -5024,8 +5044,13 @@ a,
     display: block !important;
     min-height: 100dvh !important;
     background:
-      radial-gradient(circle at top right, rgba(255, 90, 31, 0.12), transparent 32%),
-      linear-gradient(180deg, var(--gym-secondary) 0%, #1a1a1a 260px, #f5efe5 260px) !important;
+      radial-gradient(circle at top right, color-mix(in srgb, var(--gym-primary) 12%, transparent), transparent 32%),
+      linear-gradient(
+        180deg,
+        var(--gym-secondary) 0%,
+        color-mix(in srgb, var(--gym-secondary) 78%, #000000) 260px,
+        #f5efe5 260px
+      ) !important;
   }
 
   .admin-forma-sidebar {
@@ -5055,7 +5080,7 @@ a,
   }
 
   .admin-forma-brand h1 span {
-    color: #ff5a1f !important;
+    color: var(--gym-primary) !important;
   }
 
   .admin-forma-brand p {
@@ -5136,12 +5161,12 @@ a,
   .admin-forma-link.active {
     min-width: auto !important;
     background:
-      radial-gradient(circle at center, rgba(255, 90, 31, 0.32), rgba(255, 90, 31, 0.12)) !important;
-    color: #ff5a1f !important;
+      radial-gradient(circle at center, color-mix(in srgb, var(--gym-primary) 32%, transparent), color-mix(in srgb, var(--gym-primary) 12%, transparent)) !important;
+    color: var(--gym-primary) !important;
   }
 
   .admin-forma-link.active span {
-    color: #ff5a1f !important;
+    color: var(--gym-primary) !important;
   }
 
   .admin-forma-sidebar-bottom {
@@ -5179,7 +5204,7 @@ a,
 
   .date-pill {
     width: fit-content !important;
-    background: #ff5a1f !important;
+    background: var(--gym-primary) !important;
     color: #ffffff !important;
   }
 
@@ -5374,13 +5399,13 @@ a,
   }
 
   .date-pill {
-    background: #ff5a1f !important;
+    background: var(--gym-primary) !important;
     color: #ffffff !important;
     border-radius: 999px !important;
     padding: 13px 18px !important;
     font-size: 15px !important;
     font-weight: 950 !important;
-    box-shadow: 0 14px 30px rgba(255, 90, 31, 0.22) !important;
+    box-shadow: 0 14px 30px color-mix(in srgb, var(--gym-primary) 22%, transparent) !important;
   }
 
   .stats-grid,
@@ -5649,7 +5674,7 @@ a,
 
   .stats-grid.dashboard-stats-grid .stat-card p {
     margin-top: 12px !important;
-    color: #ff5a1f !important;
+    color: var(--gym-primary) !important;
     font-size: 14px !important;
     font-weight: 950 !important;
     line-height: 1.15 !important;
@@ -5668,7 +5693,7 @@ a,
   }
 
   .stats-grid.dashboard-stats-grid .dashboard-alert-card strong {
-    color: #ff5a1f !important;
+    color: var(--gym-primary) !important;
   }
 
   .stats-grid.dashboard-stats-grid .dashboard-alert-card a {
@@ -5773,4 +5798,4 @@ a,
   .stats-grid.dashboard-stats-grid {
     margin-top: 0 !important;
   }
-} 
+}  

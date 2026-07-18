@@ -11,6 +11,7 @@ import Progress from "./pages/Progress";
 import Settings from "./pages/Settings";
 import MyRoutine from "./pages/MyRoutine";
 import MyProgress from "./pages/MyProgress";
+
 import SuperAdminDashboard from "./pages/SuperAdminDashboard";
 import SuperAdminCreateGym from "./pages/SuperAdminCreateGym";
 import SuperAdminGymDetail from "./pages/SuperAdminGymDetail";
@@ -85,9 +86,10 @@ function SuperAdminRoute({ children }: { children: ReactNode }) {
 }
 
 function RedirectByRole() {
+  const token = localStorage.getItem("token");
   const user = getLoggedUser();
 
-  if (!user) {
+  if (!token || !user) {
     return <Navigate to="/" replace />;
   }
 
@@ -107,6 +109,7 @@ export default function App() {
     <Routes>
       <Route path="/" element={<Login />} />
 
+      {/* SuperAdmin */}
       <Route
         path="/superadmin"
         element={
@@ -124,14 +127,15 @@ export default function App() {
           </SuperAdminRoute>
         }
       />
+
       <Route
-        path="/superadmin/gyms/:id"
+        path="/superadmin/gyms/:id/admins"
         element={
-         <SuperAdminRoute>
-          <SuperAdminGymDetail />
-        </SuperAdminRoute>
-  }
-/>
+          <SuperAdminRoute>
+            <SuperAdminGymAdmins />
+          </SuperAdminRoute>
+        }
+      />
 
       <Route
         path="/superadmin/gyms/:id/edit"
@@ -141,15 +145,18 @@ export default function App() {
           </SuperAdminRoute>
         }
       />
+
       <Route
-        path="/superadmin/gyms/:id/admins"
+        path="/superadmin/gyms/:id"
         element={
           <SuperAdminRoute>
-            <SuperAdminGymAdmins />
+            <SuperAdminGymDetail />
           </SuperAdminRoute>
-  } 
-/>
-      <Route 
+        }
+      />
+
+      {/* Admin */}
+      <Route
         path="/admin"
         element={<Navigate to="/dashboard" replace />}
       />
@@ -217,6 +224,7 @@ export default function App() {
         }
       />
 
+      {/* Student */}
       <Route
         path="/my-routine"
         element={
@@ -238,4 +246,4 @@ export default function App() {
       <Route path="*" element={<RedirectByRole />} />
     </Routes>
   );
-} 
+}
