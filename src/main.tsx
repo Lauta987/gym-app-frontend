@@ -5,17 +5,23 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import "./index.css";
 
-import { loadStoredGymTheme } from "./utils/theme";
-import { configureGymPwaFromCurrentPath } from "./utils/gymPwa";
+import {
+  loadStoredGymTheme,
+} from "./utils/theme";
+
+import {
+  configureGymPwaFromCurrentPath,
+} from "./utils/gymPwa";
 
 loadStoredGymTheme();
 
-configureGymPwaFromCurrentPath().catch((error) => {
-  console.error(
-    "No se pudo cargar la identidad del gimnasio:",
-    error
-  );
-});
+configureGymPwaFromCurrentPath()
+  .catch((error) => {
+    console.error(
+      "No se pudo cargar la identidad del gimnasio:",
+      error
+    );
+  });
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
@@ -23,20 +29,22 @@ if ("serviceWorker" in navigator) {
       .register("/sw.js")
       .then((registration) => {
         console.log(
-          "Service Worker registrado correctamente:",
+          "Service Worker registrado:",
           registration.scope
         );
       })
       .catch((error) => {
         console.error(
-          "No se pudo registrar el Service Worker:",
+          "Error al registrar Service Worker:",
           error
         );
       });
   });
 }
 
-createRoot(document.getElementById("root")!).render(
+createRoot(
+  document.getElementById("root")!
+).render(
   <StrictMode>
     <BrowserRouter>
       <App />

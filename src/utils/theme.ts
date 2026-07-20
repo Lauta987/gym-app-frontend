@@ -1,8 +1,11 @@
 export interface GymTheme {
+  _id?: string;
   name?: string;
+  slug?: string;
   logoUrl?: string;
   primaryColor?: string;
   secondaryColor?: string;
+  updatedAt?: string;
 }
 
 const STORAGE_KEY = "gymTheme";
@@ -10,18 +13,28 @@ const STORAGE_KEY = "gymTheme";
 const DEFAULT_PRIMARY_COLOR = "#dc2626";
 const DEFAULT_SECONDARY_COLOR = "#111111";
 
-function isValidHexColor(color?: string): color is string {
-  if (!color) return false;
+function isValidHexColor(
+  color?: string
+): color is string {
+  if (!color) {
+    return false;
+  }
 
   return /^#[0-9A-Fa-f]{6}$/.test(color);
 }
 
-export function applyGymTheme(gym?: GymTheme | null) {
-  const primaryColor = isValidHexColor(gym?.primaryColor)
+export function applyGymTheme(
+  gym?: GymTheme | null
+) {
+  const primaryColor = isValidHexColor(
+    gym?.primaryColor
+  )
     ? gym.primaryColor
     : DEFAULT_PRIMARY_COLOR;
 
-  const secondaryColor = isValidHexColor(gym?.secondaryColor)
+  const secondaryColor = isValidHexColor(
+    gym?.secondaryColor
+  )
     ? gym.secondaryColor
     : DEFAULT_SECONDARY_COLOR;
 
@@ -36,18 +49,25 @@ export function applyGymTheme(gym?: GymTheme | null) {
   );
 }
 
-export function saveAndApplyGymTheme(gym?: GymTheme | null) {
+export function saveAndApplyGymTheme(
+  gym?: GymTheme | null
+) {
   if (!gym) {
     clearGymTheme();
     return;
   }
 
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(gym));
+  localStorage.setItem(
+    STORAGE_KEY,
+    JSON.stringify(gym)
+  );
+
   applyGymTheme(gym);
 }
 
 export function loadStoredGymTheme() {
-  const storedTheme = localStorage.getItem(STORAGE_KEY);
+  const storedTheme =
+    localStorage.getItem(STORAGE_KEY);
 
   if (!storedTheme) {
     applyGymTheme(null);
@@ -55,7 +75,9 @@ export function loadStoredGymTheme() {
   }
 
   try {
-    const gym = JSON.parse(storedTheme) as GymTheme;
+    const gym =
+      JSON.parse(storedTheme) as GymTheme;
+
     applyGymTheme(gym);
   } catch {
     localStorage.removeItem(STORAGE_KEY);
@@ -63,7 +85,27 @@ export function loadStoredGymTheme() {
   }
 }
 
+export function getStoredGymTheme():
+  | GymTheme
+  | null {
+  const storedTheme =
+    localStorage.getItem(STORAGE_KEY);
+
+  if (!storedTheme) {
+    return null;
+  }
+
+  try {
+    return JSON.parse(
+      storedTheme
+    ) as GymTheme;
+  } catch {
+    localStorage.removeItem(STORAGE_KEY);
+    return null;
+  }
+}
+
 export function clearGymTheme() {
   localStorage.removeItem(STORAGE_KEY);
   applyGymTheme(null);
-}  
+} 

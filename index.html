@@ -3,44 +3,6 @@
   <head>
     <meta charset="UTF-8" />
 
-    <link
-      id="app-favicon"
-      rel="icon"
-      type="image/svg+xml"
-      href="/favicon.svg"
-    />
-
-    <script>
-      (() => {
-        const match = window.location.pathname.match(
-          /^\/gym\/([^/]+)\/?$/
-        );
-
-        const apiUrl = "%VITE_API_URL%".replace(/\/+$/, "");
-
-        const manifest = document.createElement("link");
-
-        manifest.id = "app-manifest";
-        manifest.rel = "manifest";
-
-        if (
-          match &&
-          apiUrl &&
-          !apiUrl.includes("%VITE_API_URL%")
-        ) {
-          manifest.href =
-            `${apiUrl}/public/gyms/${match[1]}` +
-            "/manifest.webmanifest";
-
-          manifest.crossOrigin = "anonymous";
-        } else {
-          manifest.href = "/manifest.webmanifest";
-        }
-
-        document.head.appendChild(manifest);
-      })();
-    </script>
-
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"
@@ -53,11 +15,18 @@
     />
 
     <meta
+      id="app-name"
+      name="application-name"
+      content="GymStart"
+    />
+
+    <meta
       name="mobile-web-app-capable"
       content="yes"
     />
 
     <meta
+      id="apple-app-title"
       name="apple-mobile-web-app-title"
       content="GymStart"
     />
@@ -73,12 +42,189 @@
     />
 
     <link
-      id="apple-touch-icon"
-      rel="apple-touch-icon"
+      id="app-favicon"
+      rel="icon"
+      type="image/png"
       href="/icon-192.png"
     />
 
     <title>GymStart</title>
+
+    <script>
+      (() => {
+        const routeMatch =
+          window.location.pathname.match(
+            /^\/gym\/([^/]+)(?:\/|$)/
+          );
+
+        const querySlug =
+          new URLSearchParams(
+            window.location.search
+          ).get("gym");
+
+        let storedSlug = null;
+        let storedGym = null;
+
+        try {
+          storedSlug =
+            localStorage.getItem("gymSlug");
+
+          const storedTheme =
+            localStorage.getItem("gymTheme");
+
+          if (storedTheme) {
+            storedGym =
+              JSON.parse(storedTheme);
+          }
+        } catch {
+          storedSlug = null;
+          storedGym = null;
+        }
+
+        let routeSlug = null;
+
+        if (routeMatch) {
+          try {
+            routeSlug =
+              decodeURIComponent(
+                routeMatch[1]
+              );
+          } catch {
+            routeSlug = routeMatch[1];
+          }
+        }
+
+        const slug =
+          routeSlug ||
+          querySlug ||
+          storedSlug;
+
+        const apiUrl =
+          "%VITE_API_URL%"
+            .trim()
+            .replace(/\/+$/, "");
+
+        const manifest =
+          document.createElement("link");
+
+        manifest.id = "app-manifest";
+        manifest.rel = "manifest";
+        manifest.crossOrigin = "anonymous";
+
+        if (
+          slug &&
+          apiUrl &&
+          !apiUrl.includes(
+            "%VITE_API_URL%"
+          )
+        ) {
+          manifest.href =
+            `${apiUrl}/public/gyms/` +
+            `${encodeURIComponent(slug)}` +
+            "/manifest.webmanifest?v=6";
+        } else {
+          manifest.href =
+            "/manifest.webmanifest?v=6";
+        }
+
+        document.head.appendChild(
+          manifest
+        );
+
+        /*
+         * Al recargar /my-routine se aplican
+         * inmediatamente los datos guardados
+         * del gimnasio.
+         */
+        if (storedGym) {
+          if (storedGym.name) {
+            document.title =
+              storedGym.name;
+
+            const appName =
+              document.querySelector(
+                'meta[name="application-name"]'
+              );
+
+            if (appName) {
+              appName.setAttribute(
+                "content",
+                storedGym.name
+              );
+            }
+
+            const appleTitle =
+              document.querySelector(
+                'meta[name="apple-mobile-web-app-title"]'
+              );
+
+            if (appleTitle) {
+              appleTitle.setAttribute(
+                "content",
+                storedGym.name
+              );
+            }
+          }
+
+          if (storedGym.primaryColor) {
+            const themeColor =
+              document.querySelector(
+                'meta[name="theme-color"]'
+              );
+
+            if (themeColor) {
+              themeColor.setAttribute(
+                "content",
+                storedGym.primaryColor
+              );
+            }
+          }
+
+          if (storedGym.logoUrl) {
+            document
+              .querySelectorAll(
+                'link[rel~="icon"], link[rel="apple-touch-icon"]'
+              )
+              .forEach((link) => {
+                link.remove();
+              });
+
+            const separator =
+              storedGym.logoUrl.includes("?")
+                ? "&"
+                : "?";
+
+            const iconUrl =
+              storedGym.logoUrl +
+              separator +
+              "pwaVersion=6";
+
+            const favicon =
+              document.createElement("link");
+
+            favicon.rel = "icon";
+            favicon.type = "image/png";
+            favicon.href = iconUrl;
+
+            document.head.appendChild(
+              favicon
+            );
+
+            const appleIcon =
+              document.createElement("link");
+
+            appleIcon.rel =
+              "apple-touch-icon";
+
+            appleIcon.href = iconUrl;
+
+            document.head.appendChild(
+              appleIcon
+            );
+          }
+        }
+      })();
+    </script>
   </head>
 
   <body>
