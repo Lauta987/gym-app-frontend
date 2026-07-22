@@ -1,6 +1,7 @@
 :root {
   --gym-primary: #dc2626;
   --gym-secondary: #111111;
+  --gym-background: #f5efe5;
   --gym-primary-soft: color-mix(
     in srgb,
     var(--gym-primary) 12%,
@@ -21,12 +22,13 @@ body {
   margin: 0;
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     sans-serif;
-  background: #f5f5f5;
+  background: var(--gym-background);
   color: #18181b;
 }
 
 #root {
   min-height: 100vh;
+  background: var(--gym-background);
 }
 
 a {
@@ -68,7 +70,7 @@ button:hover {
 .dashboard-page {
   min-height: 100vh;
   display: flex;
-  background: #f4f4f5;
+  background: var(--gym-background);
 }
 
 .sidebar {
@@ -832,7 +834,7 @@ a,
 
 .forma-page {
   min-height: 100dvh;
-  background: #e9e1d4;
+  background: var(--gym-background);
   color: var(--gym-secondary);
   display: flex;
   justify-content: center;
@@ -852,7 +854,7 @@ a,
   min-height: 100dvh;
   background:
     radial-gradient(circle at top right, color-mix(in srgb, var(--gym-primary) 12%, transparent), transparent 34%),
-    #f5efe5;
+    var(--gym-background);
   padding: max(54px, calc(env(safe-area-inset-top, 0px) + 26px)) 18px
     max(26px, calc(env(safe-area-inset-bottom, 0px) + 18px));
 }
@@ -2026,7 +2028,7 @@ a,
 
 .forma-login-page {
   min-height: 100dvh;
-  background: #e9e1d4;
+  background: var(--gym-background);
   display: flex;
   justify-content: center;
   color: var(--gym-secondary);
@@ -2046,7 +2048,7 @@ a,
   min-height: 100dvh;
   background:
     radial-gradient(circle at top right, color-mix(in srgb, var(--gym-primary) 14%, transparent), transparent 34%),
-    #f5efe5;
+    var(--gym-background);
   padding: max(54px, calc(env(safe-area-inset-top, 0px) + 26px)) 18px
     max(26px, calc(env(safe-area-inset-bottom, 0px) + 18px));
   display: flex;
@@ -2339,7 +2341,7 @@ a,
   min-height: 100dvh;
   display: grid;
   grid-template-columns: 280px 1fr;
-  background: #e9e1d4;
+  background: var(--gym-background);
   color: var(--gym-secondary);
   font-family:
     Inter,
@@ -2503,7 +2505,7 @@ a,
   min-width: 0;
   background:
     radial-gradient(circle at top right, color-mix(in srgb, var(--gym-primary) 8%, transparent), transparent 32%),
-    #f5efe5;
+    var(--gym-background);
 }
 
 /* Adaptación visual de las pantallas admin existentes */
@@ -5049,7 +5051,7 @@ a,
         180deg,
         var(--gym-secondary) 0%,
         color-mix(in srgb, var(--gym-secondary) 78%, #000000) 260px,
-        #f5efe5 260px
+        var(--gym-background) 260px
       ) !important;
   }
 
@@ -5377,7 +5379,7 @@ a,
 
   .admin-forma-main {
     padding: 28px 14px calc(120px + env(safe-area-inset-bottom)) !important;
-    background: #f5efe5 !important;
+    background: var(--gym-background) !important;
   }
 
   .dashboard-header {
@@ -5811,3 +5813,55 @@ a,
   object-fit: contain;
   border-radius: inherit;
 }  
+
+/* =========================================================
+   GYMSTART — TEMA DINÁMICO, ÚLTIMA PRIORIDAD
+   Garantiza que los fondos personalizados no sean reemplazados
+   por reglas antiguas o reglas responsive con !important.
+   ========================================================= */
+
+html,
+body,
+#root {
+  background-color: var(--gym-background) !important;
+}
+
+.dashboard-page,
+.forma-page,
+.forma-login-page {
+  background-color: var(--gym-background) !important;
+}
+
+.admin-forma-page {
+  background-color: var(--gym-background) !important;
+}
+
+.forma-app-shell {
+  background:
+    radial-gradient(
+      circle at top right,
+      color-mix(in srgb, var(--gym-primary) 12%, transparent),
+      transparent 34%
+    ),
+    var(--gym-background) !important;
+}
+
+.forma-login-shell {
+  background:
+    radial-gradient(
+      circle at top right,
+      color-mix(in srgb, var(--gym-primary) 14%, transparent),
+      transparent 34%
+    ),
+    var(--gym-background) !important;
+}
+
+.admin-forma-main {
+  background:
+    radial-gradient(
+      circle at top right,
+      color-mix(in srgb, var(--gym-primary) 8%, transparent),
+      transparent 32%
+    ),
+    var(--gym-background) !important;
+} 
