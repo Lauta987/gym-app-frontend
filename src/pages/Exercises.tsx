@@ -4,6 +4,10 @@ import api from "../api/api";
 import AdminLayout from "../components/AdminLayout";
 import type { Exercise } from "../types";
 import { isValidImageUrl } from "../utils/image";
+import {
+  createExerciseNumberImage,
+  replaceWithExerciseNumberImage,
+} from "../utils/exerciseImage"; 
 
 type Difficulty = "principiante" | "intermedio" | "avanzado";
 type DifficultyFilter = "all" | Difficulty;
@@ -111,6 +115,19 @@ export default function Exercises() {
 
   const handleSubmitExercise = async (event: FormEvent) => {
     event.preventDefault();
+
+    const normalizedImageUrl = imageUrl.trim();
+
+    if (
+      normalizedImageUrl &&
+      !isValidImageUrl(normalizedImageUrl)
+    ) {
+      setMessage("");
+      setError(
+        "La imagen debe tener una URL válida que comience con http:// o https://."
+      );
+      return;
+    }
 
     try {
       setSaving(true);
@@ -286,12 +303,49 @@ export default function Exercises() {
               <label>
                 Imagen URL
                 <input
-                  type="text"
+                  type="url"
                   placeholder="https://imagen.com/ejercicio.jpg"
                   value={imageUrl}
                   onChange={(event) => setImageUrl(event.target.value)}
                 />
+                <small>
+                  Es opcional. Si no agregás una imagen, la app mostrará una
+                  imagen con el número del ejercicio.
+                </small>
               </label>
+
+              <div className="exercise-image-preview">
+                <img
+                  src={
+                    isValidImageUrl(imageUrl.trim())
+                      ? imageUrl.trim()
+                      : createExerciseNumberImage(1)
+                  }
+                  alt={
+                    isValidImageUrl(imageUrl.trim())
+                      ? "Vista previa del ejercicio"
+                      : "Vista previa del número del ejercicio"
+                  }
+                  className={
+                    isValidImageUrl(imageUrl.trim())
+                      ? ""
+                      : "is-number-placeholder"
+                  }
+                  onError={(event) =>
+                    replaceWithExerciseNumberImage(
+                      event.currentTarget,
+                      1
+                    )
+                  }
+                />
+
+                <div>
+                  <strong>Vista previa</strong>
+                  <span>
+                    La imagen se recortará para ocupar todo el recuadro.
+                  </span>
+                </div>
+              </div>
 
               <label>
                 Músculos trabajados
@@ -388,15 +442,41 @@ export default function Exercises() {
               </div>
             ) : (
               <div className="exercise-grid">
-                {filteredExercises.map((exercise) => (
-                  <article key={exercise._id} className="exercise-card">
-                    <div className="exercise-image">
-                      {isValidImageUrl(exercise.imageUrl) ? (
-                        <img src={exercise.imageUrl} alt={exercise.name} />
-                      ) : (
-                        <span>Sin imagen</span>
-                      )}
-                    </div>
+                {filteredExercises.map((exercise, index) => {
+                  const fallbackNumber = index + 1;
+                  const hasExerciseImage = isValidImageUrl(
+                    exercise.imageUrl
+                  );
+
+                  return (
+                    <article key={exercise._id} className="exercise-card">
+                      <div className="exercise-image">
+                        <img
+                          src={
+                            hasExerciseImage
+                              ? exercise.imageUrl
+                              : createExerciseNumberImage(
+                                  fallbackNumber
+                                )
+                          }
+                          alt={
+                            hasExerciseImage
+                              ? exercise.name
+                              : `Ejercicio ${fallbackNumber}`
+                          }
+                          className={
+                            hasExerciseImage
+                              ? ""
+                              : "is-number-placeholder"
+                          }
+                          onError={(event) =>
+                            replaceWithExerciseNumberImage(
+                              event.currentTarget,
+                              fallbackNumber
+                            )
+                          }
+                        />
+                      </div>
 
                     <div className="exercise-info">
                       <div className="exercise-info-header">
@@ -448,8 +528,9 @@ export default function Exercises() {
                         ))}
                       </div>
                     </div>
-                  </article>
-                ))}
+                    </article>
+                  );
+                })}
               </div>
             )}
           </article>
@@ -457,4 +538,4 @@ export default function Exercises() {
       </section>
     </AdminLayout>
   );
-} 
+}  

@@ -5864,4 +5864,97 @@ body,
       transparent 32%
     ),
     var(--gym-background) !important;
+}
+
+/* =========================================================
+   IMÁGENES DE EJERCICIOS
+   - Muestra la imagen cargada por el gimnasio.
+   - Si no existe o falla, utiliza una imagen SVG con el número.
+   ========================================================= */
+
+.exercise-image-preview {
+  display: grid;
+  grid-template-columns: 92px 1fr;
+  gap: 14px;
+  align-items: center;
+  border: 1px solid rgba(17, 17, 17, 0.1);
+  border-radius: 18px;
+  background: color-mix(
+    in srgb,
+    var(--gym-background) 72%,
+    #ffffff
+  );
+  padding: 12px;
+}
+
+.exercise-image-preview img {
+  width: 92px;
+  height: 78px;
+  display: block;
+  border-radius: 14px;
+  background: var(--gym-secondary);
+  object-fit: cover;
+}
+
+.exercise-image-preview img.is-number-placeholder {
+  object-fit: contain;
+  padding: 18px;
+}
+
+.exercise-image-preview div {
+  min-width: 0;
+  display: grid;
+  gap: 5px;
+}
+
+.exercise-image-preview strong {
+  color: var(--gym-secondary);
+  font-size: 14px;
+}
+
+.exercise-image-preview span {
+  color: #716a63;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.exercise-image {
+  background: var(--gym-secondary);
+}
+
+.exercise-image img {
+  display: block;
+}
+
+.exercise-image img.is-number-placeholder {
+  object-fit: contain;
+  padding: 24px;
+}
+
+.forma-exercise-number img {
+  display: block;
+}
+
+.forma-exercise-number img.is-number-placeholder {
+  object-fit: contain;
+  padding: 11px;
+}
+
+@media (max-width: 520px) {
+  .exercise-image-preview {
+    grid-template-columns: 72px 1fr;
+  }
+
+  .exercise-image-preview img {
+    width: 72px;
+    height: 66px;
+  }
+
+  .exercise-image-preview img.is-number-placeholder {
+    padding: 14px;
+  }
+
+  .forma-exercise-number img.is-number-placeholder {
+    padding: 9px;
+  }
 } 

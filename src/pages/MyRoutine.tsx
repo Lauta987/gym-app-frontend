@@ -3,6 +3,10 @@ import { Link, useNavigate } from "react-router-dom";
 import api from "../api/api";
 import type { Routine, RoutineExercise, User, WorkoutLog } from "../types";
 import { isValidImageUrl } from "../utils/image";
+import {
+  createExerciseNumberImage,
+  replaceWithExerciseNumberImage,
+} from "../utils/exerciseImage";
 
 interface SelectedExercise {
   dayName: string;
@@ -388,6 +392,13 @@ export default function MyRoutine() {
                       activeDay.order
                     );
 
+                    const hasExerciseImage = isValidImageUrl(
+                      exercise.imageUrl
+                    );
+
+                    const numberImage =
+                      createExerciseNumberImage(item.order);
+
                     return (
                       <article
                         key={`${activeDay.order}-${exercise._id}`}
@@ -398,17 +409,29 @@ export default function MyRoutine() {
                         }
                       >
                         <div className="forma-exercise-number">
-                          {isValidImageUrl(exercise.imageUrl) ? (
-                            <img
-                              src={exercise.imageUrl}
-                              alt={exercise.name}
-                              onError={(event) => {
-                                event.currentTarget.style.display = "none";
-                              }}
-                            />
-                          ) : (
-                            <span>{item.order}</span>
-                          )}
+                          <img
+                            src={
+                              hasExerciseImage
+                                ? exercise.imageUrl
+                                : numberImage
+                            }
+                            alt={
+                              hasExerciseImage
+                                ? exercise.name
+                                : `Ejercicio ${item.order}`
+                            }
+                            className={
+                              hasExerciseImage
+                                ? ""
+                                : "is-number-placeholder"
+                            }
+                            onError={(event) =>
+                              replaceWithExerciseNumberImage(
+                                event.currentTarget,
+                                item.order
+                              )
+                            }
+                          />
                         </div>
 
                         <div className="forma-exercise-main">
@@ -612,4 +635,4 @@ export default function MyRoutine() {
       )}
     </main>
   );
-}  
+}   
