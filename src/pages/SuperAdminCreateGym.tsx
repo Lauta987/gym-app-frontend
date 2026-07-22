@@ -39,6 +39,25 @@ function generateSlug(value: string) {
     .replace(/^-+|-+$/g, "");
 }
 
+const DEFAULT_PRIMARY_COLOR = "#ff4b25";
+const DEFAULT_SECONDARY_COLOR = "#111111";
+const DEFAULT_BACKGROUND_COLOR = "#f5efe5";
+
+function isValidHexColor(value: string): boolean {
+  return /^#[0-9A-Fa-f]{6}$/.test(value.trim());
+}
+
+function getSafeColorValue(
+  value: string,
+  fallback: string
+): string {
+  const normalizedValue = value.trim();
+
+  return isValidHexColor(normalizedValue)
+    ? normalizedValue
+    : fallback;
+}
+
 export default function SuperAdminCreateGym() {
   const navigate = useNavigate();
 
@@ -47,9 +66,9 @@ export default function SuperAdminCreateGym() {
   const [slugEdited, setSlugEdited] = useState(false);
 
   const [logoUrl, setLogoUrl] = useState("");
-  const [primaryColor, setPrimaryColor] = useState("#ff4b25");
-  const [secondaryColor, setSecondaryColor] = useState("#111111");
-  const [backgroundColor, setBackgroundColor] = useState("#f5efe5");
+  const [primaryColor, setPrimaryColor] = useState(DEFAULT_PRIMARY_COLOR);
+  const [secondaryColor, setSecondaryColor] = useState(DEFAULT_SECONDARY_COLOR);
+  const [backgroundColor, setBackgroundColor] = useState(DEFAULT_BACKGROUND_COLOR);
 
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -80,10 +99,21 @@ export default function SuperAdminCreateGym() {
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
+    setError("");
+
+    if (
+      !isValidHexColor(primaryColor) ||
+      !isValidHexColor(secondaryColor) ||
+      !isValidHexColor(backgroundColor)
+    ) {
+      setError(
+        "Los colores deben tener un formato hexadecimal completo, por ejemplo #ff4b25."
+      );
+      return;
+    }
 
     try {
       setLoading(true);
-      setError("");
 
       const response = await api.post<CreateGymResponse>("/gyms", {
         name,
@@ -206,7 +236,7 @@ export default function SuperAdminCreateGym() {
           <div className="sa-create-preview">
             <div
               style={{
-                background: `linear-gradient(135deg, ${secondaryColor}, ${primaryColor})`,
+                background: `linear-gradient(135deg, ${getSafeColorValue(secondaryColor, DEFAULT_SECONDARY_COLOR)}, ${getSafeColorValue(primaryColor, DEFAULT_PRIMARY_COLOR)})`,
               }}
             >
               {logoUrl ? (
@@ -337,7 +367,10 @@ export default function SuperAdminCreateGym() {
                 <div className="sa-color-field">
                   <input
                     type="color"
-                    value={primaryColor}
+                    value={getSafeColorValue(
+                      primaryColor,
+                      DEFAULT_PRIMARY_COLOR
+                    )}
                     onChange={(event) => setPrimaryColor(event.target.value)}
                   />
 
@@ -345,6 +378,12 @@ export default function SuperAdminCreateGym() {
                     type="text"
                     value={primaryColor}
                     onChange={(event) => setPrimaryColor(event.target.value)}
+                    onBlur={() => {
+                      if (!isValidHexColor(primaryColor)) {
+                        setPrimaryColor(DEFAULT_PRIMARY_COLOR);
+                      }
+                    }}
+                    placeholder={DEFAULT_PRIMARY_COLOR}
                     maxLength={7}
                   />
                 </div>
@@ -355,7 +394,10 @@ export default function SuperAdminCreateGym() {
                 <div className="sa-color-field">
                   <input
                     type="color"
-                    value={secondaryColor}
+                    value={getSafeColorValue(
+                      secondaryColor,
+                      DEFAULT_SECONDARY_COLOR
+                    )}
                     onChange={(event) => setSecondaryColor(event.target.value)}
                   />
 
@@ -363,6 +405,12 @@ export default function SuperAdminCreateGym() {
                     type="text"
                     value={secondaryColor}
                     onChange={(event) => setSecondaryColor(event.target.value)}
+                    onBlur={() => {
+                      if (!isValidHexColor(secondaryColor)) {
+                        setSecondaryColor(DEFAULT_SECONDARY_COLOR);
+                      }
+                    }}
+                    placeholder={DEFAULT_SECONDARY_COLOR}
                     maxLength={7}
                   />
                 </div>
@@ -373,7 +421,10 @@ export default function SuperAdminCreateGym() {
                 <div className="sa-color-field">
                   <input
                     type="color"
-                    value={backgroundColor}
+                    value={getSafeColorValue(
+                      backgroundColor,
+                      DEFAULT_BACKGROUND_COLOR
+                    )}
                     onChange={(event) => setBackgroundColor(event.target.value)}
                   />
 
@@ -381,6 +432,12 @@ export default function SuperAdminCreateGym() {
                     type="text"
                     value={backgroundColor}
                     onChange={(event) => setBackgroundColor(event.target.value)}
+                    onBlur={() => {
+                      if (!isValidHexColor(backgroundColor)) {
+                        setBackgroundColor(DEFAULT_BACKGROUND_COLOR);
+                      }
+                    }}
+                    placeholder={DEFAULT_BACKGROUND_COLOR}
                     maxLength={7}
                   />
                 </div>

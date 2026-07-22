@@ -46,6 +46,25 @@ function generateSlug(value: string) {
     .replace(/^-+|-+$/g, "");
 }
 
+const DEFAULT_PRIMARY_COLOR = "#ff4b25";
+const DEFAULT_SECONDARY_COLOR = "#111111";
+const DEFAULT_BACKGROUND_COLOR = "#f5efe5";
+
+function isValidHexColor(value: string): boolean {
+  return /^#[0-9A-Fa-f]{6}$/.test(value.trim());
+}
+
+function getSafeColorValue(
+  value: string,
+  fallback: string
+): string {
+  const normalizedValue = value.trim();
+
+  return isValidHexColor(normalizedValue)
+    ? normalizedValue
+    : fallback;
+}
+
 function getPlanLabel(plan: GymPlan) {
   const labels: Record<GymPlan, string> = {
     basic: "Plan Básico",
@@ -63,9 +82,9 @@ export default function SuperAdminEditGym() {
   const [name, setName] = useState("");
   const [slug, setSlug] = useState("");
   const [logoUrl, setLogoUrl] = useState("");
-  const [primaryColor, setPrimaryColor] = useState("#ff4b25");
-  const [secondaryColor, setSecondaryColor] = useState("#111111");
-  const [backgroundColor, setBackgroundColor] = useState("#f5efe5");
+  const [primaryColor, setPrimaryColor] = useState(DEFAULT_PRIMARY_COLOR);
+  const [secondaryColor, setSecondaryColor] = useState(DEFAULT_SECONDARY_COLOR);
+  const [backgroundColor, setBackgroundColor] = useState(DEFAULT_BACKGROUND_COLOR);
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
@@ -93,9 +112,9 @@ export default function SuperAdminEditGym() {
       setName(gym.name);
       setSlug(gym.slug);
       setLogoUrl(gym.logoUrl || "");
-      setPrimaryColor(gym.primaryColor || "#ff4b25");
-      setSecondaryColor(gym.secondaryColor || "#111111");
-      setBackgroundColor(gym.backgroundColor || "#f5efe5");
+      setPrimaryColor(gym.primaryColor || DEFAULT_PRIMARY_COLOR);
+      setSecondaryColor(gym.secondaryColor || DEFAULT_SECONDARY_COLOR);
+      setBackgroundColor(gym.backgroundColor || DEFAULT_BACKGROUND_COLOR);
       setEmail(gym.email || "");
       setPhone(gym.phone || "");
       setAddress(gym.address || "");
@@ -119,14 +138,25 @@ export default function SuperAdminEditGym() {
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
+    setError("");
 
     if (!id) {
       return;
     }
 
+    if (
+      !isValidHexColor(primaryColor) ||
+      !isValidHexColor(secondaryColor) ||
+      !isValidHexColor(backgroundColor)
+    ) {
+      setError(
+        "Los colores deben tener un formato hexadecimal completo, por ejemplo #ff4b25."
+      );
+      return;
+    }
+
     try {
       setSaving(true);
-      setError("");
 
       await api.put(`/gyms/${id}`, {
         name,
@@ -269,7 +299,7 @@ export default function SuperAdminEditGym() {
           <div className="sa-create-preview">
             <div
               style={{
-                background: `linear-gradient(135deg, ${secondaryColor}, ${primaryColor})`,
+                background: `linear-gradient(135deg, ${getSafeColorValue(secondaryColor, DEFAULT_SECONDARY_COLOR)}, ${getSafeColorValue(primaryColor, DEFAULT_PRIMARY_COLOR)})`,
               }}
             >
               {logoUrl ? (
@@ -385,7 +415,10 @@ export default function SuperAdminEditGym() {
                 <div className="sa-color-field">
                   <input
                     type="color"
-                    value={primaryColor}
+                    value={getSafeColorValue(
+                      primaryColor,
+                      DEFAULT_PRIMARY_COLOR
+                    )}
                     onChange={(event) =>
                       setPrimaryColor(event.target.value)
                     }
@@ -397,6 +430,12 @@ export default function SuperAdminEditGym() {
                     onChange={(event) =>
                       setPrimaryColor(event.target.value)
                     }
+                    onBlur={() => {
+                      if (!isValidHexColor(primaryColor)) {
+                        setPrimaryColor(DEFAULT_PRIMARY_COLOR);
+                      }
+                    }}
+                    placeholder={DEFAULT_PRIMARY_COLOR}
                     maxLength={7}
                   />
                 </div>
@@ -407,7 +446,10 @@ export default function SuperAdminEditGym() {
                 <div className="sa-color-field">
                   <input
                     type="color"
-                    value={secondaryColor}
+                    value={getSafeColorValue(
+                      secondaryColor,
+                      DEFAULT_SECONDARY_COLOR
+                    )}
                     onChange={(event) =>
                       setSecondaryColor(event.target.value)
                     }
@@ -419,6 +461,12 @@ export default function SuperAdminEditGym() {
                     onChange={(event) =>
                       setSecondaryColor(event.target.value)
                     }
+                    onBlur={() => {
+                      if (!isValidHexColor(secondaryColor)) {
+                        setSecondaryColor(DEFAULT_SECONDARY_COLOR);
+                      }
+                    }}
+                    placeholder={DEFAULT_SECONDARY_COLOR}
                     maxLength={7}
                   />
                 </div>
@@ -429,7 +477,10 @@ export default function SuperAdminEditGym() {
                 <div className="sa-color-field">
                   <input
                     type="color"
-                    value={backgroundColor}
+                    value={getSafeColorValue(
+                      backgroundColor,
+                      DEFAULT_BACKGROUND_COLOR
+                    )}
                     onChange={(event) =>
                       setBackgroundColor(event.target.value)
                     }
@@ -441,6 +492,12 @@ export default function SuperAdminEditGym() {
                     onChange={(event) =>
                       setBackgroundColor(event.target.value)
                     }
+                    onBlur={() => {
+                      if (!isValidHexColor(backgroundColor)) {
+                        setBackgroundColor(DEFAULT_BACKGROUND_COLOR);
+                      }
+                    }}
+                    placeholder={DEFAULT_BACKGROUND_COLOR}
                     maxLength={7}
                   />
                 </div>
