@@ -5,6 +5,7 @@ export interface GymTheme {
   logoUrl?: string;
   primaryColor?: string;
   secondaryColor?: string;
+  backgroundColor?: string;
   updatedAt?: string;
 }
 
@@ -12,6 +13,7 @@ const STORAGE_KEY = "gymTheme";
 
 const DEFAULT_PRIMARY_COLOR = "#dc2626";
 const DEFAULT_SECONDARY_COLOR = "#111111";
+const DEFAULT_BACKGROUND_COLOR = "#f5efe5";
 
 function isValidHexColor(
   color?: string
@@ -21,6 +23,24 @@ function isValidHexColor(
   }
 
   return /^#[0-9A-Fa-f]{6}$/.test(color);
+}
+
+function setBackgroundColor(
+  backgroundColor: string
+) {
+  document.documentElement.style.backgroundColor =
+    backgroundColor;
+
+  document.body.style.backgroundColor =
+    backgroundColor;
+
+  const root =
+    document.getElementById("root");
+
+  if (root) {
+    root.style.backgroundColor =
+      backgroundColor;
+  }
 }
 
 export function applyGymTheme(
@@ -38,6 +58,12 @@ export function applyGymTheme(
     ? gym.secondaryColor
     : DEFAULT_SECONDARY_COLOR;
 
+  const backgroundColor = isValidHexColor(
+    gym?.backgroundColor
+  )
+    ? gym.backgroundColor
+    : DEFAULT_BACKGROUND_COLOR;
+
   document.documentElement.style.setProperty(
     "--gym-primary",
     primaryColor
@@ -47,6 +73,13 @@ export function applyGymTheme(
     "--gym-secondary",
     secondaryColor
   );
+
+  document.documentElement.style.setProperty(
+    "--gym-background",
+    backgroundColor
+  );
+
+  setBackgroundColor(backgroundColor);
 }
 
 export function saveAndApplyGymTheme(

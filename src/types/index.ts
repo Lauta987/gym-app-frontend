@@ -2,14 +2,27 @@ export type UserRole =
   | "superadmin"
   | "admin"
   | "trainer"
-  | "student"; 
+  | "student";
 
 export interface User {
   id: string;
+  gymId?: string | null;
   name: string;
   lastName: string;
   email: string;
   role: UserRole;
+  active?: boolean;
+}
+
+export interface GymBranding {
+  _id: string;
+  name: string;
+  slug: string;
+  logoUrl?: string;
+  primaryColor: string;
+  secondaryColor: string;
+  backgroundColor: string;
+  updatedAt?: string;
 }
 
 export interface LoginResponse {
@@ -35,7 +48,10 @@ export interface Exercise {
   videoUrl?: string;
   imageUrl?: string;
   muscles: string[];
-  difficulty: "principiante" | "intermedio" | "avanzado";
+  difficulty:
+    | "principiante"
+    | "intermedio"
+    | "avanzado";
   active: boolean;
 }
 
@@ -59,10 +75,14 @@ export interface Routine {
   name: string;
   description?: string;
   objective?: string;
-  level: "principiante" | "intermedio" | "avanzado";
+  level:
+    | "principiante"
+    | "intermedio"
+    | "avanzado";
   days: RoutineDay[];
   active: boolean;
-} 
+}
+
 export interface WorkoutLog {
   _id: string;
   studentId: string;
@@ -77,4 +97,4 @@ export interface WorkoutLog {
   repsDone?: string;
   notes?: string;
   completedAt: string;
-}  
+} 

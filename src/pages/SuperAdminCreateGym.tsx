@@ -49,6 +49,7 @@ export default function SuperAdminCreateGym() {
   const [logoUrl, setLogoUrl] = useState("");
   const [primaryColor, setPrimaryColor] = useState("#ff4b25");
   const [secondaryColor, setSecondaryColor] = useState("#111111");
+  const [backgroundColor, setBackgroundColor] = useState("#f5efe5");
 
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -90,6 +91,7 @@ export default function SuperAdminCreateGym() {
         logoUrl: logoUrl || undefined,
         primaryColor,
         secondaryColor,
+        backgroundColor,
         email: email || undefined,
         phone: phone || undefined,
         address: address || undefined,
@@ -365,6 +367,28 @@ export default function SuperAdminCreateGym() {
                   />
                 </div>
               </label>
+
+              <label>
+                Color de fondo
+                <div className="sa-color-field">
+                  <input
+                    type="color"
+                    value={backgroundColor}
+                    onChange={(event) => setBackgroundColor(event.target.value)}
+                  />
+
+                  <input
+                    type="text"
+                    value={backgroundColor}
+                    onChange={(event) => setBackgroundColor(event.target.value)}
+                    maxLength={7}
+                  />
+                </div>
+
+                <small>
+                  Se aplica a la app del alumno y al panel del gimnasio.
+                </small>
+              </label>
             </div>
           </section>
 
@@ -473,4 +497,4 @@ export default function SuperAdminCreateGym() {
       </section>
     </main>
   );
-}
+} 

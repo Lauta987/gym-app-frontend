@@ -10,6 +10,7 @@ export interface PublicGym extends GymTheme {
   logoUrl?: string;
   primaryColor: string;
   secondaryColor: string;
+  backgroundColor: string;
   updatedAt?: string;
 }
 
@@ -36,7 +37,7 @@ function getGymVersion(
   gym: PublicGym
 ): string {
   if (!gym.updatedAt) {
-    return "6";
+    return "7";
   }
 
   const timestamp = new Date(
@@ -44,7 +45,7 @@ function getGymVersion(
   ).getTime();
 
   return Number.isNaN(timestamp)
-    ? "6"
+    ? "7"
     : timestamp.toString();
 }
 
@@ -188,10 +189,6 @@ function updateAppIcons(
 
   document.head.appendChild(favicon);
 
-  /*
-   * Principalmente utilizado por iPhone y iPad
-   * al agregar la web a la pantalla de inicio.
-   */
   const appleIcon =
     document.createElement("link");
 
@@ -283,10 +280,6 @@ export async function configureGymPwa(
 export function getGymSlugFromCurrentPath():
   | string
   | null {
-  /*
-   * Ejemplo:
-   * /gym/gym-shark
-   */
   const routeMatch =
     window.location.pathname.match(
       /^\/gym\/([^/]+)(?:\/|$)/
@@ -306,10 +299,6 @@ export function getGymSlugFromCurrentPath():
     }
   }
 
-  /*
-   * Ejemplo:
-   * /my-routine?gym=gym-shark
-   */
   const querySlug =
     new URLSearchParams(
       window.location.search
@@ -321,10 +310,6 @@ export function getGymSlugFromCurrentPath():
       .toLowerCase();
   }
 
-  /*
-   * Se utiliza cuando el alumno ya inició sesión
-   * y navega por la aplicación.
-   */
   const storedSlug =
     localStorage.getItem("gymSlug");
 

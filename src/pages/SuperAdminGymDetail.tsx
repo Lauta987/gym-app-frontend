@@ -21,6 +21,7 @@ interface Gym {
   logoUrl?: string;
   primaryColor: string;
   secondaryColor: string;
+  backgroundColor: string;
   email?: string;
   phone?: string;
   address?: string;
@@ -459,6 +460,18 @@ export default function SuperAdminGymDetail() {
                     <strong>{gym.secondaryColor}</strong>
                   </div>
                 </article>
+
+                <article>
+                  <span
+                    style={{
+                      backgroundColor: gym.backgroundColor,
+                    }}
+                  />
+                  <div>
+                    <small>Fondo</small>
+                    <strong>{gym.backgroundColor}</strong>
+                  </div>
+                </article>
               </div>
             </div>
           </article>
@@ -530,4 +543,4 @@ export default function SuperAdminGymDetail() {
       </section>
     </main>
   );
-} 
+}  
